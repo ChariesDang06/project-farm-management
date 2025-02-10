@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from "../../assets/logo.png";
-import footer from "../../assets/Footer.png";
+import logo from "../../assets/IconHomePage/logo.png";
+import footer from "../../assets/IconHomePage/Footer.png";
 import { LiaPhoneVolumeSolid, LiaFacebookF } from "react-icons/lia";
 import { TfiEmail } from "react-icons/tfi";
 import { FaXTwitter ,FaInstagram } from "react-icons/fa6";

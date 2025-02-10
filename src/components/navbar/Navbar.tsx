@@ -1,10 +1,11 @@
 import { useState } from "react";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/IconHomePage/logo.png";
 import { FaCircle } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 import NavbarItem from "./NavbarItem";
 import Button from "../button/Button";
 import { LiaPhoneVolumeSolid } from "react-icons/lia";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [toggle, setToggle] = useState(false);
@@ -22,9 +23,9 @@ function Navbar() {
     <div className="flex items-center justify-between p-5 relative">
       <div className="flex gap-8 items-center">
         <div className="flex items-center">
-          <img src={logo} className="md:w-[80px] lg:w-[56px] object-cover" />
+          <img src={logo} className="mr-1 md:w-[60px] lg:w-[56px] object-cover" />
           <span
-            className="w-[107px] h-[24px] font-[400] text-[24px] text-[#FCBD2D] 
+            className=" w-[100px] h-[24px] font-[300] text-[24px] text-[#FCBD2D] 
                 tracking-[0.01em] font-[Segoe_Script]"
           >
             DLFarm
@@ -35,21 +36,19 @@ function Navbar() {
             <NavbarItem key={item.name} name={item.name} Icon={item.icon} />
           ))}
         </div>
-        <div className="lg:hidden flex items-center">
-          <button
-            onClick={() => setToggle(!toggle)}
-            className="p-2 rounded-md bg-gray-800 text-white"
-          >
-            <HiDotsVertical className="w-6 h-6 " />
-          </button>
-          {toggle && (
-            <div className="absolute top-24 left-0 w-full bg-[#121212] border border-gray-700 shadow-lg p-4 flex flex-col items-start">
-              {menu.map((item) => (
-                <NavbarItem key={item.name} name={item.name} Icon={item.icon} />
-              ))}
-            </div>
-          )}
-        </div>
+        <button
+          onClick={() => setToggle(!toggle)}
+          className="lg:hidden cursor-pointer p-2 rounded-md bg-gray-800 text-white"
+        >
+          <HiDotsVertical className="w-6 h-6" />
+        </button>
+        {toggle && (
+          <div className="absolute top-24 left-0 w-full bg-[#121212] border border-gray-700 shadow-lg p-4 flex flex-col items-start">
+            {menu.map((item) => (
+              <NavbarItem key={item.name} name={item.name} Icon={item.icon} />
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="flex items-center justify-between gap-4">
@@ -60,8 +59,12 @@ function Navbar() {
             <span className="text-[14px]">+84 123 123 12</span>
           </div>
         </div>
+
         <Button backgroundColor="#FFFFFF" iconType="search" />
-        <Button text="Đăng Nhập" backgroundColor="#EDDD5E" iconType="arrow" />
+        <Link to="/dashboard">
+          <Button text="Đăng Nhập" backgroundColor="#EDDD5E" iconType="arrow" />
+        </Link>
+
       </div>
     </div>
   );

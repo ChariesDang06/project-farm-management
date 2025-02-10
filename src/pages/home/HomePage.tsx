@@ -1,43 +1,44 @@
+import {useState} from "react"
 import Banner from "../../components/banner/Banner";
 import Login from "../login/Login";
 import { RiLeafLine } from "react-icons/ri";
-import LoginArt from "../../assets/LoginArt.png";
-import NaturalCard from "../../components/natural-card/NaturalCard";
-import BackgroundHome from "../../assets/BackgroundHome.png"; 
-import IconHome1 from "../../assets/IconHome1.png";
-import IconHome2 from "../../assets/IconHome2.png";
-import IconHome3 from "../../assets/IconHome3.png";
-import IconHome4 from "../../assets/IconHome4.png";
-import IconSS1 from "../../assets/IconSS1.png";
-import IconSS2 from "../../assets/IconSS2.png";
-import CNC1 from "../../assets/service-img-01.jpg.png";
-import CNC2 from "../../assets/service-img-02.jpg.png";
-import CNC3 from "../../assets/service-img-03.jpg.png";
-import SectionCNC from "../../assets/SectionCNC.png";
-import Meat from "../../assets/meat.png";
-import MeatCard from "../../components/natural-card/MeatCard";
-import IconMeat1 from "../../assets/IconMeat.png";
-import IconMeat2 from "../../assets/IconMeat2.png";
-import IconMeat3 from "../../assets/IconMeat3.png";
-import IconMeat4 from "../../assets/IconMeat4.png";
-import Sec1 from "../../assets/sec1.png";
-import Sec2 from "../../assets/sec2.png";
-import Sec3 from "../../assets/sec3.png";
-import Sec4 from "../../assets/sec4.png";
-import nam1987 from "../../assets/1987.png";
-import nam1995 from "../../assets/1995.png";
-import nam2003 from "../../assets/2003.png";
-import nam2010 from "../../assets/2010.png";
-import mt100 from "../../assets/mt100.png";
-import SectionMT from "../../assets/SectionMT.png";
-import logo1 from "../../assets/5.png";
-import logo2 from "../../assets/6.png";
-import logo3 from "../../assets/7.png";
-import logo4 from "../../assets/8.png";
-import logo5 from "../../assets/9.png";
-import logo6 from "../../assets/10.png";
-import Section9 from "../../assets/Section9.png";
-import AgricultureCard from "../../components/natural-card/AgricultureCard";
+import LoginArt from "../../assets/IconHomePage/LoginArt.png";
+import NaturalCard from "../../components/card/NaturalCard";
+import BackgroundHome from "../../assets/IconHomePage/BackgroundHome.png"; 
+import IconHome1 from "../../assets/IconHomePage/IconHome1.png";
+import IconHome2 from "../../assets/IconHomePage/IconHome2.png";
+import IconHome3 from "../../assets/IconHomePage/IconHome3.png";
+import IconHome4 from "../../assets/IconHomePage/IconHome4.png";
+import IconSS1 from "../../assets/IconHomePage/IconSS1.png";
+import IconSS2 from "../../assets/IconHomePage/IconSS2.png";
+import CNC1 from "../../assets/IconHomePage/service-img-01.jpg.png";
+import CNC2 from "../../assets/IconHomePage/service-img-02.jpg.png";
+import CNC3 from "../../assets/IconHomePage/service-img-03.jpg.png";
+import SectionCNC from "../../assets/IconHomePage/SectionCNC.png";
+import Meat from "../../assets/IconHomePage/meat.png";
+import MeatCard from "../../components/card/MeatCard";
+import IconMeat1 from "../../assets/IconHomePage/IconMeat.png";
+import IconMeat2 from "../../assets/IconHomePage/IconMeat2.png";
+import IconMeat3 from "../../assets/IconHomePage/IconMeat3.png";
+import IconMeat4 from "../../assets/IconHomePage/IconMeat4.png";
+import Sec1 from "../../assets/IconHomePage/sec1.png";
+import Sec2 from "../../assets/IconHomePage/sec2.png";
+import Sec3 from "../../assets/IconHomePage/sec3.png";
+import Sec4 from "../../assets/IconHomePage/sec4.png";
+import nam1987 from "../../assets/IconHomePage/1987.png";
+import nam1995 from "../../assets/IconHomePage/1995.png";
+import nam2003 from "../../assets/IconHomePage/2003.png";
+import nam2010 from "../../assets/IconHomePage/2010.png";
+import mt100 from "../../assets/IconHomePage/mt100.png";
+import SectionMT from "../../assets/IconHomePage/SectionMT.png";
+import logo1 from "../../assets/IconHomePage/5.png";
+import logo2 from "../../assets/IconHomePage/6.png";
+import logo3 from "../../assets/IconHomePage/7.png";
+import logo4 from "../../assets/IconHomePage/8.png";
+import logo5 from "../../assets/IconHomePage/9.png";
+import logo6 from "../../assets/IconHomePage/10.png";
+import Section9 from "../../assets/IconHomePage/Section9.png";
+import AgricultureCard from "../../components/card/AgricultureCard";
 import Button from "../../components/button/Button";
 import Footer from "../../components/footer/Footer";
 import ButtonNext from "../../components/button/ButtonNext";
@@ -81,6 +82,24 @@ const cardAgricultureCardData = [
     title: "Công nghệ cao",
     description: "Áp dụng công nghệ hiện đại vào chăn nuôi, tối ưu hóa quy trình chăm sóc và sản xuất.",
     img: CNC3,
+  },
+  {
+    topic: "Sáng tạo",
+    title: "Phát Triển Giống Mới",
+    description: "Nghiên cứu và lai tạo giống nông sản năng suất cao, chống chịu tốt.",
+    img: CNC3,
+  },
+  {
+    topic: "Bền vững",
+    title: "Bảo Vệ Môi Trường",
+    description: "Sử dụng phương pháp canh tác hữu cơ, bảo vệ hệ sinh thái tự nhiên.",
+    img: CNC2,
+  },
+  {
+    topic: "Chất lượng",
+    title: "Sản Phẩm An Toàn",
+    description: "Đảm bảo chất lượng thực phẩm sạch, an toàn và đạt chuẩn quốc tế.",
+    img: CNC1,
   },
 ];
 const MeatCardData = [
@@ -135,7 +154,19 @@ const timelineData = [
   },
 ];
 const logos = [logo1, logo2, logo3, logo4, logo5, logo6, logo1, logo2, logo3, logo4,logo5, logo6,];
+// 
+// 
+// 
 const HomePage = () => {
+  const [currentPage, setCurrentPage] = useState(0);
+  const totalCardPages = Math.ceil(cardAgricultureCardData.length / 3);
+  const nextPage = () => {
+    setCurrentPage((prev) => (prev + 1) % totalCardPages);
+  };
+  const prevPage = () => {
+    setCurrentPage((prev) => (prev - 1 + totalCardPages) % totalCardPages);
+  };
+
   return (
     <>
       <Banner/>
@@ -217,21 +248,26 @@ const HomePage = () => {
                   <p className="text-black text-[1rem] ml-2 flex items-center justify-center">Dịch Vụ Của Chúng Tôi</p>
                 </button>
                 <div className="flex items-center justify-between mb-[5%]">
-                <h3 className=" flex items-center justify-left text-[280%]  leading-[120%] text-white">
-                  Nông nghiệp bền vững
-                </h3>
-                <ButtonNext borderColor="#FFFFFF" iconColor="#FFFFFF" iconType="both" />
-              </div>
-                <div className="grid grid-cols-3 md:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 gap-4">
-                  {cardAgricultureCardData.map((card, index) => (
-                    <AgricultureCard
-                      key={index}
-                      topic={card.topic}
-                      title={card.title}
-                      description={card.description}
-                      img={card.img}
-                    />
-                  ))}
+                  <h3 className=" flex items-center justify-left text-[280%]  leading-[120%] text-white">
+                    Nông nghiệp bền vững
+                  </h3>
+                  <div className="flex items-center justify-between gap-2">
+                    <ButtonNext onClick={prevPage} borderColor="#FFFFFF" iconColor="#FFFFFF" iconType="back" />
+                    <ButtonNext onClick={nextPage} borderColor="#FFFFFF" iconColor="#FFFFFF" iconType="next" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 md:grid-cols-3 gap-4 transition-all duration-500">
+                  {cardAgricultureCardData
+                    .slice(currentPage * 3, (currentPage + 1) * 3)
+                    .map((card, index) => (
+                      <AgricultureCard
+                        key={index}
+                        topic={card.topic}
+                        title={card.title}
+                        description={card.description}
+                        img={card.img}
+                      />
+                    ))}
                 </div>
           </div>
       </div>
@@ -336,11 +372,11 @@ const HomePage = () => {
                 <h3 className="text-[280%] leading-[120%] text-[#404A3D] ">
                   Kết nối hơn 100+ doanh nghiệp
                 </h3>
-                <ButtonNext borderColor="#404A3D" iconColor="#404A3D" iconType="both" />
+                    <ButtonNext  borderColor="#404A3D" iconColor="#404A3D" iconType="both" />
               </div>
 
               <div className="grid gap-6">
-                <div className="grid grid-cols-6 gap-7 justify-center">
+                <div className="grid grid-cols-6 gap-7 transition-all duration-500">
                   {logos.slice(0, 6).map((logo, index) => (
                     <div key={index} className="flex justify-center">
                       <img
@@ -351,7 +387,8 @@ const HomePage = () => {
                     </div>
                   ))}
                 </div>
-                <div className="grid grid-cols-6 gap-7 justify-center" style={{ marginLeft: "8%" }}>
+
+                <div className="grid grid-cols-6 gap-7 transition-all duration-500" style={{ marginLeft: "8%" }}>
                   {logos.slice(6, 12).map((logo, index) => (
                     <div key={index} className="flex justify-center">
                       <img
