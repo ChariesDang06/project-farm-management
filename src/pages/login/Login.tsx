@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, MouseEvent } from "react";
-import Hello from "../../assets/hello.png"
+import Hello from "../../assets/IconHomePage/hello.png"
 import { FcGoogle } from "react-icons/fc";
 export const validateInput = (str: string = ""): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

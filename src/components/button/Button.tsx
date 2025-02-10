@@ -14,7 +14,7 @@ const Button: React.FC<ButtonProps> = ({ text, backgroundColor = "#EDDD5E", icon
   const borderRadius = !text ? "50%" : "30px"; 
   return (
     <button
-      className=" shrink-0 flex items-center justify-center gap-2 font-medium transition-all duration-300"
+      className=" cursor-pointer shrink-0 flex items-center justify-center gap-2 font-medium transition-all duration-300"
       style={{
         backgroundColor,
         color: "#404A3D",
