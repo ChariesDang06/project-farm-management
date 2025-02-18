@@ -1,17 +1,21 @@
-import React, { useState, ChangeEvent, MouseEvent } from "react";
+import React, { useState, useContext ,ChangeEvent, MouseEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import Hello from "../../assets/IconHomePage/hello.png"
 import { FcGoogle } from "react-icons/fc";
+import { AuthContext } from "../../hooks/user";
 export const validateInput = (str: string = ""): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(str);
 };
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [err, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-
+  const { loginApi } = useContext(AuthContext);
+  
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
     setError(null);
@@ -27,6 +31,15 @@ const Login: React.FC = () => {
   const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setLoading(true);
+    try {
+      await loginApi({ email, password }); 
+      navigate("/dashboard");
+      /* eslint-disable  @typescript-eslint/no-explicit-any */ 
+    } catch (error: any) {
+      setError(error.response?.data?.message || "Đăng nhập thất bại!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -60,14 +73,17 @@ const Login: React.FC = () => {
               className="w-full p-3 border border-[#D4D7E3] rounded-[100px] text-black bg-white"
               type="password"
               name="password"
-              placeholder="Ít nhất 8 kí tự ..."
+              placeholder="Ít nhất 6 kí tự ..."
               onChange={handlePasswordChange}
               value={password}
             />
-            {err && <p className="text-red-500 text-sm mt-1 text-left">{err}</p>}
-            <a href="/" className="hover:underline cursor-pointer text-sm text-green-600 absolute right-0 mt-14 ">
-              Quên mật khẩu?
-            </a>
+            <div className="flex align-center justify-between mt-2">
+              {err && <p className="text-red-500 text-sm text-left">{err}</p>}
+              <a href="/" className="hover:underline cursor-pointer text-sm text-green-600 absolute right-0">
+                Quên mật khẩu?
+              </a>
+            </div>
+           
           </div>
 
           <button

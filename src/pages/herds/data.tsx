@@ -126,4 +126,3 @@ export const ProductService = {
         return Promise.resolve(this.getProductsData());
     },
 };
-

@@ -1,26 +1,34 @@
 import './App.css';
-import { useState } from "react";
-import Dashboard from './pages/dashboard/DashboardPage';
+import { useState , useContext} from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
-import HomePage from "./pages/home/HomePage";
-import Sidebar, { SidebarItem } from "./components/side-bar/Sidebar";
+import { QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import 'primereact/resources/primereact.css';
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
+
 import { HiMiniChartPie } from "react-icons/hi2";
 import { MdOutlinePets, MdSick, MdAssignment } from "react-icons/md";
 import { BiSolidBarChartSquare } from "react-icons/bi";
+
+import Sidebar, { SidebarItem } from "./components/side-bar/Sidebar";
 import Header from "./components/header/Header";
 import Breadcrumb_Comp from "./components/breadcrumb/Breadcrumb_Comp";
-import Herd from './pages/herd/Herd';
-import AbnormalDetection from './pages/abnormal-detection/AbnormalDetection';
-import HerdsReport from './pages/herds-report/HerdsReport';
-import 'primereact/resources/primereact.css';
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import HomePage from "./pages/home/HomePage";
+import Dashboard from './pages/dashboard/DashboardPage';
+import Herds from './pages/herds/Herds';
+import AbnormalDetection from './pages/herds/AbnormalDetection';
+import HerdsReport from './pages/herds/HerdsReport';
+import EpidemicReport from './pages/epidemic/EpidemicReport';
+import TreatmentPlan from './pages/epidemic/TreatmentPlan';
+import TrackRecord from './pages/epidemic/TrackRecord';
+import ResourcesReport from './pages/resources/ResourcesReport';
+import Water from './pages/resources/Water';
+import Food from './pages/resources/Food';
+import Medical from './pages/resources/Medical';
+import JobManage from './pages/job/JobManage';
+import JobReport from './pages/job/JobReport';
+import { AuthContext } from './hooks/user';
+
 const queryClient = new QueryClient();
-
-
 const SIDEBAR_ITEMS = [
   { text: "Tổng quan", url: "/dashboard", icon: <HiMiniChartPie /> },
   {
@@ -80,34 +88,38 @@ function App() {
     }
   };
   const Layout = () => {
+    const { currentUser } = useContext(AuthContext);
     return (
-    <div className="flex">
-      <div className="flex-1 max-w-[345px] box-border">
-        <Sidebar>
-          {SIDEBAR_ITEMS.map((item) => (
-            <SidebarItem
-              key={item.url}
-              icon={item.icon}
-              text={item.text}
-              url={item.url}
-              onSelect={handleSidebarSelect}
-              subItems={item.subItems}
-            />
-          ))}
-        </Sidebar>
-      </div>
-
-      <main className="flex-5 py-4 px-6">
-        <Header />
-        <Breadcrumb_Comp items={breadcrumbItems} onNavigate={(url) => console.log("Navigate to:", url)} />
-        <>
-          <QueryClientProvider client={queryClient}>
-                <Outlet />
-          </QueryClientProvider>
-        </>
-      </main>
-    </div>
-
+      <>
+      {currentUser && (
+          <div className="flex">
+          <div className="flex-1 max-w-[345px] box-border">
+            <Sidebar>
+              {SIDEBAR_ITEMS.map((item) => (
+                <SidebarItem
+                  key={item.url}
+                  icon={item.icon}
+                  text={item.text}
+                  url={item.url}
+                  onSelect={handleSidebarSelect}
+                  subItems={item.subItems}
+                />
+              ))}
+            </Sidebar>
+          </div>
+    
+          <main className="flex-5 py-4 px-6">
+            <Header />
+            <Breadcrumb_Comp items={breadcrumbItems} onNavigate={(url) => console.log("Navigate to:", url)} />
+            <>
+              <QueryClientProvider client={queryClient}>
+                    <Outlet />
+              </QueryClientProvider>
+            </>
+          </main>
+        </div>
+      )}
+      </>
     );
   };
 
@@ -126,7 +138,7 @@ function App() {
         },
         {
           path: "/herds/manage",
-          element: <Herd />,
+          element: <Herds />,
         },
         {
           path: "/herds/abnormal-detection",
@@ -136,10 +148,45 @@ function App() {
           path: "/herds/report",
           element: <HerdsReport />,
         },
+        {
+          path: "/epidemic/track-record",
+          element: <TrackRecord />,
+        },
+        {
+          path: "/epidemic/treatment-plan",
+          element: <TreatmentPlan />,
+        },
+        {
+          path: "/epidemic/report",
+          element: <EpidemicReport />,
+        },
+        {
+          path: "/resources/water",
+          element: <Water />,
+        },
+        {
+          path: "/resources/food",
+          element: <Food />,
+        },
+        {
+          path: "/resources/medical",
+          element: <Medical />,
+        },
+        {
+          path: "/resources/report",
+          element: <ResourcesReport />,
+        },
+        {
+          path: "/job/manage",
+          element: <JobManage />,
+        },
+        {
+          path: "/job/report",
+          element: <JobReport />,
+        },
       ],
     },
   ]);
-
   return <RouterProvider router={router} />;
 }
 

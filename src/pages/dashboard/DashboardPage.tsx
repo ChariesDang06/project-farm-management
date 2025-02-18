@@ -2,7 +2,7 @@ import { useState } from "react";
 import AbnormalDetectionCard from "../../components/card/AbnormalDetectionCard";
 import phvt from "../../assets/phvn.png";
 import phbt1 from "../../assets/phbt1.png";
-import BarnSelec from "../../components/barn-selector/BarnSelec";
+import BarnSelec from "../../components/barn-selector/BarnSelector";
 import { FiChevronDown, FiSearch } from "react-icons/fi";
 
 import BarChartComponent from "../../components/bar-chart/BarChartComponent";
@@ -123,8 +123,6 @@ const DashBoard = () => {
         </div>
       </div>
     </>
-    
-    
   );
 };
 
