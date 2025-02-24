@@ -5,8 +5,7 @@ import { HiDotsVertical } from "react-icons/hi";
 import NavbarItem from "./NavbarItem";
 import Button from "../button/Button";
 import { LiaPhoneVolumeSolid } from "react-icons/lia";
-import { Link } from "react-router-dom";
-
+import { Link } from "react-scroll";
 function Navbar() {
   const [toggle, setToggle] = useState(false);
 
@@ -20,7 +19,7 @@ function Navbar() {
   ];
 
   return (
-    <div className="flex items-center justify-between p-5 relative">
+    <div className="flex items-center justify-between p-5 pr-50 relative">
       <div className="flex gap-8 items-center">
         <div className="flex items-center">
           <img src={logo} className="mr-1 md:w-[60px] lg:w-[56px] object-cover" />
@@ -51,7 +50,7 @@ function Navbar() {
         )}
       </div>
 
-      <div className="flex items-center justify-between gap-4">
+      <div className=" flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <LiaPhoneVolumeSolid className="w-8 h-8 text-[#EDDD5E]" />
           <div className="flex flex-col text-white">
@@ -61,8 +60,8 @@ function Navbar() {
         </div>
 
         <Button backgroundColor="#FFFFFF" iconType="search" />
-        <Link to="/dashboard">
-          <Button text="Đăng Nhập" backgroundColor="#EDDD5E" iconType="arrow" />
+        <Link to="targetSection" >
+          <Button login={true}/>
         </Link>
 
       </div>

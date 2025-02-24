@@ -1,9 +1,9 @@
-import { useState } from "react";
-import BarChartComponent from "../../components/bar-chart/BarChartComponent";
-import TimelineSelector from "../../components/timeline-selector/TimelineSelector";
-import RecoveryReport from "../../components/input-field/InputField";
 
-const HerdsReport = () => {
+import { useState } from "react";
+import TimelineSelector from "../../components/timeline-selector/TimelineSelector";
+import LineChartComponent from "../../components/line-chart/LineChartComponent";
+
+const ResourcesReport = () => {
   const [filterType, setFilterType] = useState<"year" | "month" | "week">("year");
   const [selectedAnimal, setSelectedAnimal] = useState("");
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
@@ -13,7 +13,7 @@ const HerdsReport = () => {
   return (
     <div className="bg-[#F3F7F5] rounded-[16px] p-5">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl">Thống kê</h1>
+        <h1 className="text-2xl">Quản lý tài nguyên</h1>
         <TimelineSelector
           filterType={filterType}
           setFilterType={setFilterType}
@@ -29,31 +29,14 @@ const HerdsReport = () => {
       </div>
       
       <div className="flex flex-col gap-y-5">
-        <BarChartComponent
-          title="Số lượng vật nuôi"
-          filterType={filterType}
-          hasIsolation={false}
-          selectedAnimal={selectedAnimal}
-        />
-        <BarChartComponent
-          title="Trạng thái sức khỏe"
-          filterType={filterType}
-          hasIsolation={true}
-          selectedAnimal={selectedAnimal}
-        />
-        {/* <BarChartComponent
-          title="Tỉ lệ nhập kho"
-          filterType={filterType}
-          hasIsolation={false}
-          selectedAnimal={selectedAnimal}
-        /> */}
-      <RecoveryReport/>
-
+        <LineChartComponent title="Lượng nước tiêu thụ" chartType="water" filterType={filterType} alert="water" />
+        <LineChartComponent title="Lượng thức ăn tiêu thụ" chartType="food" filterType={filterType} alert="food"  />
+        <LineChartComponent title="Chi phí y tế" chartType="medical" filterType={filterType}  alert="medical" /> 
       </div>
     </div>
     
   );
 };
 
-  export default HerdsReport;
-  
+  export default ResourcesReport;
+      

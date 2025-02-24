@@ -129,7 +129,7 @@ export function SidebarItem({
                      className="block py-2 cursor-pointer hover:border-b hover:border-[#B1B1B1]"
                      onClick={(e) => {
                        e.stopPropagation();
-                       if (item.url && onSelect) onSelect(item.url); // ✅ Gọi onSelect khi chọn subItem
+                       if (item.url && onSelect) onSelect(item.url); 
                      }}
                    >
                      {item.text}

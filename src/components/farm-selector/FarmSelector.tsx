@@ -17,9 +17,9 @@ const FarmSelector: React.FC<FarmDropdownProps> = ({ onSelect }) => {
   useEffect(() => {
     const fetchFarms = async () => {
       try {
-        const response = await fetch("https://agriculture-traceability.vercel.app/api/v1/farms");
+        const response = await fetch("https://agriculture-traceability.vercel.app/api/v1/rooms");
         const data = await response.json();
-        setFarms(data.farms);
+        setFarms(data.rooms);
       } catch (error) {
         console.error("Error fetching farms:", error);
       }
@@ -44,7 +44,7 @@ const FarmSelector: React.FC<FarmDropdownProps> = ({ onSelect }) => {
             <MdHomeWork className="text-[#278D45] w-5 h-5" />
           </div>
           <span className="truncate max-w-[240px]">
-            {selectedFarm ? farms.find(farm => farm._id === selectedFarm)?.name : "Chọn một trang trại"}
+            {selectedFarm ? farms.find(farm => farm._id === selectedFarm)?.name : "Nông trại Lạc Dương"}
           </span>
         </div>
         <FiChevronDown className="w-5 h-5 shrink-0" />
@@ -57,7 +57,7 @@ const FarmSelector: React.FC<FarmDropdownProps> = ({ onSelect }) => {
               className="p-2 hover:border-b hover:border-white cursor-pointer truncate"
               onClick={() => handleSelect(farm._id)}
             >
-              {farm.name}
+              {/* Chuồng {farm.name} */}"Nông trại Lạc Dương"
             </li>
           ))}
         </ul>

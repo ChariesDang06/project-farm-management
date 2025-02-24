@@ -25,8 +25,11 @@ const Banner = () => {
     <div
       className="relative w-full h-[120vh] bg-cover bg-center rounded-[4%] transition-all duration-500"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${banners[currentIndex]})`
+        backgroundImage: `linear-gradient(to top right, rgba(171, 179, 137, 0.67), rgba(18, 37, 20, 0.73)), url(${banners[currentIndex]})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
+      
     >
       <Navbar />
       <div className="flex items-center text-left h-full pl-[6%] absolute top-1/2 transform -translate-y-1/2 mt-[2%]">

@@ -45,7 +45,7 @@ import ButtonNext from "../../components/button/ButtonNext";
 const cardData = [
   {
     title: "Đội ngũ chuyên nghiệp",
-    description: "Người chăn nuôi giàu kinh nghiệm tận tâm",
+    description: "Người chăn nuôi giàu kinh nghiệm, tận tâm, không ngừng học hỏi và phát triển.",
     img: IconHome1,
   },
   {
@@ -170,7 +170,7 @@ const HomePage = () => {
   return (
     <>
       <Banner/>
-      <div className="flex w-full h-screen my-4">
+      <div  id="targetSection"  className="flex w-full h-screen my-4">
         <div className="w-full md:w-1/2 flex items-center justify-center">
           <Login />
         </div>
@@ -242,7 +242,7 @@ const HomePage = () => {
                 backgroundImage: `url(${SectionCNC})`
               }}
             >
-            <div  className="w-full max-w-[76%] mx-auto">
+            <div  className="w-full max-w-[76%] mx-auto ">
                 <button className="bg-white w-[210px] h-[3.5%] py-1 px-2 rounded-full flex items-center justify-center mb-[1%]">
                   <RiLeafLine  className="text-black"  />
                   <p className="text-black text-[1rem] ml-2 flex items-center justify-center">Dịch Vụ Của Chúng Tôi</p>
@@ -256,19 +256,20 @@ const HomePage = () => {
                     <ButtonNext onClick={nextPage} borderColor="#FFFFFF" iconColor="#FFFFFF" iconType="next" />
                   </div>
                 </div>
-                <div className="grid grid-cols-3 md:grid-cols-3 gap-4 transition-all duration-500">
-                  {cardAgricultureCardData
-                    .slice(currentPage * 3, (currentPage + 1) * 3)
-                    .map((card, index) => (
-                      <AgricultureCard
-                        key={index}
-                        topic={card.topic}
-                        title={card.title}
-                        description={card.description}
-                        img={card.img}
-                      />
-                    ))}
-                </div>
+                <div className="flex flex-wrap gap-4 justify-center align-center transition-all duration-500">
+                    {cardAgricultureCardData
+                      .slice(currentPage * 3, (currentPage + 1) * 3)
+                      .map((card, index) => (
+                        <AgricultureCard
+                          key={index}
+                          topic={card.topic}
+                          title={card.title}
+                          description={card.description}
+                          img={card.img}
+                        />
+                      ))}
+                  </div>
+                
           </div>
       </div>
     
