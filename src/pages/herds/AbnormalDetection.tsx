@@ -3,6 +3,7 @@ import phvt from "../../assets/phvn.png";
 import phbt1 from "../../assets/phbt1.png";
 import BarnSelec from "../../components/barn-selector/BarnSelector";
 import { FiChevronDown, FiSearch } from "react-icons/fi";
+import CameraStream from "../../components/camera-stream/CameraStream";
 
 const abnormalDetections = [
   {
@@ -34,6 +35,11 @@ const imageList = [
   { src: phbt1, caption: "Chuồng Heo01A1" },
   { src: phbt1, caption: "Chuồng Heo01A1" },
 ];
+
+
+
+const cameraIds = ["cam_1", "cam_2","cam_3"]; // Add more camera IDs as needed
+
 function AbnormalDetection() {
   const handleBarnSelect = (id: string) => {
     console.log("Selected Barn ID:", id);
@@ -51,7 +57,7 @@ function AbnormalDetection() {
         </div>
 
           <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-2 z-1 ">
-            {imageList.map((image, index) => (
+            {/* {imageList.map((image, index) => (
               <div key={index} className="relative">
                 <img
                   src={image.src}
@@ -62,7 +68,14 @@ function AbnormalDetection() {
                   {image.caption}
                 </p>
               </div>
+            ))} */}
+            
+             <div className="relative">
+            {cameraIds.map((camId) => (
+                <CameraStream key={camId} camId={camId}  />
             ))}
+        </div>
+
           </div>
         </div>
       
