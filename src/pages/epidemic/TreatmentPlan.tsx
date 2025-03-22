@@ -266,18 +266,18 @@ export default function TreatmentPlan() {
                         paginatorTemplate=" PrevPageLink PageLinks NextPageLink  RowsPerPageDropdown"
                         globalFilter={globalFilter} header={header}
                         selectionMode="multiple" scrollable scrollHeight='100vh' virtualScrollerOptions={{ itemSize: 46 }} tableStyle={{ minWidth: '50rem' }}>
-                    <Column className="bg-[#F3F7F5]" selectionMode="multiple" exportable={false}></Column>
-                    <Column className="bg-[#F3F7F5]"  field="diseaseName" header="Tên bệnh" sortable style={{ minWidth: '1rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]"  field="species" header="Giống loài" sortable style={{ minWidth: '1rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]" field="symptom"  header="Dấu hiệu"  sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]"  field="transmission" header="Nguyên nhân lây lan" sortable style={{ minWidth: '1rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]"  field="prevention" header="Biện pháp phòng ngừa" sortable style={{ minWidth: '1rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]" field="medicine"  header="Thuốc" sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]" field="dosage"  header="Liều lượng"  sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]"  field="usageTime" header="Thời gian dùng" sortable style={{ minWidth: '1rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]"  field="usageStage" header="Giai đoạn sử dụng" sortable style={{ minWidth: '1rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]" field="responsiblePerson"  header="Người phụ trách" sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]" header="Thao tác" body={actionBodyTemplate} exportable={false} style={{ minWidth: '5rem' }}></Column>
+                    <Column  selectionMode="multiple" exportable={false}></Column>
+                    <Column   field="diseaseName" header="Tên bệnh" sortable style={{ minWidth: '1rem' }}></Column>
+                    <Column   field="species" header="Giống loài" sortable style={{ minWidth: '1rem' }}></Column>
+                    <Column  field="symptom"  header="Dấu hiệu"  sortable style={{ minWidth: '4rem' }}></Column>
+                    <Column   field="transmission" header="Nguyên nhân lây lan" sortable style={{ minWidth: '1rem' }}></Column>
+                    <Column   field="prevention" header="Biện pháp phòng ngừa" sortable style={{ minWidth: '1rem' }}></Column>
+                    <Column  field="medicine"  header="Thuốc" sortable style={{ minWidth: '4rem' }}></Column>
+                    <Column  field="dosage"  header="Liều lượng"  sortable style={{ minWidth: '4rem' }}></Column>
+                    <Column   field="usageTime" header="Thời gian dùng" sortable style={{ minWidth: '1rem' }}></Column>
+                    <Column   field="usageStage" header="Giai đoạn sử dụng" sortable style={{ minWidth: '1rem' }}></Column>
+                    <Column  field="responsiblePerson"  header="Người phụ trách" sortable style={{ minWidth: '4rem' }}></Column>
+                    <Column  header="Thao tác" body={actionBodyTemplate} exportable={false} style={{ minWidth: '5rem' }}></Column>
                 </DataTable>
             </div>
 

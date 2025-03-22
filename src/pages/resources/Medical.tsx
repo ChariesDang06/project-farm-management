@@ -261,19 +261,19 @@ export default function Medical() {
                         paginatorTemplate=" PrevPageLink PageLinks NextPageLink  RowsPerPageDropdown"
                         globalFilter={globalFilter} header={header}
                         selectionMode="multiple" scrollable scrollHeight='100vh' virtualScrollerOptions={{ itemSize: 46 }} tableStyle={{ minWidth: '50rem' }}>
-                    <Column className="bg-[#F3F7F5]" selectionMode="multiple" exportable={false}></Column>
-                    <Column className="bg-[#F3F7F5]"  field="name" header="Tên sản phẩm" sortable style={{ minWidth: '1rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]" field="quantity"  header="SL"  sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]"  field="remain_qty" header="Đã dùng" sortable style={{ minWidth: '1rem' }}></Column>
-                    <Column   className="bg-[#F3F7F5]"  field="use_date"   header="Ngày sử dụng" sortable   style={{ minWidth: '4rem' }}
+                   <Column  selectionMode="multiple" exportable={false}></Column>
+                    <Column   field="name" header="Tên sản phẩm" sortable style={{ minWidth: '1rem' }}></Column>
+                    <Column  field="quantity"  header="SL"  sortable style={{ minWidth: '4rem' }}></Column>
+                    <Column   field="remain_qty" header="Đã dùng" sortable style={{ minWidth: '1rem' }}></Column>
+                    <Column     field="use_date"   header="Ngày sử dụng" sortable   style={{ minWidth: '4rem' }}
                         body={(rowData) => rowData.use_date ? new Date(rowData.use_date).toLocaleDateString() : "Chưa có"}
                     ></Column>
 
-                    <Column className="bg-[#F3F7F5]" field="usage"  header="Cách sử dụng" sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]"  field="received_date" header="Ngày nhập" 
+                    <Column  field="usage"  header="Cách sử dụng" sortable style={{ minWidth: '4rem' }}></Column>
+                    <Column   field="received_date" header="Ngày nhập" 
                         body={(rowData) => rowData.received_date ? new Date(rowData.received_date).toLocaleDateString() : "Chưa có"}
                         sortable style={{ minWidth: '1rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]" header="Thao tác" body={actionBodyTemplate} exportable={false} style={{ minWidth: '5rem' }}></Column>
+                    <Column  header="Thao tác" body={actionBodyTemplate} exportable={false} style={{ minWidth: '5rem' }}></Column>
                 </DataTable>
             </div>
 

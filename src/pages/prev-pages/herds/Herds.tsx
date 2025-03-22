@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef,useContext } from 'react';
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { classNames } from 'primereact/utils';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -8,33 +9,57 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { FiEdit, FiTrash2 ,FiChevronDown, FiChevronUp ,FiSearch, FiPlus} from "react-icons/fi";
-import { FaExclamationTriangle } from "react-icons/fa";
-import { InputNumber,InputNumberValueChangeEvent  } from 'primereact/inputnumber';
-import { Calendar } from 'primereact/calendar';
-import {AuthContext} from "../../hooks/user"
-
+import {AuthContext} from "../../../hooks/user"
+import ImageUploader from '../../../components/image-upload/Image-Uploader';
+import { FaTimesCircle, FaCircle, FaCheckCircle ,FaExclamationTriangle} from "react-icons/fa";
+import { BiMessageSquareDetail } from "react-icons/bi";
+import { InputTextarea } from 'primereact/inputtextarea';
+import { Dropdown } from 'primereact/dropdown';
 interface Product {
-  _id: string | null;
-  name: string;
-  quantity: number;
-  remain_qty: number;
-  use_date: Date;
-  usage: string;
-  received_date: Date;
+    _id: string | null;
+    name: string;
+    description: string;
+    categoryId:string;
+    roomId:string;
+    category:{_id:string;name:string};
+    location:string;
+    member_count:number;
+    farm:string;
+    start_date:Date;
+    // records
+    notified:boolean;
+    status:string;
+    room:{_id:string;name:string};
+    images: { path: string; _id: string }[]; 
+  }
+    interface Room {
+    _id: string;
+    name: string;
 }
-
-
-export default function Food() {
-  const emptyProduct: Product = {
+interface Category {
+    _id: string;
+    name: string;
+}
+export default function OldHerds() {
+const emptyProduct: Product = {
     _id: null,
     name: "",
-    quantity: 0, 
-    remain_qty: 0, 
-    use_date: new Date(), 
-    usage: "", 
-    received_date: new Date(), 
-  };
-  
+    description: "",
+    category: { _id: "", name: "" },
+    categoryId: "",
+    start_date:new Date(),
+    roomId: "",
+    location: "",
+    member_count: 0,
+    farm: "",
+    notified: true,
+    status: "",
+    room: { _id: "", name: "" } ,
+    images: [
+        { path: "", _id: "" } 
+    ]
+
+};
 
     const [products, setProducts] = useState<Product[]>([]);
     const [productDialog, setProductDialog] = useState<boolean>(false);
@@ -43,7 +68,11 @@ export default function Food() {
     const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
     const [submitted, setSubmitted] = useState<boolean>(false);
     const [globalFilter, setGlobalFilter] = useState<string>('');
-
+    const [barns, setBarns] = useState<Room[]>([]);
+    const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
+    const navigate = useNavigate();
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
     const toast = useRef<Toast>(null);
     const dt = useRef<DataTable<Product[]>>(null);
@@ -52,17 +81,37 @@ export default function Food() {
     useEffect(() => {
         const fetch = async () => {
           try {
-            const response = await axios.get("https://agriculture-traceability.vercel.app/api/v1/resources");
-            const data = response.data.resources;
+            const response = await axios.get("https://agriculture-traceability.vercel.app/api/v1/herds");
+            const data = response.data.herds;
             setProducts(data);
-            console.log(products);
         } catch (error) {
             console.error("ERROR:", error);
         }
     };
     fetch();
 }, []);
-
+    useEffect(() => {
+    const fetchBarns = async () => {
+      try {
+        const response = await fetch("https://agriculture-traceability.vercel.app/api/v1/rooms");
+        const data = await response.json();
+        setBarns(data.rooms);
+      } catch (error) {
+        console.error("Error fetching:", error);
+      }
+    };
+    const fetchCategories = async () => {
+        try {
+          const response = await fetch("https://agriculture-traceability.vercel.app/api/v1/categories");
+          const data = await response.json();
+          setCategories(data.categories);
+        } catch (error) {
+          console.error("Error fetching:", error);
+        }
+      };
+      fetchCategories();
+    fetchBarns();
+  }, []);
     const openNew = () => {
         setProduct(emptyProduct);
         setSubmitted(false);
@@ -91,7 +140,7 @@ export default function Food() {
               console.log( _products[index]);
               try {
                 await axios.patch(
-                    `https://agriculture-traceability.vercel.app/api/v1/resources/${product._id}`,
+                    `https://agriculture-traceability.vercel.app/api/v1/herds/${product._id}`,
                     _products[index],
                     {
                         headers: {
@@ -120,7 +169,7 @@ export default function Food() {
 
               try {
                 await axios.post(
-                    `https://agriculture-traceability.vercel.app/api/v1/resources/`,
+                    `https://agriculture-traceability.vercel.app/api/v1/herds/`,
                     _product,
                     {
                         headers: {
@@ -157,7 +206,7 @@ export default function Food() {
     };
     const deleteProduct = async () => {
         try {
-            await axios.delete(`https://agriculture-traceability.vercel.app/api/v1/resources/${product._id}`, {
+            await axios.delete(`https://agriculture-traceability.vercel.app/api/v1/herds/${product._id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -174,7 +223,25 @@ export default function Food() {
         }
     };
     
-
+    const onRoomChange = (e: { value: string }) => {
+        const selectedCat = barns.find((r) => r._id === e.value);
+        setSelectedRoom(e.value);
+        setProduct((prev) => ({
+            ...prev,
+            roomId: e.value,  
+            room: selectedCat ? { _id: selectedCat._id, name: selectedCat.name } : prev.room, 
+        }));
+    };
+    const onCategoryChange = (e: { value: string }) => {
+        const selectedCat = categories.find((category) => category._id === e.value);
+        setSelectedCategory(e.value);
+        setProduct((prev) => ({
+            ...prev,
+            categoryId: e.value,  
+            category: selectedCat ? { _id: selectedCat._id, name: selectedCat.name } : prev.category, 
+        }));
+    };
+    
     const findIndexById = (_id: string) => {
         let index = -1;
         for (let i = 0; i < products.length; i++) {
@@ -194,22 +261,66 @@ export default function Food() {
         _product[herd] = val;
         setProduct(_product);
     };
-    const onInputNumberChange = (e: InputNumberValueChangeEvent, herd: string) => {
-      const val = e.value ?? 0;
-      const _product = { ...product };
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      _product[herd] = val;
-      setProduct(_product);
-  };
+    const onInputTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>, name: string) => {
+        const val = (e.target && e.target.value) || '';
+        const _product = { ...product };
 
-  
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        _product[name] = val;
+
+        setProduct(_product);
+    };
+    const representativeBodyTemplate = (rowData:any) => {
+        const representative = rowData.category;
+    
+        return (
+          <div className="flex align-items-center gap-2">
+            <span>{representative.name}</span>
+          </div>
+        );
+      };
+      const isProcessedBodyTemplate = (rowData: any) => {
+        if (rowData.status === "Chưa thu hoạch") {
+          return <FaTimesCircle className="text-red-500" />;
+        } else if (rowData.status === "Đang thu hoạch") {
+          return <FaCircle className="text-yellow-500" />;
+        } else if (rowData.status === "Thu hoạch xong") {
+          return <FaCheckCircle className="text-green-500" />;
+        }
+        return null;
+      };
+      //tinh tháng
+      const calculateAgeInMonths = (startDate: string) => {
+        const start = new Date(startDate);
+        const now = new Date();
+        const yearsDiff = now.getFullYear() - start.getFullYear();
+        const monthsDiff = now.getMonth() - start.getMonth();
+        return yearsDiff * 12 + monthsDiff;
+      };
+      
+      const stockBodyTemplate = (rowData: any) => {
+        const ageInMonths = calculateAgeInMonths(rowData.start_date);
+        const stockClassName = classNames(
+          "rounded-full  p-2 inline-flex font-bold justify-content-center align-items-center text-sm",
+          {
+            "bg-teal-100 text-teal-900": ageInMonths > 6,
+          }
+        );
+        return <div className={stockClassName}>{ageInMonths}</div>;
+      };
+      const onRowDoubleClick = () => {
+          for (const selectedProduct of selectedProducts) {
+            navigate(`/herds/${selectedProduct._id}`);
+          }
+      };
     const actionBodyTemplate = (rowData: Product) => {
         return (
             <React.Fragment>
                 <div className="flex flex-wrap gap-2">
                 <FiEdit className="text-[#FCBD2D] cursor-pointer hover:text-amber-500" size={18}  onClick={() => editProduct(rowData)} />
                 <FiTrash2 className="text-[#F14871] cursor-pointer hover:text-red-500" size={18} onClick={() => confirmDeleteProduct(rowData)}  />
+                <BiMessageSquareDetail className="text-[#76bc6a] cursor-pointer hover:text-green-500" size={19} onClick={onRowDoubleClick}  />
                 </div>      
             </React.Fragment>
         );
@@ -218,7 +329,7 @@ export default function Food() {
     const header = (
         <div className="flex flex-wrap lign-items-center justify-between">
             <div className="text-left flex flex-wrap gap-10 align-items-center justify-between">
-                <h1 className="m-0 text-2xl">Thức ăn</h1>
+                <h1 className="m-0 text-2xl">Đàn vật nuôi</h1>
                 <div className="flex items-center gap-2 text-xs rounded-full bg-white border border-[#E0E2E7] px-2 max-w-[340px]">
                     <FiSearch  className="text-[#278D45] w-5 h-5" />
                     <input  type="search" onInput={(e) => {const target = e.target as HTMLInputElement; setGlobalFilter(target.value);}} placeholder="Tìm kiếm..." className=" hidden sm:flex text-[#737791] text-sm font-normal w-[200px] p-2 bg-transparent outline-none"/>
@@ -263,80 +374,66 @@ export default function Food() {
                         globalFilter={globalFilter} header={header}
                         selectionMode="multiple" scrollable scrollHeight='100vh' virtualScrollerOptions={{ itemSize: 46 }} tableStyle={{ minWidth: '50rem' }}>
                     <Column  selectionMode="multiple" exportable={false}></Column>
-                    <Column   field="name" header="Tên sản phẩm" sortable style={{ minWidth: '1rem' }}></Column>
-                    <Column  field="quantity"  header="Số lượng"  sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column   field="remain_qty" header="Đã dùng" sortable style={{ minWidth: '1rem' }}></Column>
-                    <Column     field="use_date"   header="Ngày sử dụng" sortable   style={{ minWidth: '4rem' }}
-                        body={(rowData) => rowData.use_date ? new Date(rowData.use_date).toLocaleDateString() : "Chưa có"}
-                    ></Column>
-
-                    <Column  field="usage"  header="Cách sử dụng" sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column   field="received_date" header="Ngày nhập" 
-                        body={(rowData) => rowData.received_date ? new Date(rowData.received_date).toLocaleDateString() : "Chưa có"}
-                        sortable style={{ minWidth: '1rem' }}></Column>
+                    <Column   field="name" header="Tên vật nuôi" sortable style={{ minWidth: '1rem' }}></Column>
+                    <Column field="member_count"  header="Số lượng" sortable  style={{ minWidth: "6rem" }} ></Column>
+                    <Column field="status" header="Trạng thái" dataType="boolean" bodyClassName="text-center"style={{ minWidth: "5rem" }} body={isProcessedBodyTemplate} />
+                    <Column field="location" sortable header="Chuồng" style={{ minWidth: "6rem" }}></Column>
+                    <Column field="start_date" sortable header="Tháng tuổi" body={stockBodyTemplate} style={{ minWidth: "6rem" }}></Column>
+                    <Column header="Nhóm" sortable sortField="category.name" filterField="category" style={{ minWidth: "14rem" }} body={representativeBodyTemplate} />
+                    
                     <Column  header="Thao tác" body={actionBodyTemplate} exportable={false} style={{ minWidth: '5rem' }}></Column>
                 </DataTable>
             </div>
 
             <Dialog visible={productDialog} style={{ width: '45rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Thêm mới/Chỉnh sửa" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
-                <p className="mb-4 text-black">Thông tin tài nguyên</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
-                  {/* trai */}
-                  <div>
+                <p className="mb-4 text-black">Thông tin vật nuôi</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="field ">
-                        <label htmlFor="name" className="font-normal">Tên sản phẩm</label>
+                        <label htmlFor="name" className="font-normal">Tên vật nuôi</label>
                         <InputText id="name" value={product.name}  onChange={(e) => onInputChange(e, 'name')}  required  autoFocus className={classNames({ 'p-invalid': submitted && !product.name })}
                         />
                         {submitted && !product.name && <small className="p-error">name is required.</small>}
                     </div>
-
+                   
                     <div className="field ">
-                    <label htmlFor="remain_qty" className="font-normal">
-                        Đã dùng
-                    </label>
-                    <InputNumber id="remain_qty" value={product.remain_qty} onValueChange={(e) => onInputNumberChange(e, 'remain_qty')} showButtons  />
-                    </div>
-
-                    <div className="field ">
-                        <label htmlFor="usage" className="font-normal">Cách sử dụng</label>
-                        <InputText id="usage" value={product.usage}  onChange={(e) => onInputChange(e, 'usage')}  required  autoFocus className={classNames({ 'p-invalid': submitted && !product.usage })}
+                        <label htmlFor="category" className="font-normal">Nhóm vật nuôi</label>
+                        <Dropdown id="category" value={selectedCategory} options={categories}
+                        onChange={onCategoryChange}  optionLabel="name" optionValue="_id"  placeholder="Chọn nhóm vật nuôi"
+                        className={classNames({ "p-invalid": submitted && !selectedCategory })}
                         />
-                        {submitted && !product.usage && <small className="p-error">usage is required.</small>}
+                        {submitted && !product.category && <small className="p-error">category is required.</small>}
                     </div>
-                  </div>
-                  {/* phải */}
-                  <div>
-                    <div className="field ">
-                      <label htmlFor="quantity" className="font-normal">
-                          Số lượng
-                      </label>
-                      <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} showButtons  />
-                      </div>
-
-                    <div className="field">
-                        <label htmlFor="use_date" className="font-normal">Ngày sử dụng</label>
-                        <Calendar 
-                            id="use_date" 
-                            value={product?.use_date ?? new Date()} 
-                            onChange={(e) => setProduct({ ...product, use_date: e.value ?? new Date() })} 
-                            showIcon 
-                            />
-
-                    </div>
-                    <div className="field">
-                        <label htmlFor="received_date" className="font-normal">Ngày nhập</label>
-                        <Calendar 
-                            id="received_date" 
-                            value={product?.received_date ?? new Date()} 
-                            onChange={(e) => setProduct({ ...product, received_date: e.value ?? new Date() })} 
-                            showIcon 
-                            />
-                    </div>
-                  </div>
-
-
                     
-                </div>
+                    <div className="field ">
+                        <label htmlFor="location" className="font-normal">Vị trí chuồng</label>
+                        <InputText id="location" value={product.location}  onChange={(e) => onInputChange(e, 'location')}  required  autoFocus className={classNames({ 'p-invalid': submitted && !product.location })}
+                        />
+                    </div>
+                    <div className="field ">
+                        <label htmlFor="room" className="font-normal">Chuồng</label>
+                        <Dropdown id="room" value={selectedRoom} options={barns}
+                        onChange={onRoomChange}  optionLabel="name" optionValue="_id"  placeholder="Chọn chuồng"
+                        className={classNames({ "p-invalid": submitted && !selectedRoom })}
+                        />
+                        {submitted && !product.room && <small className="p-error">room is required.</small>}
+                    </div>
+                    
+                  </div>
+                  <div className="field mt-3">
+                        <label htmlFor="description" className="font-normal">Mô tả</label>
+                        <InputTextarea id="description" value={product.description} onChange={(e:React.ChangeEvent<HTMLTextAreaElement>) => onInputTextAreaChange(e, 'description')} required rows={5} cols={20} />
+                        {submitted && !product.description && <small className="p-error">description is required.</small>}
+                    </div>
+                  {product._id && (
+                        <div className="mt-3">
+                            <label htmlFor="description" className="font-normal">Hình ảnh</label>
+                            <ImageUploader
+                            uploadUrl={`https://agriculture-traceability.vercel.app/api/v1/herds/upload/${product._id}`}
+                            images={product.images?.map(img => ({ path: img.path, _id: img._id }))}
+                            />
+                        </div>
+                    )}
+                       
 
             </Dialog>
 

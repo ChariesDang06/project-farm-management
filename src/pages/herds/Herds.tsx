@@ -292,10 +292,10 @@
 //                         paginatorTemplate=" PrevPageLink PageLinks NextPageLink  RowsPerPageDropdown"
 //                         globalFilter={globalFilter} header={header}
 //                         selectionMode="multiple" scrollable scrollHeight='100vh' virtualScrollerOptions={{ itemSize: 46 }} tableStyle={{ minWidth: '50rem' }}>
-//                     <Column className="bg-[#F3F7F5]" selectionMode="multiple" exportable={false}></Column>
-//                     <Column className="bg-[#F3F7F5]"  field="room.name" header="Chuồng" sortable style={{ minWidth: '1rem' }}></Column>
-//                     <Column className="bg-[#F3F7F5]" field="cameraId" body={cameraBodyTemplate} header="Camera theo dõi"  style={{ minWidth: '4rem' }}></Column>
-//                     <Column className="bg-[#F3F7F5]" header="Thao tác" body={actionBodyTemplate} exportable={false} style={{ minWidth: '5rem' }}></Column>
+//                     <Column  selectionMode="multiple" exportable={false}></Column>
+//                     <Column   field="room.name" header="Chuồng" sortable style={{ minWidth: '1rem' }}></Column>
+//                     <Column  field="cameraId" body={cameraBodyTemplate} header="Camera theo dõi"  style={{ minWidth: '4rem' }}></Column>
+//                     <Column  header="Thao tác" body={actionBodyTemplate} exportable={false} style={{ minWidth: '5rem' }}></Column>
 //                 </DataTable>
 //             </div>
 
@@ -561,17 +561,17 @@ export default function ProductsDemo() {
                         paginatorTemplate=" PrevPageLink PageLinks NextPageLink  RowsPerPageDropdown"
                         globalFilter={globalFilter} header={header}
                         selectionMode="multiple" scrollable scrollHeight='100vh' virtualScrollerOptions={{ itemSize: 46 }} tableStyle={{ minWidth: '50rem' }}>
-                    <Column className="bg-[#F3F7F5]" selectionMode="multiple" exportable={false}></Column>
-                    <Column className="bg-[#F3F7F5]" field="species" header="Giống loài" sortable style={{ minWidth: '1rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]" field="herd" header="Đàn" sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]" field="barn" header="Chuồng" sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]" field="entryDate" header="Ngày nhập chuồng" sortable ></Column>
-                    <Column className="bg-[#F3F7F5]" field="exitDate" header="Ngày xuất chuồng" sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]" field="totalQuantity" header="Tổng số lượng" sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]"  field="sickQuantity" header="Số lượng bệnh" headerStyle={{ color: '#F14871' }}
-                        bodyStyle={{ color: '#F14871' }}   headerClassName="custom-sort-icon" sortable  style={{ minWidth: '4rem' }} />
-                    <Column className="bg-[#F3F7F5]" field="cameraMonitoring" body={cameraBodyTemplate} header="Camera theo dõi"  style={{ minWidth: '4rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]" header="Thao tác" body={actionBodyTemplate} exportable={false} style={{ minWidth: '5rem' }}></Column>
+                    <Column  selectionMode="multiple" exportable={false}></Column>
+                    <Column  field="species" header="Giống loài" sortable style={{ minWidth: '1rem' }}></Column>
+                    <Column  field="herd" header="Đàn" sortable style={{ minWidth: '4rem' }}></Column>
+                    <Column  field="barn" header="Chuồng" sortable style={{ minWidth: '4rem' }}></Column>
+                    <Column  field="entryDate" header="Ngày nhập chuồng" sortable ></Column>
+                    <Column  field="exitDate" header="Ngày xuất chuồng" sortable style={{ minWidth: '4rem' }}></Column>
+                    <Column  field="totalQuantity" header="Tổng số lượng" sortable style={{ minWidth: '4rem' }}></Column>
+                    {/* <Column   field="sickQuantity" header="Số lượng bệnh" headerStyle={{ color: '#F14871' }} */}
+                      {/* bodyStyle={{ color: '#F14871' }}   headerClassName="custom-sort-icon" sortable  style={{ minWidth: '4rem' }} /> */}
+                    <Column  field="cameraMonitoring" body={cameraBodyTemplate} header="Camera theo dõi"  style={{ minWidth: '4rem' }}></Column>
+                    <Column  header="Thao tác" body={actionBodyTemplate} exportable={false} style={{ minWidth: '5rem' }}></Column>
                 </DataTable>
             </div>
 

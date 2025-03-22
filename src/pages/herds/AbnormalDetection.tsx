@@ -1,95 +1,114 @@
 import AbnormalDetectionCard from "../../components/card/AbnormalDetectionCard";
 import phvt from "../../assets/phvn.png";
 import phbt1 from "../../assets/phbt1.png";
-import BarnSelec from "../../components/barn-selector/BarnSelector";
-import { FiChevronDown, FiSearch } from "react-icons/fi";
+import BarnSelector, { Barn } from "../../components/barn-selector/BarnSelector";
+
 import CameraStream from "../../components/camera-stream/CameraStream";
-
-const abnormalDetections = [
+import { FaPaw, FaCheck, FaTag } from "react-icons/fa";
+import { MdHome ,MdLinkedCamera} from "react-icons/md";
+import WidgetComponent from "../../components/widget/WidgetComponent";
+import QuantitySelector from "../../components/quantity-selector/QuantitySelector";
+import NotificationCard from "../../components/card/NotificationCard";
+import { useEffect, useState } from "react";
+import ButtonAction from "../../components/button/ButtonAction";
+const notifications = [
   {
-    imageUrl: phvt,
-    title: "Phát hiện vật nuôi vượt rào",
-    timestamp: "12:30:05 AM - 01/11/2025",
-    description: "Phát hiện vật nuôi vượt mức tại khu vực 123123",
-    link: "/detail-alert/1",
+    title: "Phát hiện người",
+    description: "Phát hiện người tại khu vực HeoA101_01",
+    date: "06.11.2024",
   },
   {
-    imageUrl: phvt,
-    title: "Phát hiện vật nuôi ra khỏi khu vực",
-    timestamp: "03:15:20 PM - 02/11/2025",
-    description: "Vật nuôi đã đi ra khỏi khu vực cho phép. Cần kiểm tra ngay.",
-    link: "/detail-alert/2",
+    title: "Phát hiện người",
+    description: "Phát hiện người tại khu vực HeoA101_01",
+    date: "06.11.2024",
   },
   {
-    imageUrl: phvt,
-    title: "Cảnh báo hoạt động bất thường",
-    timestamp: "06:45:10 AM - 03/11/2025",
-    description: "Hệ thống phát hiện di chuyển bất thường tại khu vực nuôi A.",
-    link: "/detail-alert/4",
+    title: "Phát hiện người",
+    description: "Phát hiện người tại khu vực HeoA101_01",
+    date: "06.11.2024",
   },
 ];
 
-const imageList = [
-  { src: phbt1, caption: "Chuồng Heo01A1" },
-  { src: phbt1, caption: "Chuồng Heo01A1" },
-  { src: phbt1, caption: "Chuồng Heo01A1" },
-  { src: phbt1, caption: "Chuồng Heo01A1" },
-];
-
-
-
-const cameraIds = ["cam_1", "cam_2","cam_3"]; // Add more camera IDs as needed
+const cameraIds = ["cam_1", "cam_2"]; // Add more camera IDs as needed
 
 function AbnormalDetection() {
-  const handleBarnSelect = (id: string) => {
+  const handleSelectBarn = (id: string) => {
     console.log("Selected Barn ID:", id);
   };
+    const [barns, setBarns] = useState<Barn[]>([]);
+  useEffect(() => {
+      const fetchBarns = async () => {
+        try {
+          const response = await fetch("https://agriculture-traceability.vercel.app/api/v1/rooms");
+          const data = await response.json();
+          setBarns(data.rooms);
+        } catch (error) {
+          console.error("Error fetching:", error);
+        }
+      };
+      fetchBarns();
+    }, []);
+  const handleQuantityChange = (animal: string, quantity: number, from: string, to: string) => {
+    console.log("Loại vật nuôi:", animal);
+    console.log("Số lượng:", quantity);
+    console.log("Từ tháng:", from, "đến tháng:", to);
+  };
     return (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-[#F3F7F5] rounded-[20px] p-5">
-        <div className=" md:col-span-2">
-        <div className="flex justify-between items-center w-full mb-2">
-          <span className="text-left text-black text-lg">Đàn HeoA101S1</span>
-          <div className="hidden md:flex items-center gap-2 text-xs rounded-full bg-white border border-[#E0E2E7] px-2 max-w-[340px]">
-            <FiSearch className="text-[#278D45] w-5 h-5" />
-            <input type="text" placeholder="Tìm kiếm..." className="text-[#737791] text-sm w-[200px] p-2 bg-transparent outline-none"/>
-            <FiChevronDown className="text-[#737791] w-5 h-5" />
+      <>
+      {/* <div className="space-y-4 p-5">
+        {notifications.map((noti, index) => (
+          <NotificationCard key={index} {...noti} />
+        ))}
+      </div> */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 rounded-[20px] mb-5">
+        <div className="bg-[#F3F7F5] rounded-[20px] p-5 mb-5 lg:col-span-2">
+          <BarnSelector 
+            barns={barns}
+            onSelect={handleSelectBarn}
+            icon={<MdHome className="w-6 h-6"/>}
+            rounded={false}
+            widthFull={false}
+            placeholder="Chọn đàn"
+            iconColor="text-white"
+            iconBgColor="bg-yellow-500"
+          />
+          <div className="my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <WidgetComponent icon={<FaPaw />} title="Tổng số vật nuôi" quantity={80040} description="Số lượng tổng vật nuôi tại chi nhánh" bgColor="#2196F3" />
+              <WidgetComponent icon={<FaCheck />} title="Nhập vào" quantity={80040} description="Tổng số lượng vật nuôi được nhập tại chi nhánh" bgColor="#619959" />
+              <WidgetComponent icon={<FaTag />} title="Bán ra" quantity={80040} description="Tổng số lượng vật nuôi được bán ra tại chi nhánh" bgColor="#FCBD2D" />
           </div>
         </div>
-
-          <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-2 z-1 ">
-            {/* {imageList.map((image, index) => (
-              <div key={index} className="relative">
-                <img
-                  src={image.src}
-                  alt={`Image ${index + 1}`}
-                  className="w-full h-auto"
-                />
-                <p className="absolute bottom-2 left-2 bg-gray-400 text-white text-sm px-2 py-1 rounded-md">
-                  {image.caption}
-                </p>
-              </div>
-            ))} */}
-            
-             <div className="relative">
-            {cameraIds.map((camId) => (
-                <CameraStream key={camId} camId={camId}  />
-            ))}
-        </div>
-
-          </div>
-        </div>
-      
-        <div className="grid grid-cols-1 gap-2 md:col-span-1 bg-white p-3 rounded-[8px]">
-          <BarnSelec onSelect={handleBarnSelect} />
-          <span className="text-left text-black">Số lượng: 10010</span>
-          <span className="text-left text-black">Lịch sử hoạt động</span>
-          {abnormalDetections.map((alert, index) => (
-            <AbnormalDetectionCard key={index} {...alert} />
-          ))}
+        <div className="lg:col-span-1 rounded-[20px] p-5 mb-5 bg-[#F3F7F5]">
+            <QuantitySelector onChange={handleQuantityChange} />
         </div>
       </div>
-
-      
+      <div className="bg-[#F3F7F5] rounded-[20px] p-5">
+        <div className="flex flex-wrap items-center gap-4 mb-5">
+            <BarnSelector 
+              barns={barns}
+              onSelect={handleSelectBarn}
+              icon={<MdHome className="w-6 h-6"/>}
+              rounded={false}
+              widthFull={false}
+              placeholder="Đàn hep HA01"
+              iconColor="text-white"
+              iconBgColor="bg-yellow-500"
+            />
+            <ButtonAction  icon={<MdLinkedCamera className="w-7 h-7" />} 
+                            text="Xem lại sự kiện" 
+                            bgColor="#76bc6a" 
+                            textColor="#fff"
+            />
+          </div>
+          <div className="">
+            {cameraIds.map((camId) => (
+              <div key={camId} className="relative mb-8 bg-white p-3 rounded-[8px] ">
+                <CameraStream camId={camId} />
+              </div>
+            ))}
+          </div>
+      </div>
+    </>
     );
   }
   

@@ -137,3 +137,18 @@ body {
 .custom-dialog .p-dialog-content {
   background-color: #ffebcd !important;
 }
+
+/* image */
+.p-galleria .p-galleria-indicators .p-galleria-indicator button {
+  background-color: #76bc6a38;
+}
+.p-galleria .p-galleria-indicators .p-galleria-indicator.p-highlight button {
+  background-color: #76bc6a;
+}
+img{
+  border-radius: 6px;
+}
+
+.p-datatable .p-datatable-tbody > tr {
+  background: #f3f7f5;
+}

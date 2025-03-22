@@ -1,16 +1,39 @@
-import {useContext} from "react"
+import {useContext,useState,useEffect} from "react"
 import AvataAdmin from "../../assets/avataAdmin.png"
 import IconNo from "../../assets/IconNotification.png"
-import FarmSelector from "../farm-selector/FarmSelector"
 import { AuthContext } from "../../hooks/user"
+import BarnSelector, { Barn } from "../barn-selector/BarnSelector"
+import { MdHomeWork } from "react-icons/md";
 const Header = () => {
   const handleFarmSelect = (id: string) => {
     console.log("Selected Farm ID:", id);
   };
+      const [farms, setFarms] = useState<Barn[]>([]);
+    useEffect(() => {
+        const fetchBarns = async () => {
+          try {
+            const response = await fetch("https://agriculture-traceability.vercel.app/api/v1/rooms");
+            const data = await response.json();
+            setFarms(data.rooms);
+          } catch (error) {
+            console.error("Error fetching:", error);
+          }
+        };
+        fetchBarns();
+      }, []);
   const {currentUser}=useContext(AuthContext);
   return (
     <div className="flex items-center justify-between">
-      <FarmSelector onSelect={handleFarmSelect} />
+    <BarnSelector
+          barns={farms}
+          onSelect={handleFarmSelect}
+          icon={<MdHomeWork className="text-[#278D45] w-5 h-5"  />}
+          rounded={true}
+          widthFull={false}
+          placeholder="Nông trại Lạc Dương"
+          iconColor="text-green"
+          iconBgColor="bg-white"
+        />
       <div className="flex items-center gap-4 w-auto p-2 bg-[#262626] rounded-full" >
         <div className="bg-white rounded-full w-8 h-8 flex items-center justify-center cursor-pointer relative">
           <img src={IconNo} alt="" width={18} height={18} />
