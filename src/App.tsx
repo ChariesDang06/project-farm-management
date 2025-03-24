@@ -27,7 +27,13 @@ import Medical from './pages/resources/Medical';
 import JobManage from './pages/job/JobManage';
 import JobReport from './pages/job/JobReport';
 import { AuthContext } from './hooks/user';
-
+import Categories from './pages/prev-pages/categories/Categories';
+import OldHerds from './pages/prev-pages/herds/Herds';
+import Records from './pages/prev-pages/herds/Records';
+import Diseases from './pages/prev-pages/diseases/Diseases';
+import Treatments from './pages/prev-pages/treatments/Treatments';
+import { NotificationProvider } from "./contexts/NotificationContext";
+import NotificationContainer from "./components/NotificationContainer";
 const queryClient = new QueryClient();
 const SIDEBAR_ITEMS = [
   { text: "Tổng quan", url: "/dashboard", icon: <HiMiniChartPie /> },
@@ -71,6 +77,19 @@ const SIDEBAR_ITEMS = [
       { text: "Báo cáo", url: "/job/report" },
     ],
   },
+  //Code prev
+  {
+    text: "QL Admin (Prev)",
+    url: "/admin",
+    icon: <MdAssignment />,
+    subItems: [
+      { text: "Nhóm vật nuôi", url: "/admin/categories" },
+      { text: "Đàn (pages old)", url: "/admin/old-herds" },
+      { text: "Bệnh", url: "/admin/diseases" },
+      { text: "Điều trị", url: "/admin/treatments" },
+    ],
+  },
+
 ];
 
 function App() {
@@ -117,6 +136,7 @@ function App() {
               </QueryClientProvider>
             </>
           </main>
+        
         </div>
       )}
       </>
@@ -184,10 +204,39 @@ function App() {
           path: "/job/report",
           element: <JobReport />,
         },
+        {
+          path: "/admin/categories",
+          element: <Categories />,
+        },
+        {
+          path: "/admin/diseases",
+          element: <Diseases />,
+        },
+        {
+          path: "/admin/treatments",
+          element: <Treatments />,
+        },
+        {
+          path: "/admin/old-herds",
+          element: <OldHerds />,
+        },
+        {
+          path: "/herds/:id",
+          element: <Records />,
+        },
+        {
+          path: "/detection",
+          element: <Records />,
+        },
       ],
     },
   ]);
-  return <RouterProvider router={router} />;
+  return (
+    <NotificationProvider>
+      <NotificationContainer />
+      <RouterProvider router={router} />
+  </NotificationProvider>
+  );
 }
 
 export default App;

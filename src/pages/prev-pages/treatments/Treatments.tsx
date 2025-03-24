@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef ,useContext} from 'react';
+import React, { useState, useEffect, useRef,useContext } from 'react';
 import axios from "axios";
 import { classNames } from 'primereact/utils';
 import { DataTable } from 'primereact/datatable';
@@ -9,36 +9,43 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { FiEdit, FiTrash2 ,FiChevronDown, FiChevronUp ,FiSearch, FiPlus} from "react-icons/fi";
 import { FaExclamationTriangle } from "react-icons/fa";
-import { Calendar } from 'primereact/calendar';
-import { ProductService } from './data';
-import {AuthContext} from "../../hooks/user"
-import TreatmentHistoryPopup from '../../components/treatment-history-Popup/TreatmentHistoryPopup';
+import {AuthContext} from "../../../hooks/user"
+
 interface Product {
-  _id: string | null;
-  species: string;
-  barn: string;
-  detectionDate: Date;
-  diseaseType: string;
-  entryDate: Date;
-  treatmentHistory: string;
-  notes: string;
-
-}
-
-
-export default function TrackRecord() {
-  const emptyProduct: Product = {
-    _id: null,
-    species: "",
-    barn: "", 
-    detectionDate: new Date(), 
-    diseaseType: "", 
-    entryDate: new Date(), 
-    treatmentHistory: "", 
-    notes: "", 
-
-  };
+    _id: string|null;
+    herd: {
+    _id: string;
+    name: string;
+    };
+    type: string;
+    product: string;
+    amount: string;
+    mode: string;
+    description: string;
+    date: string;
+    retreat_date: string;
+    site: string;
+    technician: string;
+    
+  }
   
+export default function Treatments() {
+const emptyProduct: Product = {
+    _id: null,
+    herd: {
+        _id: "",
+        name: ""
+    },
+    type: "",
+    product: "",
+    amount: "",
+    mode: "",
+    description: "",
+    date: "",
+    retreat_date: "",
+    site: "",
+    technician: ""
+};
 
     const [products, setProducts] = useState<Product[]>([]);
     const [productDialog, setProductDialog] = useState<boolean>(false);
@@ -47,34 +54,24 @@ export default function TrackRecord() {
     const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
     const [submitted, setSubmitted] = useState<boolean>(false);
     const [globalFilter, setGlobalFilter] = useState<string>('');
-    const { token } = useContext(AuthContext);
-    
-    /*eslint-disable @typescript-eslint/no-explicit-any*/
-    const [selectedTreatment, setSelectedTreatment] = useState<any>(null);
-    /* eslint-disable  @typescript-eslint/no-explicit-any */
-    const handleOpenPopup = (rowData: any) => {
-      setSelectedTreatment(rowData);
-    };
 
-    const handleClosePopup = () => {
-      setSelectedTreatment(null);
-    };
 
     const toast = useRef<Toast>(null);
     const dt = useRef<DataTable<Product[]>>(null);
+    const {token}=useContext(AuthContext);
+   
     useEffect(() => {
-    //     const fetch = async () => {
-    //       try {
-    //         const response = await axios.get("https://agriculture-traceability.vercel.app/api/v1/resources");
-    //         const data = response.data.resources;
-    //         setProducts(data);
-    //         console.log(products);
-    //     } catch (error) {
-    //         console.error("ERROR:", error);
-    //     }
-    // };
-    // fetch();
-    ProductService.getProducts().then((data) => setProducts(data));
+        const fetch = async () => {
+          try {
+            const response = await axios.get("https://agriculture-traceability.vercel.app/api/v1/treatments");
+            const data = response.data.treatments;
+            setProducts(data);
+            console.log(products);
+        } catch (error) {
+            console.error("ERROR:", error);
+        }
+    };
+    fetch();
 }, []);
 
     const openNew = () => {
@@ -95,7 +92,7 @@ export default function TrackRecord() {
     const saveProduct = async() => {
       setSubmitted(true);
 
-      if (product.species.trim()) {
+      if (product.type.trim()) {
           const _products = [...products];
           const _product = { ...product };
 
@@ -105,7 +102,7 @@ export default function TrackRecord() {
               console.log( _products[index]);
               try {
                 await axios.patch(
-                    `https://agriculture-traceability.vercel.app/api/v1/resources/${product._id}`,
+                    `https://agriculture-traceability.vercel.app/api/v1/treatments/${product._id}`,
                     _products[index],
                     {
                         headers: {
@@ -134,7 +131,7 @@ export default function TrackRecord() {
 
               try {
                 await axios.post(
-                    `https://agriculture-traceability.vercel.app/api/v1/resources/`,
+                    `https://agriculture-traceability.vercel.app/api/v1/treatments/`,
                     _product,
                     {
                         headers: {
@@ -171,7 +168,7 @@ export default function TrackRecord() {
     };
     const deleteProduct = async () => {
         try {
-            await axios.delete(`https://agriculture-traceability.vercel.app/api/v1/resources/${product._id}`, {
+            await axios.delete(`https://agriculture-traceability.vercel.app/api/v1/treatments/${product._id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -208,6 +205,7 @@ export default function TrackRecord() {
         _product[herd] = val;
         setProduct(_product);
     };
+
   
     const actionBodyTemplate = (rowData: Product) => {
         return (
@@ -223,7 +221,7 @@ export default function TrackRecord() {
     const header = (
         <div className="flex flex-wrap lign-items-center justify-between">
             <div className="text-left flex flex-wrap gap-10 align-items-center justify-between">
-                <h1 className="m-0 text-2xl">Thức ăn</h1>
+                <h1 className="m-0 text-2xl">Quản lý bệnh</h1>
                 <div className="flex items-center gap-2 text-xs rounded-full bg-white border border-[#E0E2E7] px-2 max-w-[340px]">
                     <FiSearch  className="text-[#278D45] w-5 h-5" />
                     <input  type="search" onInput={(e) => {const target = e.target as HTMLInputElement; setGlobalFilter(target.value);}} placeholder="Tìm kiếm..." className=" hidden sm:flex text-[#737791] text-sm font-normal w-[200px] p-2 bg-transparent outline-none"/>
@@ -268,110 +266,79 @@ export default function TrackRecord() {
                         globalFilter={globalFilter} header={header}
                         selectionMode="multiple" scrollable scrollHeight='100vh' virtualScrollerOptions={{ itemSize: 46 }} tableStyle={{ minWidth: '50rem' }}>
                     <Column  selectionMode="multiple" exportable={false}></Column>
-                    <Column   field="_id" header="_id" sortable style={{ minWidth: '1rem' }}></Column>
-                    <Column   field="species" header="Giống loài" sortable style={{ minWidth: '1rem' }}></Column>
-                    <Column  field="barn"  header="Khu vực cách ly"  sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column     field="detectionDate"   header="Ngày phát hiện" sortable   style={{ minWidth: '4rem' }}
-                        body={(rowData) => rowData.detectionDate ? new Date(rowData.detectionDate).toLocaleDateString() : "Chưa có"}
-                    ></Column>
-                    <Column   field="diseaseType" header="Loại bệnh" sortable style={{ minWidth: '1rem' }}></Column>
-                    <Column   field="entryDate" header="Ngày tái nhập đàn" 
-                        body={(rowData) => rowData.entryDate ? new Date(rowData.entryDate).toLocaleDateString() : "Chưa có"}
-                        sortable style={{ minWidth: '1rem' }}></Column>
-                    <Column  field="treatmentHistory"  header="Lịch sử điều trị" 
-                     body={(rowData) => (
-                      <button
-                        className="text-blue-500 underline"
-                        onClick={() => handleOpenPopup(rowData)}
-                      >
-                        Xem lịch sử
-                      </button>
-                    )} sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]" field="notes"  header="Ghi chú" sortable style={{ minWidth: '4rem' }}></Column>
-                    <Column className="bg-[#F3F7F5]" header="Thao tác" body={actionBodyTemplate} exportable={false} style={{ minWidth: '5rem' }}></Column>
+                    <Column field="product" header="Tên sản phẩm" sortable style={{ minWidth: '1rem' }} />
+                    <Column field="description" header="Mô tả" sortable style={{ minWidth: '1rem' }} />
+                    <Column field="type" header="Loại" sortable style={{ minWidth: '1rem' }} />
+                    <Column field="amount" header="Liều lượng" sortable style={{ minWidth: '1rem' }} />
+                    <Column field="mode" header="Phương thức" sortable style={{ minWidth: '1rem' }} />
+                    <Column field="site" header="Vị trí tiêm" sortable style={{ minWidth: '1rem' }} />
+                    <Column field="technician" header="Kỹ thuật viên" sortable style={{ minWidth: '1rem' }} />
+                    <Column field="date" header="Ngày tiêm" style={{ minWidth: "5rem" }}  
+                        body={(rowData) => rowData.date ? new Date(rowData.date).toLocaleDateString() : "Chưa có"} />
+                    <Column field="retreat_date" header="Ngày nhắc lại" style={{ minWidth: "5rem" }}  
+                        body={(rowData) => rowData.retreat_date ? new Date(rowData.retreat_date).toLocaleDateString() : "Chưa có"} />
+                    <Column field="herd.name" header="Tên đàn" sortable style={{ minWidth: '1rem' }} />
+
+                    <Column  header="Thao tác" body={actionBodyTemplate} exportable={false} style={{ minWidth: '5rem' }}></Column>
                 </DataTable>
             </div>
 
-            <Dialog visible={productDialog} style={{ width: '45rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Hồ sơ theo dõi" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
-                <p className="mb-4 text-black">Lịch sử điều trị </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
-                  {/* trai */}
-                  <div className="grid gap-1 ">
-                    <div className="field ">
-                        <label htmlFor="_id" className="font-normal">ID</label>
-                        <InputText id="_id" value={product._id}  onChange={(e) => onInputChange(e, '_id')}  required  autoFocus className={classNames({ 'p-invalid': submitted && !product._id })}
-                        />
-                        {submitted && !product._id && <small className="p-error">_id is required.</small>}
-                    </div>
-                    <div className="field ">
-                      <label htmlFor="barn" className="font-normal">
-                          Khu vực cách ly
-                      </label>
-                      <InputText id="barn" value={product.barn} onChange={(e) => onInputChange(e, 'barn')}   />
-                    </div>
-
-                    <div className="field">
-                        <label htmlFor="detectionDate" className="font-normal">Ngày phát hiện</label>
-                        <Calendar 
-                            id="detectionDate" 
-                            value={product?.detectionDate ?? new Date()} 
-                            onChange={(e) => setProduct({ ...product, detectionDate: e.value ?? new Date() })} 
-                            showIcon 
-                            />
-                    </div>
-                  </div>
-                  {/* phải */}
-                  <div className="grid gap-1 ">
-                    <div className="field ">
-                        <label htmlFor="species" className="font-normal">Giống loài</label>
-                        <InputText id="species" value={product.species}  onChange={(e) => onInputChange(e, 'species')}  required  autoFocus className={classNames({ 'p-invalid': submitted && !product.species })}
-                        />
-                        {submitted && !product.species && <small className="p-error">species is required.</small>}
-                    </div>
-                    <div className="field ">
-                      <label htmlFor="diseaseType" className="font-normal">
-                        Loại bệnh
-                      </label>
-                      <InputText id="diseaseType" value={product.diseaseType} onChange={(e) => onInputChange(e, 'diseaseType')}   />
-                    </div>
-                    <div className="field">
-                        <label htmlFor="entryDate" className="font-normal">Ngày tái nhập đàn</label>
-                        <Calendar 
-                            id="entryDate" 
-                            value={product?.entryDate ?? new Date()} 
-                            onChange={(e) => setProduct({ ...product, entryDate: e.value ?? new Date() })} 
-                            showIcon 
-                            />
-                    </div>
-                  </div>
-
+            <Dialog visible={productDialog} style={{ width: '45rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Thêm mới/Chỉnh sửa" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+                <p className="mb-4 text-black">Thông tin nhóm</p>
+                <div className="grid grid-cols-2 gap-4">
+            {/* Cột 1 */}
+            <div className="flex flex-col gap-3">
+                <div className="field">
+                    <label htmlFor="product" className="font-normal">Tên sản phẩm</label>
+                    <InputText id="product" value={product.product} onChange={(e) => onInputChange(e, 'product')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.product })} />
+                    {submitted && !product.product && <small className="p-error">Tên sản phẩm là bắt buộc.</small>}
                 </div>
-                <div className="field ">
-                      <label htmlFor="notes" className="font-normal">
-                          Ghi chú
-                      </label>
-                      <InputText id="notes" value={product.notes} onChange={(e) => onInputChange(e, 'notes')}   />
-                  </div>
+                <div className="field">
+                    <label htmlFor="type" className="font-normal">Loại</label>
+                    <InputText id="type" value={product.type} onChange={(e) => onInputChange(e, 'type')} required className={classNames({ 'p-invalid': submitted && !product.type })} />
+                    {submitted && !product.type && <small className="p-error">Loại là bắt buộc.</small>}
+                </div>
+                <div className="field">
+                    <label htmlFor="amount" className="font-normal">Liều lượng</label>
+                    <InputText id="amount" value={product.amount} onChange={(e) => onInputChange(e, 'amount')} required className={classNames({ 'p-invalid': submitted && !product.amount })} />
+                </div>
+                <div className="field">
+                    <label htmlFor="mode" className="font-normal">Phương thức</label>
+                    <InputText id="mode" value={product.mode} onChange={(e) => onInputChange(e, 'mode')} required className={classNames({ 'p-invalid': submitted && !product.mode })} />
+                </div>
+            </div>
+
+            {/* Cột 2 */}
+            <div className="flex flex-col gap-3">
+                <div className="field">
+                    <label htmlFor="description" className="font-normal">Mô tả</label>
+                    <InputText id="description" value={product.description} onChange={(e) => onInputChange(e, 'description')} required className={classNames({ 'p-invalid': submitted && !product.description })} />
+                    {submitted && !product.description && <small className="p-error">Mô tả là bắt buộc.</small>}
+                </div>
+                <div className="field">
+                    <label htmlFor="site" className="font-normal">Vị trí tiêm</label>
+                    <InputText id="site" value={product.site} onChange={(e) => onInputChange(e, 'site')} required className={classNames({ 'p-invalid': submitted && !product.site })} />
+                </div>
+                <div className="field">
+                    <label htmlFor="technician" className="font-normal">Kỹ thuật viên</label>
+                    <InputText id="technician" value={product.technician} onChange={(e) => onInputChange(e, 'technician')} required className={classNames({ 'p-invalid': submitted && !product.technician })} />
+                </div>
+            </div>
+        </div>
+                       
+
             </Dialog>
+
             <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Thông báo" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
                 <div className="confirmation-content flex item-center ">
                     <FaExclamationTriangle className="text-[#FF0000] mr-3" style={{ fontSize: '2rem' }} />
                     {product && (
                         <span className="mt-3">
-                           Bạn có chắc chắn muốn xóa <b>{product.species}</b>?
+                           Bạn có chắc chắn muốn xóa <b>{product.type}</b>?
                         </span>
                     )}
                 </div>
             </Dialog>
-            {selectedTreatment && (
-                    <TreatmentHistoryPopup
-                    id={selectedTreatment._id}
-                    diseaseType={selectedTreatment.diseaseType}
-                    history={selectedTreatment.history || []}  
-                    onClose={handleClosePopup}
-                />
-            )}
-
         </div>
     );
 }
