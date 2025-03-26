@@ -222,7 +222,7 @@ export default function TreatmentPlan() {
     const header = (
         <div className="flex flex-wrap lign-items-center justify-between">
             <div className="text-left flex flex-wrap gap-10 align-items-center justify-between">
-                <h1 className="m-0 text-2xl">Thức ăn</h1>
+                <h1 className="m-0 text-2xl">Kế hoạch điều trị</h1>
                 <div className="flex items-center gap-2 text-xs rounded-full bg-white border border-[#E0E2E7] px-2 max-w-[340px]">
                     <FiSearch  className="text-[#278D45] w-5 h-5" />
                     <input  type="search" onInput={(e) => {const target = e.target as HTMLInputElement; setGlobalFilter(target.value);}} placeholder="Tìm kiếm..." className=" hidden sm:flex text-[#737791] text-sm font-normal w-[200px] p-2 bg-transparent outline-none"/>

@@ -5,7 +5,7 @@ const NotificationContainer = () => {
     const { notifications } = useNotification();
 
     return (
-        <div className="fixed top-4 right-4 w-[300px] z-50">
+        <div className="fixed top-4 right-4 w-[400px] z-50">
             {notifications.map((notif) => (
                 <NotificationCard key={notif.id} {...notif} />
             ))}

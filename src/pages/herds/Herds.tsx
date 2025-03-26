@@ -365,7 +365,7 @@ interface Product {
   cameraMonitoring: string;
 }
 
-export default function ProductsDemo() {
+export default function Herds() {
     const emptyProduct: Product = {
        id: null,
        species: '',

@@ -29,8 +29,7 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
     };
     setNotifications((prev) => [...prev, newNotification]);
 
-    // Tự động xóa thông báo sau 5 giây
-    setTimeout(() => removeNotification(newNotification.id), 5000);
+    setTimeout(() => removeNotification(newNotification.id), 1400);
   };
 
   const removeNotification = (id: number) => {
