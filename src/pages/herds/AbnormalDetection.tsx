@@ -29,7 +29,7 @@ const notifications = [
   },
 ];
 
-const cameraIds = ["cam_1", "cam_2"]; // Add more camera IDs as needed
+const cameraIds = ["cam_1","cam_2"];
 
 function AbnormalDetection() {
   const handleSelectBarn = (id: string) => {
@@ -106,6 +106,8 @@ function AbnormalDetection() {
                 <CameraStream camId={camId} />
               </div>
             ))}
+            {/* <CameraStream camIds={["cam_1", "cam_2"]} /> */}
+
           </div>
       </div>
     </>

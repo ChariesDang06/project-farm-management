@@ -4,10 +4,10 @@ import BarnSelector, { Barn } from "../barn-selector/BarnSelector";
 import { MdOutlinePets } from "react-icons/md";
 type CameraStatusProps = {
   totalAnimals: number;
-  noChangeMessage: string;
+  noChangeMessage?: string;
   detections: number;
   abnormalDetections: any[];
-  personDetected: boolean;
+  personDetected?: boolean;
 };
 
 const CameraStatus: React.FC<CameraStatusProps> = ({
@@ -49,11 +49,11 @@ const CameraStatus: React.FC<CameraStatusProps> = ({
       <span className="text-black">{noChangeMessage}</span>
       <span className="text-black">Đã phát hiện {detections} lần ra vào</span>
 
-      {personDetected && (
+      {/* {personDetected && (
         <>
             <div className="text-red-500 font-semibold">🚨 Người đã được phát hiện!</div>
         </>
-        )}
+        )} */}
     {abnormalDetections.length > 0 && (
         <div className=" max-h-[400px] overflow-y-auto space-y-2">
             {abnormalDetections.map((alert, index) => (
@@ -68,3 +68,5 @@ const CameraStatus: React.FC<CameraStatusProps> = ({
 };
 
 export default CameraStatus;
+
+

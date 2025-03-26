@@ -4,26 +4,13 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
-
 import { HiMiniChartPie } from "react-icons/hi2";
-import { MdOutlinePets, MdSick, MdAssignment } from "react-icons/md";
-import { BiSolidBarChartSquare } from "react-icons/bi";
-
+import {MdAssignment } from "react-icons/md";
 import Sidebar, { SidebarItem } from "./components/side-bar/Sidebar";
 import Header from "./components/header/Header";
 import Breadcrumb_Comp from "./components/breadcrumb/Breadcrumb_Comp";
 import HomePage from "./pages/home/HomePage";
 import Dashboard from './pages/dashboard/DashboardPage';
-import Herds from './pages/herds/Herds';
-import AbnormalDetection from './pages/herds/AbnormalDetection';
-import HerdsReport from './pages/herds/HerdsReport';
-import EpidemicReport from './pages/epidemic/EpidemicReport';
-import TreatmentPlan from './pages/epidemic/TreatmentPlan';
-import TrackRecord from './pages/epidemic/TrackRecord';
-import ResourcesReport from './pages/resources/ResourcesReport';
-import Water from './pages/resources/Water';
-import Food from './pages/resources/Food';
-import Medical from './pages/resources/Medical';
 import JobManage from './pages/job/JobManage';
 import JobReport from './pages/job/JobReport';
 import { AuthContext } from './hooks/user';
@@ -34,40 +21,24 @@ import Diseases from './pages/prev-pages/diseases/Diseases';
 import Treatments from './pages/prev-pages/treatments/Treatments';
 import { NotificationProvider } from "./contexts/NotificationContext";
 import NotificationContainer from "./components/NotificationContainer";
+import { MdLinkedCamera } from "react-icons/md";
+import IndexHerd from './pages/herds';
+import IndexResources from './pages/resources';
+import IndexEpidemic from './pages/epidemic';
 const queryClient = new QueryClient();
 const SIDEBAR_ITEMS = [
   { text: "Tổng quan", url: "/dashboard", icon: <HiMiniChartPie /> },
   {
-    text: "QL Vật nuôi",
-    url: "/herds",
-    icon: <MdOutlinePets />,
+    text: "Giám sát",
+    url: "/monitor",
+    icon: <MdLinkedCamera />,
     subItems: [
-      { text: "Đàn", url: "/herds/manage" },
-      { text: "Phát hiện bất thường", url: "/herds/abnormal-detection" },
-      { text: "Báo cáo", url: "/herds/report" },
+      { text: "Vật nuôi", url: "/herds" },
+      { text: "Dịch bệnh", url: "/epidemic" },
+      { text: "Tài nguyên", url: "/resources" },
     ],
   },
-  {
-    text: "KS Dịch bệnh",
-    url: "/epidemic",
-    icon: <MdSick />,
-    subItems: [
-      { text: "Hồ sơ theo dõi", url: "/epidemic/track-record" },
-      { text: "Kế hoạch điều trị", url: "/epidemic/treatment-plan" },
-      { text: "Báo cáo", url: "/epidemic/report" },
-    ],
-  },
-  {
-    text: "QL Tài nguyên",
-    url: "/resources",
-    icon: <BiSolidBarChartSquare />,
-    subItems: [
-      { text: "Nước", url: "/resources/water" },
-      { text: "Thức ăn", url: "/resources/food" },
-      { text: "Y tế", url: "/resources/medical" },
-      { text: "Báo cáo", url: "/resources/report" },
-    ],
-  },
+ 
   {
     text: "QL Công việc",
     url: "/job",
@@ -157,45 +128,18 @@ function App() {
           element: <Dashboard />,
         },
         {
-          path: "/herds/manage",
-          element: <Herds />,
+          path: "/herds",
+          element: <IndexHerd />,
         },
         {
-          path: "/herds/abnormal-detection",
-          element: <AbnormalDetection />,
+          path: "/epidemic",
+          element: <IndexEpidemic />,
         },
         {
-          path: "/herds/report",
-          element: <HerdsReport />,
+          path: "/resources",
+          element: <IndexResources/>,
         },
-        {
-          path: "/epidemic/track-record",
-          element: <TrackRecord />,
-        },
-        {
-          path: "/epidemic/treatment-plan",
-          element: <TreatmentPlan />,
-        },
-        {
-          path: "/epidemic/report",
-          element: <EpidemicReport />,
-        },
-        {
-          path: "/resources/water",
-          element: <Water />,
-        },
-        {
-          path: "/resources/food",
-          element: <Food />,
-        },
-        {
-          path: "/resources/medical",
-          element: <Medical />,
-        },
-        {
-          path: "/resources/report",
-          element: <ResourcesReport />,
-        },
+       
         {
           path: "/job/manage",
           element: <JobManage />,
@@ -232,10 +176,11 @@ function App() {
     },
   ]);
   return (
-    <NotificationProvider>
-      <NotificationContainer />
-      <RouterProvider router={router} />
-  </NotificationProvider>
+      <NotificationProvider>
+            <NotificationContainer />
+            <RouterProvider router={router} />
+        </NotificationProvider>
+    
   );
 }
 
