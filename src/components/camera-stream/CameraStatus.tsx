@@ -40,7 +40,6 @@ const CameraStatus: React.FC<CameraStatusProps> = ({
         onSelect={handleSelectBarn}
         icon={<MdOutlinePets className="w-5 h-5" />}
         rounded={true}
-        widthFull={false}
         placeholder="Chọn chuồng"
         iconColor="text-white"
         iconBgColor="bg-yellow-500"

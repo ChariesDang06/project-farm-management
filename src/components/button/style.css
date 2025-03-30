@@ -9,7 +9,7 @@
       border-radius: 0 0 0 2.25rem ;
       background-color: #F3F0EB;
   }
-.tagLogin::after {
+  .tagLogin::after {
     width: 2.5rem;
     height: 2.5rem;
     content: "";
@@ -34,7 +34,6 @@
     
   }
   
-  
   .curve_oneLogin, .curve_twoLogin{
     width:1.25rem;
     height:1.25rem;
@@ -44,7 +43,7 @@
   }
   .curve_oneLogin {
     height: 2.5rem;
-    width: 2.5rem;
+    width: 2.9rem;
     border-bottom-left-radius: 10rem;
     background-color: #2d311c;
     right: 0%;
@@ -63,4 +62,7 @@
     border-bottom-left-radius: 10rem;
       
   }
-  
+.no-decorations::before,
+.no-decorations::after {
+  display: none;
+}

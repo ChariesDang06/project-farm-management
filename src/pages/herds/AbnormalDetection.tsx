@@ -67,7 +67,7 @@ function AbnormalDetection() {
             onSelect={handleSelectBarn}
             icon={<MdHome className="w-6 h-6"/>}
             rounded={false}
-            widthFull={false}
+            widthFull="w-[240px]"
             placeholder="Chọn đàn"
             iconColor="text-white"
             iconBgColor="bg-yellow-500"
@@ -89,7 +89,7 @@ function AbnormalDetection() {
               onSelect={handleSelectBarn}
               icon={<MdHome className="w-6 h-6"/>}
               rounded={false}
-              widthFull={false}
+              widthFull="w-[240px]"
               placeholder="Đàn hep HA01"
               iconColor="text-white"
               iconBgColor="bg-yellow-500"

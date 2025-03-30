@@ -3,12 +3,12 @@ import React from 'react';
 interface NaturalCardProps {
   title: string;
   description: string;
-  img: string ;
+  img: string ;width?: string;
 }
 
-const MeatCard: React.FC<NaturalCardProps> = ({ title, description, img }) => {
+const MeatCard: React.FC<NaturalCardProps> = ({ title, description, img ,width }) => {
   return (
-    <div className="rounded-2xl p-4 w-[70%] h-auto flex flex-col">
+    <div className={`rounded-2xl p-4 h-auto flex flex-col ${width || 'w-[70%]'}`}>
       <div className="flex items-center gap-3">
           <div className="bg-[#A31717] rounded-full w-16 h-16 flex items-center justify-center shrink-0">
               <img src={img} alt="icon" className="w-10 h-10 " />

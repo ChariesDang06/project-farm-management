@@ -1,4 +1,4 @@
-import {useState} from "react"
+import {useState,useEffect} from "react"
 import Banner from "../../components/banner/Banner";
 import Login from "../login/Login";
 import { RiLeafLine } from "react-icons/ri";
@@ -166,12 +166,11 @@ const HomePage = () => {
   const prevPage = () => {
     setCurrentPage((prev) => (prev - 1 + totalCardPages) % totalCardPages);
   };
-
   return (
     <>
       <Banner/>
-      <div  id="targetSection"  className="flex w-full h-screen my-4">
-        <div className="w-full md:w-1/2 flex items-center justify-center">
+      <div  id="targetSection"  className="flex w-full my-12">
+        <div className="w-full md:w-1/2 flex items-center justify-center px-4">
           <Login />
         </div>
 
@@ -196,7 +195,8 @@ const HomePage = () => {
           ))}
         </div>
       </div>
-      <div className="flex w-full max-w-[76%] mx-auto h-screen my-[5%]">
+      <div className="flex w-full px-5 md:max-w-[76%] mx-auto w-full my-12">
+
         <div className="hidden md:flex w-1/2 items-center justify-center mr-10">
           <img 
             src={BackgroundHome} 
@@ -209,25 +209,25 @@ const HomePage = () => {
                 <RiLeafLine  className="text-black"  />
                 <p className="text-black text-[1rem] ml-2 flex items-center justify-center">Chúng Tôi</p>
               </button>
-                <h2 className="text-[280%]  leading-[120%] text-[#404A3D]">
+                <h2 className="text-3xl lg:text-4xl xl:text-5xl text-[#404A3D]">
                 Với sứ mệnh "Sạch từ tâm - Lành từ đất"
                 </h2>
-                <p className="leading-[150%] text-[#666666] mb-[3%]">
+                <p className="text-[#666666] mb-[3%]">
                 Nông trại của chúng tôi khởi nguồn từ tình yêu thiên nhiên, cam kết cung cấp thực phẩm sạch và an toàn. Với quy trình hữu cơ và thân thiện môi trường, chúng tôi mang đến sản phẩm chất lượng cao cho mọi gia đình.
                 </p>
                 <div className="flex space-x-4">
                   <div className="">
                     <img src={IconSS1} className="w-[36%] h-auto object-fit mb-4 " />
-                    <h2 className="leading-[120%] text-[#404A3D]">Eco Farms Worldwide</h2>
-                    <p  className="leading-[150%] text-[#666666]">
+                    <h2 className="text-[#404A3D]">Eco Farms Worldwide</h2>
+                    <p  className="text-[#666666]">
                       Đối tác toàn cầu về phát triển nông trại bền vững, cùng chia sẻ giá trị xanh cho tương lai.
                     </p>
                   </div>
 
                   <div className="">
                     <img src={IconSS2} className="w-[36%] h-auto object-fit " />
-                    <h2 className="leading-[120%] text-[#404A3D]">Trang Thiết Bị Đặc Biệt</h2>
-                    <p  className=" leading-[150%] text-[#666666]">
+                    <h2 className=" text-[#404A3D]">Trang Thiết Bị Đặc Biệt</h2>
+                    <p  className="  text-[#666666]">
                       Sử dụng thiết bị chăn nuôi tiên tiến, đảm bảo quy trình sản xuất hiệu quả và thân thiện với môi trường.
                     </p>
                   </div>
@@ -237,51 +237,51 @@ const HomePage = () => {
       </div>
       
       
-        <div className="flex justify-center items-center w-full h-full py-[5%] bg-cover bg-center"
+        <div className="flex justify-center items-center w-full h-full py-12 md:py-24 bg-cover bg-center"
               style={{
                 backgroundImage: `url(${SectionCNC})`
               }}
-            >
-            <div  className="w-full max-w-[76%] mx-auto ">
-                <button className="bg-white w-[210px] h-[3.5%] py-1 px-2 rounded-full flex items-center justify-center mb-[1%]">
+            ><div className=" w-full px-5 md:max-w-[79%] mx-auto">
+                <button className="bg-white w-[210px] h-[3.5%] py-1 px-2 rounded-full flex items-center justify-center my-4">
                   <RiLeafLine  className="text-black"  />
                   <p className="text-black text-[1rem] ml-2 flex items-center justify-center">Dịch Vụ Của Chúng Tôi</p>
                 </button>
-                <div className="flex items-center justify-between mb-[5%]">
-                  <h3 className=" flex items-center justify-left text-[280%]  leading-[120%] text-white">
+                <div className="flex items-center justify-between my-5 gap-4">
+                  <h3 className="text-left text-3xl lg:text-4xl xl:text-5xl  text-white">
                     Nông nghiệp bền vững
                   </h3>
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="hidden items-center justify-between gap-2 md:flex lg:flex">
                     <ButtonNext onClick={prevPage} borderColor="#FFFFFF" iconColor="#FFFFFF" iconType="back" />
                     <ButtonNext onClick={nextPage} borderColor="#FFFFFF" iconColor="#FFFFFF" iconType="next" />
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-4 justify-center align-center transition-all duration-500">
-                    {cardAgricultureCardData
-                      .slice(currentPage * 3, (currentPage + 1) * 3)
-                      .map((card, index) => (
-                        <AgricultureCard
-                          key={index}
-                          topic={card.topic}
-                          title={card.title}
-                          description={card.description}
-                          img={card.img}
-                        />
-                      ))}
-                  </div>
-                
+                <div className="flex overflow-x-auto overflow-y-hidden gap-x-4 transition-all duration-500">
+                  {cardAgricultureCardData.map((card, index) => (
+                    <div key={index} className="shrink-0 min-w-[33.33%] md:min-w-[330px]">
+                      <AgricultureCard
+                        topic={card.topic}
+                        title={card.title}
+                        description={card.description}
+                        img={card.img}
+                      />
+                    </div>
+                  ))}
+                </div>
+
+
+                  
           </div>
       </div>
     
-      <div className="flex items-center justify-center flex-col text-center h-full mt-10">
-        <button className="bg-white w-[170px] h-[3.5%] py-1 px-2 rounded-full flex items-center justify-center mb-[1%]">
+      <div className="flex items-center justify-center flex-col text-center mt-12 md:mt-24">
+        <button className="bg-white w-[170px] h-[3.5%] py-2 px-2 rounded-full flex items-center justify-center mb-[1%]">
               <RiLeafLine className="text-black" />
               <p className="text-black text-[1rem] ml-2">Chất Lượng Cao</p>
         </button>
-        <h3 className="text-[280%]  leading-[120%] text-[#404A3D] mb-[5%]">
+        <h3 className="text-3xl lg:text-4xl xl:text-5xl  text-[#404A3D] mb-[5%]">
               Chất lượng trong <br></br>từng khâu chăn nuôi
         </h3>
-        <div className="relative flex items-center justify-center w-full h-auto mb-20">
+        <div className="relative hidden lg:flex items-center justify-center w-full h-auto mb-20">
           <img src={Meat} className="w-[44%] h-auto" />
             {MeatCardData.map((card, index) => (
               <div key={index} className={`absolute ${positionClasses[index]}`}>
@@ -289,76 +289,89 @@ const HomePage = () => {
               </div>
             ))}
         </div>
+        <div className="mb-5 block lg:hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+            {MeatCardData.map((card, index) => (
+              <div key={index}>
+                <MeatCard title={card.title} description={card.description} img={card.img} width="w-full"/>
+              </div>
+            ))}
+        </div>
+        
       </div>
 
-
-      <div className="flex items-center justify-center mx-4 gap-4">
+      <div className="flex items-center justify-center mx-4 gap-x-4 md:mt-12 md:mb-24 ">
         {images.map((src, index) => (
           <img key={index} src={src} className="w-[24%] h-auto" />
         ))}
       </div>
-      
-      <div className="flex max-w-[76%] my-[8%]  mx-auto">
+      <div className="flex w-full px-5 my-12 md:max-w-[76%] mx-auto">
           <div className="w-full h-full">
             <button className="bg-white w-[140px] h-[3.9%] py-1 px-2 rounded-full flex items-center justify-center mb-[3%]">
               <RiLeafLine className="text-black" />
               <p className="text-black text-[1rem] ml-2">Our History</p>
             </button>
-            <div className="flex items-center justify-between gap-10">
-              <h3 className="text-[280%] leading-[120%] text-[#404A3D] text-left w-1/2">
+            <div className="flex flex-col md:flex-row justify-between gap-x-4 gap-y-6">
+              <h3 className="text-3xl md:text-3xl lg:text-4xl xl:text-5xl  text-[#404A3D] text-left w-full md:w-1/2">
                 Nông trại đã được phát triển từ những năm 80
               </h3>
-              <p className="text-[#666666] text-left text-opacity-80 w-1/2">
+              <p className="text-[#666666] text-left md:text-lg text-base  w-full md:w-1/2">
                 Nằm giữa vùng cao nguyên xanh mát, nơi đàn dê và cừu được chăn thả tự nhiên trên những đồng cỏ rộng lớn.
                 Ban đầu, tôi chỉ nuôi vài con để lấy sữa và lông, nhưng dần dần, nhờ học hỏi và cải tiến, nông trại đã phát triển thành một mô hình khép kín.
               </p>
             </div>
           </div>
         </div>
-      <div className="w-full max-w-[76%] mx-auto">
-        <div className="grid grid-cols-4 relative">
-          <div className="absolute top-[20px] left-0 w-full h-[2px] bg-[#D3D4CC]"></div>
-          {timelineData.map((item, index) => (
-            <div key={index} className="flex flex-col items-start text-left px-4 relative">
-              <div className="w-2 h-2 bg-[#5B8C51] rounded-full absolute top-[17px] left-0"></div>
-              <img src={item.year} className="w-[56%] h-auto mt-[-2.8rem]" />
-              <h3 className="text-[#404A3D] text-xl font-bold mt-10">{item.title}</h3>
-              <p className="text-[#666666] text-opacity-80 mt-1">{item.description}</p>
-            </div>
-          ))}
-        </div>
+        <div className=" w-full px-5 md:max-w-[76%] mx-auto">
+          <div className="grid grid-cols-1 xl:grid-cols-4 gap-4 relative">
+            <div className="hidden xl:block absolute top-16 left-0 w-full h-[2px] bg-[#D3D4CC]"></div>
+            <div className="absolute top-5 left-[3px] w-[2px] h-full bg-[#D3D4CC] xl:hidden"></div>
 
-        <div className="flex relative my-[10%]">
-            <div className="hidden md:flex w-1/2 items-center relative">
+            {timelineData.map((item, index) => (
+              <div key={index} className="flex flex-col items-start text-left px-4 relative">
+                <img 
+                  src={item.year} 
+                  className="w-full max-w-[80px] xl:max-w-[56%] h-auto mt-[0.8rem] sx:mt-[-2.8rem]"
+                />
+                <div className="w-2 h-2 bg-[#5B8C51] rounded-full absolute top-12 md:top-15 left-0 xl:left-auto"></div>
+                <h3 className="text-[#404A3D] text-xl font-bold mt-4 md:mt-6">{item.title}</h3>
+                <p className="text-[#666666] text-opacity-80 mt-1">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        <div className="flex relative my-12 md:my-24">
+            <div className="hidden xl:flex w-1/2 items-center relative">
               <img 
                 src={SectionMT} 
                 className="rounded-[2.5%] w-[100%] h-[100%]" 
               />
-            </div>
-            <div className="w-full md:w-1/2 flex items-center bg-[#EDDD5E] rounded-[30px] p-8 relative -ml-8">
-              <div className="w-[89%] flex flex-col text-left">
+            </div> 
+            
+            <div className="w-full xl:w-1/2 flex items-center  bg-[#EDDD5E] rounded-[30px] relative xl:absolute xl:left-[50%] xl:translate-x-[-20%] h-full ">
+              <div className="w-full flex flex-col text-left  px-8 py-10 ">
                 <button className="bg-white w-[140px] h-[3.5%] py-1 px-2 rounded-full flex items-center justify-center mb-[3%]">
                   <RiLeafLine className="text-black" />
-                  <p className="text-black text-[1rem] ml-2 flex items-center justify-center">What We Do</p>
+                  <p className="text-black text-sm md:text-base ml-2 flex items-center justify-center">What We Do</p>
                 </button>
-                <h2 className="text-[280%] leading-[120%] text-[#404A3D]">
+                <h2 className="text-xl md:text-3xl lg:text-4xl leading-tight text-[#404A3D]">
                   Hành trình từ nông trại đến chất lượng
                 </h2>
-                <p className="leading-[150%] text-[#404A3D] mb-[3%]">
+                <p className="text-sm md:text-base leading-relaxed text-[#404A3D] mb-4">
                   Chúng tôi chuyên chăn nuôi dê cừu tại Ninh Thuận, cung cấp thịt, sữa và các sản phẩm chất lượng cao.
                 </p>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="flex items-center">
-                    <img src={mt100} className="w-[50%] h-auto object-cover m-0" />
-                    <h3 className="text-xl font-medium text-[#404A3D]">Sản phẩm sạch</h3>
+                    <img src={mt100} className="w-[66px] md:w-[40%] h-auto object-cover" />
+                    <h3 className="text-sm md:text-lg font-medium text-[#404A3D]">Sản phẩm sạch</h3>
                   </div>
                   <div className="flex items-center">
-                    <img src={mt100} className="w-[50%] h-auto object-cover m-0" />
-                    <h3 className="text-xl font-medium text-[#404A3D]">Phát triển bền vững</h3>
-                  </div>
+                  <img src={mt100} className="w-[66px] md:w-[40%] h-auto object-cover" />
+                  <h3 className="text-sm md:text-lg font-medium text-[#404A3D] ">Phát triển bền vững</h3>
+                </div>
                 </div>
               </div>
             </div>
+
+
           </div>
 
           <div className="">
@@ -369,27 +382,26 @@ const HomePage = () => {
                   Đáng tin cậy
                 </p>
               </button>
-              <div className="flex items-center justify-between mb-[5%]">
-                <h3 className="text-[280%] leading-[120%] text-[#404A3D] ">
+              <div className="flex items-center justify-between my-5 gap-4">
+                <h3 className="text-3xl lg:text-4xl xl:text-5xl text-left  text-[#404A3D] ">
                   Kết nối hơn 100+ doanh nghiệp
                 </h3>
-                    <ButtonNext  borderColor="#404A3D" iconColor="#404A3D" iconType="both" />
+                <div className="hidden items-center justify-between gap-2 md:flex lg:flex"> 
+                  <ButtonNext  borderColor="#404A3D" iconColor="#404A3D" iconType="both" />
+                </div>
               </div>
 
-              <div className="grid gap-6">
-                <div className="grid grid-cols-6 gap-7 transition-all duration-500">
+              <div className="grid gap-x-6 overflow-x-auto lg:overflow-visible">
+                <div className="grid grid-cols-6 gap-7 transition-all duration-500 min-w-max">
                   {logos.slice(0, 6).map((logo, index) => (
                     <div key={index} className="flex justify-center">
-                      <img
-                        src={logo}
-                        alt={`Logo ${index + 1}`}
-                        className="w-[100px] h-[90px] object-contain"
-                      />
+                      <img src={logo} alt={`Logo ${index + 1}`} className="w-[100px] h-[90px] object-contain" />
                     </div>
                   ))}
                 </div>
-
-                <div className="grid grid-cols-6 gap-7 transition-all duration-500" style={{ marginLeft: "8%" }}>
+              </div>
+              <div className="grid gap-x-6 overflow-x-auto lg:overflow-visible mt-6">
+                <div className="grid grid-cols-6 gap-7 transition-all duration-500 min-w-max" style={{ marginLeft: "87px" }}>
                   {logos.slice(6, 12).map((logo, index) => (
                     <div key={index} className="flex justify-center">
                       <img
@@ -404,25 +416,24 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="relative bg-cover bg-center rounded-tl-2xl rounded-tr-2xl p-12 text-white  my-[6%]"
+          <div className="relative bg-cover bg-center rounded-tl-2xl rounded-tr-2xl p-12 text-white  my-12"
             style={{
               backgroundImage: `linear-gradient(180deg, rgba(64, 74, 61, 0.6), rgba(64, 74, 61, 0.3)), url(${Section9})`,
               backgroundPosition: 'center top',
             }}
           >
-            <div  className="flex  items-center  justify-between ">
+            <div  className="flex flex-col md:flex-row items-center justify-between ">
                   <div  className="flex  items-center mt-2 ">
                     <div className="bg-[#EDDD5E] rounded-full w-16 h-16 flex items-center justify-center shrink-0 mr-2">
                       <img src={IconHome2} alt="icon" className="w-10 h-10" />
                     </div>
-                    <h2 className="text-white text-xl font-bold text-center">Dẫn đầu trong thị trường nông nghiệp toàn quốc</h2>
+                    <h2 className="text-white text:sm md:text-xl font-bold text-center">Dẫn đầu trong thị trường nông nghiệp toàn quốc</h2>
                   </div>
-                  <div className=" top-4 right-4">
+                  <div className=" top-4 right-4 md:mt-0 mt-4">
                     <Button text="Tìm Hiểu Thêm" backgroundColor = "#FFFFFF" iconType="arrow" />
                   </div>
             </div>
-          </div>          
-          {/*  */}
+          </div>    
         </div>
       <Footer/>
     </>

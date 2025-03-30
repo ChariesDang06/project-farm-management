@@ -7,7 +7,7 @@
   font-weight: 500;
 }
 
-body {
+html,body {
   background-color: #F3F0EB;
   min-height: 100vh;
   overflow-x: hidden;
@@ -15,6 +15,7 @@ body {
   font-family: 'Signika', sans-serif;
   
 } 
+
 
 .p-component {
   font-family: 'Signika', sans-serif;

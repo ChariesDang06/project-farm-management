@@ -44,10 +44,10 @@ const JobReport = () => {
                 <LuClipboardCheck  className="w-6 h-6 text-[#A1A3AB]"/>
                 <p className="font-bold text-[#FFA412] mt-2">Tiến độ công việc</p>
               </div>
-              <div className="flex justify-center space-x-6 p-4">
-              <PieChartComponent percentage={100} />
-              <PieChartComponent percentage={84} />
-              <PieChartComponent percentage={13} />
+              <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                <PieChartComponent percentage={100} />
+                <PieChartComponent percentage={84} />
+                <PieChartComponent percentage={13} />
               </div>
             </div>
 

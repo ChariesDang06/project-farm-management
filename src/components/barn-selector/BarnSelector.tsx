@@ -10,11 +10,11 @@ type BarnSelectorProps = {
   onSelect: (id: string) => void;
   barns: Barn[];
   icon?: React.ReactNode;
-  iconColor?: string; // Màu của icon
-  iconBgColor?: string; // Màu nền của icon
+  iconColor?: string; 
+  iconBgColor?: string; 
   rounded?: boolean;
-  widthFull?: boolean; // Chiều rộng full hoặc cố định
-  placeholder?: string; // Văn bản placeholder khi chưa chọn chuồng
+  widthFull?: string; 
+  placeholder?: string; 
 };
 
 const BarnSelector: React.FC<BarnSelectorProps> = ({
@@ -24,7 +24,7 @@ const BarnSelector: React.FC<BarnSelectorProps> = ({
   iconColor = "text-white", // Mặc định màu icon là trắng
   iconBgColor = "bg-yellow-500", // Mặc định màu nền icon là vàng
   rounded = false,
-  widthFull = true,
+  widthFull = "w-full",
   placeholder = "Chọn chuồng", // Văn bản mặc định khi chưa chọn chuồng
 }) => {
   const [selectedBarn, setSelectedBarn] = useState<string>("");
@@ -37,7 +37,7 @@ const BarnSelector: React.FC<BarnSelectorProps> = ({
   };
 
   return (
-    <div className={`${widthFull ? "w-full" : "relative w-[240px]"}`}>
+    <div className={`${widthFull}`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`h-12 p-2 border bg-[#262626] text-white text-left flex items-center justify-between ${
