@@ -25,7 +25,6 @@ import { MdLinkedCamera } from "react-icons/md";
 import IndexHerd from './pages/herds';
 import IndexResources from './pages/resources';
 import IndexEpidemic from './pages/epidemic';
-import AppTest from './components/text';
 const queryClient = new QueryClient();
 const SIDEBAR_ITEMS = [
   { text: "Tổng quan", url: "/dashboard", icon: <HiMiniChartPie /> },
@@ -84,7 +83,6 @@ function App() {
       <>
       {currentUser && (
            <div className="flex">
-           {/* Sidebar */}
            <div className="basis-1/6 md:relative absolute left-[-200px] md:left-0 transition-all duration-300">
              <Sidebar>
                {SIDEBAR_ITEMS.map((item) => (
@@ -100,7 +98,6 @@ function App() {
              </Sidebar>
            </div>
          
-           {/* Main Content */}
            <main className="basis-5/6 w-full md:w-5/6 py-4 px-6">
              <Header />
              <Breadcrumb_Comp items={breadcrumbItems} onNavigate={(url) => console.log("Navigate to:", url)} />
@@ -119,10 +116,6 @@ function App() {
     {
       path: "/",
       element: <HomePage />,
-    },
-    {
-      path: "/test",
-      element: <AppTest />,
     },
     {
       path: "/",
