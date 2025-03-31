@@ -61,7 +61,7 @@ const DashBoard = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-[#F3F7F5] rounded-[20px] p-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-[#F3F7F5] rounded-[20px] p-3  sm:p-5">
         <div className=" md:col-span-2">
           <div className="flex justify-between items-center w-full mb-2">
             <span className="text-left text-black text-lg">Đàn HeoA101S1</span>
@@ -106,9 +106,9 @@ const DashBoard = () => {
         </div>
       </div>
 
-      <div className="p-5">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl">Thống kê tổng quan</h1>
+      <div className="my-5">
+        <div className="flex flex-wrap gap-y-2 items-center justify-between md:mb-8">
+          <h1 className="text-xl sm:text-2xl">Thống kê tổng quan</h1>
           <TimelineSelector
             filterType={filterType}
             setFilterType={setFilterType}

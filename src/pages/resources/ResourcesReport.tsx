@@ -11,9 +11,9 @@ const ResourcesReport = () => {
   const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
 
   return (
-    <div className="bg-[#F3F7F5] rounded-[16px] p-5">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl">Quản lý tài nguyên</h1>
+    <div className="bg-[#F3F7F5] rounded-[16px] sm:p-5 p-3">
+      <div className="flex flex-wrap gap-y-2 items-center justify-between md:mb-8">
+        <h1 className="text-xl sm:text-2xl">Quản lý tài nguyên</h1>
         <TimelineSelector
           filterType={filterType}
           setFilterType={setFilterType}

@@ -40,9 +40,9 @@ const HerdsReport = () => {
   };
 
   return (
-    <div className="bg-[#F3F7F5] rounded-[16px] p-5">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl">Thống kê</h1>
+    <div className="bg-[#F3F7F5] rounded-[16px] p-3 sm:p-5">
+      <div className="flex items-center gap-y-2 flex-wrap justify-between md:mb-8">
+        <h1 className="text-xl sm:text-2xl">Thống kê</h1>
         <TimelineSelector
           filterType={filterType}
           setFilterType={setFilterType}
@@ -72,7 +72,7 @@ const HerdsReport = () => {
         />
 
         <div className="p-4 bg-[#FFFFF1] rounded-[16px] w-full mx-auto">
-          <h2 className="text-lg mb-4 text-left font-semibold">Số ca chữa khỏi, tái phát</h2>
+          <h2 className="text-sx sm:text-lg mb-4 text-left font-semibold">Số ca chữa khỏi, tái phát</h2>
           <div className="bg-[#FFFFF1] p-6 rounded-[16px] border border-[#A1A3AB] grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="flex flex-col gap-3 md:col-span-1 text-left">
               <InputField label="Tổng số lượng" value={data.total} onChange={(val) => handleChange("total", val)}  type="number" />

@@ -30,7 +30,9 @@ const generateChartData = (chartType: ChartType, filterType: FilterType): ChartD
   return labels[filterType].map((label) => {
     const entry: Record<string, number | string> = { name: label };
     if (chartType === "herd") {
-      ["Cừu Appenninica", "Cừu Bentheimer", "Cừu Merinoland", "Dê Boer", "Dê Saanen"].forEach((animal) => {
+      ["Cừu Meri", "Dê Boer", "Dê Saanen"].forEach((animal) => {
+      // ["Cừu Appenninica", "Cừu Bentheimer", "Cừu Merinoland", "Dê Boer", "Dê Saanen"].forEach((animal) => {
+        
         entry[animal] = Math.floor(Math.random() * 200);
       });
     } else if (chartType === "consumption") {
@@ -38,7 +40,9 @@ const generateChartData = (chartType: ChartType, filterType: FilterType): ChartD
         entry[item] = Math.floor(Math.random() * 100);
       });
     } else if (chartType === "disease") {
-      ["Bệnh chương", "Bệnh tụ chải", "Bệnh viêm vú", "Bệnh giun sán", "Bệnh lở mồm"].forEach((disease) => {
+      ["Bệnh viêm vú", "Bệnh giun sán", "Bệnh lở mồm"].forEach((disease) => {
+
+      // ["Bệnh chương", "Bệnh tụ chải", "Bệnh viêm vú", "Bệnh giun sán", "Bệnh lở mồm"].forEach((disease) => {
         entry[disease] = Math.floor(Math.random() * 300);
       });
     } else {
@@ -54,9 +58,9 @@ const LineChartComponent: React.FC<CombinedChartProps> = ({ title, chartType, fi
   const data = generateChartData(chartType, filterType);
   const colorGroups: Record<ChartType, Record<string, string>> = {
     herd: {
-      "Cừu Appenninica": "#4CAF50",
-      "Cừu Bentheimer": "#E91E63",
-      "Cừu Merinoland": "#FF9800",
+      // "Cừu Appenninica": "#4CAF50",
+      // "Cừu Bentheimer": "#E91E63",
+      "Cừu Meri": "#FF9800",
       "Dê Boer": "#9C27B0",
       "Dê Saanen": "#2196F3",
     },
@@ -67,8 +71,8 @@ const LineChartComponent: React.FC<CombinedChartProps> = ({ title, chartType, fi
       "Nước": "#1C91E6",
     },
     disease: {
-      "Bệnh chương": "#28A745",
-      "Bệnh tụ chải": "#FFC107",
+      // "Bệnh chương": "#28A745",
+      // "Bệnh tụ chải": "#FFC107",
       "Bệnh viêm vú": "#DC3545",
       "Bệnh giun sán": "#6610F2",
       "Bệnh lở mồm": "#17A2B8",
@@ -96,13 +100,38 @@ const LineChartComponent: React.FC<CombinedChartProps> = ({ title, chartType, fi
   const selectedColors = colorGroups[chartType] || {};
 
   return (
-    <div className="p-4 bg-white rounded-[16px] shadow-md">
-      <h1 className="text-xl mb-4 text-left font-semibold">{title}</h1>
-      <ResponsiveContainer width="100%" height={400}>
+    <div className="p-4 bg-white rounded-[16px] shadow-md ">
+      {/* <h1 className="text-xl mb-4 text-left font-semibold">{title}</h1>
+      <div className="max-h-120 h-full w-full">
+        <ResponsiveContainer width="100%" aspect={2.5} >
+          <LineChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" tick={{ fill: "#555" }} />
+            <YAxis tick={{ fill: "#555" }} />
+            <Tooltip />
+            {Object.keys(selectedColors).map((key) => (
+              <Line
+                key={key}
+                type="monotone"
+                dataKey={key}
+                stroke={selectedColors[key]}
+                strokeWidth={2}
+                dot={false}
+              />
+            ))}
+          </LineChart>
+        </ResponsiveContainer>
+      </div> */}
+      <h1 className="text-md md:text-xl mb-4 text-left font-semibold">{title}</h1>
+      <ResponsiveContainer 
+        width="100%" 
+        aspect={window.innerWidth < 740 ? 1.5 : 2.5} 
+        className="max-h-400 sm:max-h-100" 
+      >
         <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" tick={{ fill: "#555" }} />
-          <YAxis tick={{ fill: "#555" }} />
+          <CartesianGrid strokeDasharray="3 3" className="hidden sm:block" /> 
+          <XAxis dataKey="name" tick={{ fill: "#555", fontSize: window.innerWidth < 640 ? 10 : 14 }} />
+          <YAxis tick={{ fill: "#555", fontSize: window.innerWidth < 640 ? 10 : 14 }} />
           <Tooltip />
           {Object.keys(selectedColors).map((key) => (
             <Line
@@ -111,27 +140,28 @@ const LineChartComponent: React.FC<CombinedChartProps> = ({ title, chartType, fi
               dataKey={key}
               stroke={selectedColors[key]}
               strokeWidth={2}
-              dot={false}
+              dot={window.innerWidth < 740 ? false : true} 
             />
           ))}
         </LineChart>
       </ResponsiveContainer>
 
-      <div className="flex flex-wrap justify-center bg-[#1C1717] text-white rounded-lg p-3 w-fit mx-auto mt-4">
+
+      <div className="flex flex-nowrap overflow-x-auto justify-center bg-[#1C1717] text-white rounded-lg p-3 w-fit mx-auto mt-4">
         {Object.keys(selectedColors).map((key, index, array) => (
           <div key={key} className="flex flex-row items-center">
             <div className="flex flex-col items-center">
               <div className="flex items-center">
-                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: selectedColors[key] }}></span>
-                <span className="ml-2 text-sm">{key}</span>
+                <span className="sm:w-2 sm:h-2 w-1 h-1 rounded-full" style={{ backgroundColor: selectedColors[key] }}></span>
+                <span className="ml-2 text-[12px] sm:text-sm">{key}</span>
               </div>
-              <span className="text-lg">12,423</span>
+              <span className="text-[12px] sm:text-lg">12,423</span>
             </div>
-            {index !== array.length - 1 && <div className="w-[1px] h-10 bg-gray-500 mx-4 hidden md:block"></div>}
+            {index !== array.length - 1 && <div className="w-[1px] h-10 bg-gray-500 mx-4"></div>}
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-2 gap-4 mt-4 mb-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 mb-1">
       {alert==="water" ? (
         <>
         <AlertCard

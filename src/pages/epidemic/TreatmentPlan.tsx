@@ -282,8 +282,8 @@ export default function TreatmentPlan() {
             </div>
 
             <Dialog visible={productDialog} style={{ width: '45rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Hồ sơ theo dõi" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
-                <p className="mb-4 text-black">Lịch sử điều trị </p>
-                <div className="flex  flex-col md:flex-row  gap-4">
+                <p className="mb-4 text-black">Lịch sử điều trị</p>
+                <div className="flex  flex-col md:flex-row   gap-4">
                   <div className="flex-1 flex flex-col gap-2">
                     <div className="field ">
                       <label htmlFor="diseaseName" className="font-normal">

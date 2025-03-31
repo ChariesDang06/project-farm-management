@@ -33,6 +33,7 @@ html,body {
   border: none;
   border-bottom: 1px solid #E9EDF7;
 }
+
 .p-datatable .p-datatable-tbody > tr > td {
   border: none;
 }
@@ -152,4 +153,48 @@ img{
 
 .p-datatable .p-datatable-tbody > tr {
   background: #f3f7f5;
+}
+
+@media (max-width: 640px) { 
+  .p-datatable .p-datatable-header {
+    padding: 0.75rem; 
+  }
+  .p-fluid .p-inputtext {
+    padding: 0.5rem;
+  }
+  .p-calendar .p-inputtext {
+    height: 38px;
+  }
+  .p-fluid .p-button-icon-only {
+    width: 2.5rem;
+    height: 2.4rem;
+  
+  }
+  .p-fluid .p-inputnumber .p-inputnumber-input {
+    height: 38px;
+  }
+  .p-inputnumber-button-group .p-inputnumber-button-up {
+    height:16px;
+  }
+  .p-inputnumber-button-group .p-inputnumber-button-down{
+    height:16px;
+  }
+  .p-paginator .p-paginator-first, .p-paginator .p-paginator-prev, .p-paginator .p-paginator-next, .p-paginator .p-paginator-last {
+    min-width: 2.5rem;
+    height: 2.5rem;
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page {
+    min-width: 2.5rem;
+    height: 2.5rem;
+  }
+  .p-dropdown .p-dropdown-trigger {
+    width: 2.5rem;
+  }
+  .p-paginator .p-inputwrapper-filled{
+    width: 5rem;
+    height: 2.5rem;
+  }
+  .p-inputwrapper-filled .p-inputtext{
+    padding: 0.5rem 0.5rem;
+  }
 }

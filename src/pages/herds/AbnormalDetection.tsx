@@ -61,7 +61,7 @@ function AbnormalDetection() {
         ))}
       </div> */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 rounded-[20px] mb-5">
-        <div className="bg-[#F3F7F5] rounded-[20px] p-5 mb-5 lg:col-span-2">
+        <div className="bg-[#F3F7F5] rounded-[20px] p-3 sm:p-5 mb-5 lg:col-span-2">
           <BarnSelector 
             barns={barns}
             onSelect={handleSelectBarn}
@@ -78,12 +78,12 @@ function AbnormalDetection() {
               <WidgetComponent icon={<FaTag />} title="Bán ra" quantity={80040} description="Tổng số lượng vật nuôi được bán ra tại chi nhánh" bgColor="#FCBD2D" />
           </div>
         </div>
-        <div className="lg:col-span-1 rounded-[20px] p-5 mb-5 bg-[#F3F7F5]">
+        <div className="lg:col-span-1 rounded-[20px] p-3 sm:p-5 mb-5 bg-[#F3F7F5]">
             <QuantitySelector onChange={handleQuantityChange} />
         </div>
       </div>
-      <div className="bg-[#F3F7F5] rounded-[20px] p-5">
-        <div className="flex flex-wrap items-center gap-4 mb-5">
+      <div className="bg-[#F3F7F5] rounded-[20px] p-3 sm:p-5">
+          <div className="flex flex-wrap items-center gap-4 mb-5">
             <BarnSelector 
               barns={barns}
               onSelect={handleSelectBarn}
@@ -98,16 +98,17 @@ function AbnormalDetection() {
                             text="Xem lại sự kiện" 
                             bgColor="#76bc6a" 
                             textColor="#fff"
+                            truncate={false}
             />
           </div>
-          <div className="">
-            {cameraIds.map((camId) => (
+
+          <div className="mt-12">
+            {/* {cameraIds.map((camId) => (
               <div key={camId} className="relative mb-8 bg-white p-3 rounded-[8px] ">
                 <CameraStream camId={camId} />
               </div>
-            ))}
-            {/* <CameraStream camIds={["cam_1", "cam_2"]} /> */}
-
+            ))} */}
+            <CameraStream camIds={["cam_1", "cam_2"]} />
           </div>
       </div>
     </>

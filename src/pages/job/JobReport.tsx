@@ -4,9 +4,9 @@ import PieChartComponent from "./PieChartComponent";
 const JobReport = () => {
     return (
       <div>
-        <div className="bg-black text-white p-5 rounded-t-[16px] ">Ngày tháng năm</div>
+        <div className="bg-black text-white p-3 sm:p-5 rounded-t-[16px] ">Ngày tháng năm</div>
 
-        <div className="bg-white rounded-b-[16px] p-5 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white rounded-b-[16px] p-3 sm:p-5 grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-3 bg-[#F3F0EB] rounded-[16px] space-y-4">
             <div className=" flex gap-2  ">
               <LuClipboardX className="w-6 h-6 text-[#A1A3AB]"/>

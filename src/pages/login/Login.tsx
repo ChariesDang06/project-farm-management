@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Hello from "../../assets/IconHomePage/hello.png"
 import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from "../../hooks/user";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 export const validateInput = (str: string = ""): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(str);
@@ -15,7 +16,7 @@ const Login: React.FC = () => {
   const [err, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { loginApi } = useContext(AuthContext);
-  
+  const [showPassword, setShowPassword] = useState(false);
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
     setError(null);
@@ -68,15 +69,24 @@ const Login: React.FC = () => {
             <span className="block  text-left text-[#0C1421] mb-2 ">
               Mật khẩu
             </span>
+            <div className="relative">
             <input
               id="password"
-              className="w-full p-3 border border-[#D4D7E3] rounded-[100px] text-black bg-white"
-              type="password"
+              className="w-full p-3 border border-[#D4D7E3] rounded-[100px] text-black bg-white pr-10"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Ít nhất 6 kí tự ..."
               onChange={handlePasswordChange}
               value={password}
             />
+            <button
+              type="button"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-black"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+               {showPassword ? <AiOutlineEye size={22} className="font-bold" /> : <AiOutlineEyeInvisible size={22} className="font-bold" /> }
+            </button>
+          </div>
             <div className="flex align-center justify-between mt-2">
               {err && <p className="text-red-500 text-sm text-left">{err}</p>}
               <a href="/" className="hover:underline cursor-pointer text-sm text-green-600 absolute right-0">

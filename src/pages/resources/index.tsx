@@ -17,7 +17,7 @@ const IndexResources: React.FC = () => {
   ];
   return (
     <div className="gap-4 w-full space-y-5">
-        <ButtonAction icon={<BiSolidBarChartSquare className="w-5 h-5" />}  bgColor="#000000" textColor="#ffffff"  text="Quản lý tài nguyên" onClick={() => setActiveComponent(<Water />)} />
+        <ButtonAction icon={<BiSolidBarChartSquare className="w-5 h-5" />} hoverBorderColor="#76bc6a"  borderColor="#000000" bgColor="#000000" textColor="#ffffff"  text="Quản lý tài nguyên" onClick={() => setActiveComponent(<Water />)} truncate={false}/>
       <div className="flex gap-2">
         {buttons.map((btn, index) => (
           <ButtonAction key={index} bgColor="#ffffff" textColor="#76bc6a" borderColor="#76bc6a"  text={btn.text} onClick={() => setActiveComponent(btn.component)} />

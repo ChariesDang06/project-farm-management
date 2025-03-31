@@ -25,6 +25,7 @@ import { MdLinkedCamera } from "react-icons/md";
 import IndexHerd from './pages/herds';
 import IndexResources from './pages/resources';
 import IndexEpidemic from './pages/epidemic';
+import ButtonScrollToTop from './components/button/ButtonScrollToTop';
 const queryClient = new QueryClient();
 const SIDEBAR_ITEMS = [
   { text: "Tổng quan", url: "/dashboard", icon: <HiMiniChartPie /> },
@@ -65,6 +66,7 @@ const SIDEBAR_ITEMS = [
 
 function App() {
   const [breadcrumbItems, setBreadcrumbItems] = useState<{ name: string; url: string }[]>([]);
+  const [activeItem, setActiveItem] = useState<string>("/dashboard");
   const handleSidebarSelect = (selectedPath: string) => {
     const foundItem = SIDEBAR_ITEMS.find(
       (item) => item.url === selectedPath || item.subItems?.some((sub) => sub.url === selectedPath)
@@ -79,36 +81,45 @@ function App() {
   };
   const Layout = () => {
     const { currentUser } = useContext(AuthContext);
+    const [expanded, setExpanded] = useState<boolean>(true);
     return (
       <>
       {currentUser && (
-           <div className="flex">
-           <div className="basis-1/6 md:relative absolute left-[-200px] md:left-0 transition-all duration-300">
-             <Sidebar>
-               {SIDEBAR_ITEMS.map((item) => (
-                 <SidebarItem
-                   key={item.url}
-                   icon={item.icon}
-                   text={item.text}
-                   url={item.url}
-                   onSelect={handleSidebarSelect}
-                   subItems={item.subItems}
-                 />
-               ))}
-             </Sidebar>
-           </div>
-         
-           <main className="basis-5/6 w-full md:w-5/6 py-4 px-6">
-             <Header />
-             <Breadcrumb_Comp items={breadcrumbItems} onNavigate={(url) => console.log("Navigate to:", url)} />
-             <QueryClientProvider client={queryClient}>
-               <Outlet />
-             </QueryClientProvider>
-           </main>
-         </div>
-         
+        <div className="flex">
+          <div
+            className={`md:relative absolute transition-all duration-300 
+              ${expanded ? "w-[clamp(100px,16vw,240px)]" : "w-0"}
+            `}
+          >
+            <Sidebar expanded={expanded} setExpanded={setExpanded}>
+              {SIDEBAR_ITEMS.map((item) => (
+                <SidebarItem
+                  key={item.url}
+                  icon={item.icon}
+                  text={item.text}
+                  active={activeItem === item.url || item.subItems?.some(sub => sub.url === activeItem)}
+                  url={item.url}
+                  onSelect={handleSidebarSelect}
+                  subItems={item.subItems}
+                />
+              ))}
+            </Sidebar>
+          </div>
+
+          <main
+            className={`md:py-4 md:px-6 p-4 transition-all duration-300 flex-1 
+              ${expanded ? "" : "ml-0"}
+            `}
+          >
+            <Header expanded={expanded}/>
+            <Breadcrumb_Comp items={breadcrumbItems} onNavigate={(url) => console.log("Navigate to:", url)} />
+            <QueryClientProvider client={queryClient}>
+              <Outlet />
+            </QueryClientProvider>
+          </main>
+        </div>
       )}
-      </>
+    </>
     );
   };
 
@@ -176,9 +187,10 @@ function App() {
   ]);
   return (
       <NotificationProvider>
-            <NotificationContainer />
-            <RouterProvider router={router} />
-        </NotificationProvider>
+        <NotificationContainer />
+        <RouterProvider router={router} />
+        <ButtonScrollToTop />
+      </NotificationProvider>
     
   );
 }
