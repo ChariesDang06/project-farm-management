@@ -16,7 +16,7 @@ const Footer = () => {
       }}>
     
       <header className="bg-[#EDDD5E] py-6 ">
-          <div className="w-full max-w-[76%] mx-auto flex justify-between items-center">
+          <div className="w-full md:max-w-[76%] px-5 mx-auto flex justify-between items-center gap-4 overflow-x-auto ">
             <nav className="flex space-x-6 text-sm font-medium text-[#404A3D]">
               <a href="#" className="flex items-center space-x-1 text-[#404A3D]">
                 <span>FARMERS</span>
@@ -39,7 +39,7 @@ const Footer = () => {
                   <div className="bg-white p-2 rounded-full w-10 h-10 flex items-center justify-center shrink-0">
                     <LiaPhoneVolumeSolid className="w-6 h-6 text-[#404A3D]" />
                   </div>
-                  <span className="text-sm text-[#404A3D] font-semibold">+84 123 123 123</span>
+                  <span className="text-sm text-[#404A3D] font-semibold whitespace-nowrap overflow-hidden text-ellipsis hidden md:inline">+84 123 123 123</span>
                 </div>
         
                 <div className="flex items-center space-x-2">
@@ -53,9 +53,9 @@ const Footer = () => {
       </header>
 
         {/*  */}
-        <footer className="py-[8%] w-full max-w-[76%] mx-auto">
-          <div className="max-w-6xl mx-auto grid grid-cols-10 gap-8">
-            <div className="col-span-3">
+        <footer className="py-[8%] w-full md:max-w-[76%] px-5 mx-auto">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-10 gap-8">
+            <div className="md:col-span-3">
               <div className='flex items-center'>
                 <img src={logo} className='md:w-[80px] lg:w-[56px] object-cover mr-2' />
                 <span className="w-[107px] h-[24px] font-[400] text-[24px] text-[#FCBD2D] tracking-[0.01em] font-[Segoe_Script]">
@@ -66,18 +66,19 @@ const Footer = () => {
                 Chúng tôi chuyên cung cấp các sản phẩm chất lượng từ dê và cừu, bao gồm thịt sạch, sữa tươi, và các sản phẩm chế biến tự nhiên.
               </p>
               <div className="flex space-x-4 mt-4">
-                <LiaFacebookF className="text-[#5B8C51] w-10 h-10 bg-[#F8F7F0] rounded-full p-[3%]" />
-                <FaXTwitter className="text-[#5B8C51] w-10 h-10 bg-[#F8F7F0] rounded-full p-[3%]" />
-                <TiSocialLinkedin className="text-[#5B8C51] w-10 h-10 bg-[#F8F7F0] rounded-full p-[2%]" />
-                <FaInstagram className="text-[#5B8C51] w-10 h-10 bg-[#F8F7F0] rounded-full p-[3%]" />
+                <LiaFacebookF className="text-[#5B8C51] w-10 h-10 bg-[#F8F7F0] rounded-full p-2 shrink-0" />
+                <FaXTwitter className="text-[#5B8C51] w-10 h-10 bg-[#F8F7F0] rounded-full p-2 shrink-0" />
+                <TiSocialLinkedin className="text-[#5B8C51] w-10 h-10 bg-[#F8F7F0] rounded-full p-2 shrink-0" />
+                <FaInstagram className="text-[#5B8C51] w-10 h-10 bg-[#F8F7F0] rounded-full p-2 shrink-0" />
               </div>
+
             </div>
             
-            <div className="col-span-7">
-              <h3 className="text-[200%] leading-[120%] text-[#404A3D] text-left">
+            <div className="md:col-span-7">
+              <h3 className="text-3xl lg:text-4xl xl:text-5xl text-[#404A3D] text-left">
                 Chúng tôi cam kết mang đến sự an tâm và chất lượng cao nhất cho khách hàng.
               </h3>
-              <div className="grid grid-cols-3 gap-4 mt-4">
+              <div className="grid  grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                 <div>
                   <h3 className="text-lg font-semibold mb-2 text-[#404A3D] text-left">Liên Kết</h3>
                   <ul className="space-y-1 text-sm text-[#666666] text-left">

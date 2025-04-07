@@ -2,17 +2,35 @@ import React from "react";
 
 interface NavbarItemProps {
   name: string;
-  Icon: React.ElementType; }
+  Icon: React.ElementType;
+  textColor?: string; 
+  iconColor?: string; 
+  iconwh?:string;
+  padding?: string; 
+  activeColor?: string; 
+  borderItem?: string; 
+}
 
-const NavbarItem: React.FC<NavbarItemProps> = ({ name, Icon }) => {
+const NavbarItem: React.FC<NavbarItemProps> = ({
+  name,
+  Icon,
+  textColor = "text-white",
+  iconColor = "text-[#EDDD5E]",
+  iconwh="w-2 h-2",
+  padding = "p-0",
+  activeColor = "active:text-[#EDDD5E]",
+  borderItem = "rounded-[#EDDD5E]",
+}) => {
   return (
     <div
-      className=" flex items-center gap-3 text-[14px] font-semibold cursor-pointer hover:underline underline-offset-8 hover:text-[#EDDD5E] mb-2"
+      className={`flex items-center gap-3 text-[14px] font-semibold cursor-pointer mb-2 sm:mb-0 w-full transition-all duration-300 
+                 ${padding} ${activeColor} ${borderItem}`}
     >
-      <Icon className='text-[#EDDD5E]  w-[9px] h-[9px]' />
-      <h2 className="text-white">{name}</h2>
+      <Icon className={`${iconColor} ${iconwh} `} />
+      <h2 className={`${textColor}`}>{name}</h2>
     </div>
   );
 };
 
 export default NavbarItem;
+

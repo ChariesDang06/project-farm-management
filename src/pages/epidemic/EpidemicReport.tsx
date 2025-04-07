@@ -52,8 +52,8 @@ const EpidemicReport = () => {
 
   return (
     <div className="bg-[#F3F7F5] rounded-[16px] p-5">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl">Thống kê dịch bệnh</h1>
+      <div className="flex flex-wrap gap-y-2 items-center justify-between md:mb-8">
+        <h1 className="text-xl sm:text-2xl">Thống kê dịch bệnh</h1>
         <TimelineSelector
           filterType={filterType}
           setFilterType={setFilterType}
@@ -73,13 +73,13 @@ const EpidemicReport = () => {
       </div>
 
       <div className="bg-[#FFFFF1] mt-4 p-4 rounded-[20px]">
-        <h2 className="text-lg text-left font-semibold mb-4">Số ca chữa khỏi, tái phát</h2>
+        <h2 className="text-md sm:text-lg text-left font-semibold mb-4">Số ca chữa khỏi, tái phát</h2>
         <div className="space-y-4">
           {cases.map((disease) => (
             <div key={disease.id} className="px-4 p-4 rounded-lg border border-[#A1A3AB]">
               <div className="flex items-center mb-3">
                 <span className="w-3 h-3 bg-green-500 rounded-full mr-2"></span>
-                <h3 className="font-semibold">{disease.name}</h3>
+                <h3 className="sm:font-semibold">{disease.name}</h3>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="flex flex-col gap-3 md:col-span-1 text-left">

@@ -1,7 +1,7 @@
 import { HiOutlineSearch } from "react-icons/hi";
 import Icon from "../../assets/IconHomePage/Icon.png";
 import "./style.css";
-
+import { useState, useEffect } from "react";
 interface ButtonProps {
   text?: string;
   backgroundColor?: string;
@@ -10,6 +10,17 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({ text, backgroundColor = "#EDDD5E", iconType,login }) => {
+  const [hideElements, setHideElements] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollHeight = window.scrollY;
+      setHideElements(scrollHeight >= 500); 
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  
   const width =
     text && iconType === "arrow" ? "183.34px" : "48px"; 
   const height = "48px"; 
@@ -31,18 +42,21 @@ const Button: React.FC<ButtonProps> = ({ text, backgroundColor = "#EDDD5E", icon
         {iconType === "arrow" && <img src={Icon} className="w-4 h-4" />}
       </button>)
       :(
-        <>
-          <div className="tagLogin">
+        <> <div className={`tagLogin relative ${hideElements ? "no-decorations" : ""}`}>
             <button
             className="cursor-pointer bg-[#EDDD5E]  w-[150px] h-[54px] rounded-[30px] shrink-0 flex items-center justify-center gap-1.5 font-medium transition-all duration-300"
             >
               <span className="mr-1 text-semibold font-normal">Đăng Nhập</span><img src={Icon} className="w-4 h-4" />
             </button>
           </div>
-          <div className=" curve_oneLogin"></div>
-          <div className=" curve_twoLogin"></div>
-        </>
-        
+          {!hideElements && (
+            <>
+              <div className="curve_oneLogin"></div>
+              <div className="curve_twoLogin"></div>
+              
+            </>
+          )}
+            </>
       )
     }
     </>

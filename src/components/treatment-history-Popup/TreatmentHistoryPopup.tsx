@@ -45,22 +45,26 @@ const TreatmentHistoryPopup: React.FC<TreatmentHistoryProps> = ({ id, diseaseTyp
         <h2 className="text-xl font-bold mb-4">Lịch sử điều trị</h2>
         <p>ID: <span className="font-semibold">{id}</span> | Loại bệnh: <span className="font-semibold">{diseaseType}</span></p>
 
-        <div className="grid grid-cols-2 gap-4 mt-4 text-left">
-          <InputField  label="Công việc"  type="text"    value={task} onChange={(val) => handleChange("task", val)} />
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium">Loại bệnh</label>
-            <input type="text" value={diseaseType} disabled className="w-full p-2 border border-[#D4D4D4] rounded-[6px] " />
-          </div>
-          <InputField   label="Thuốc sử dụng"  type="text" value={medicine}  onChange={(val) => handleChange("medicine", val)} />
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium">Người phụ trách</label>
-            <input type="text" value="Chuyên gia A" disabled className="w-full p-2 border border-[#D4D4D4] rounded-[6px] " />
-          </div>
-          <div className="col-span-2 gap-1">
-            <label className="text-sm font-medium">Ghi chú</label>
-            <textarea value={note} onChange={(e) => setNote(e.target.value)} className="w-full border border-[#D4D4D4] rounded-[6px] p-2 text-[#242731] resize-none focus:outline-none focus:border-[#F8C32C] h-[110px]"/>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 text-left">
+        <div className="flex flex-col gap-1">
+          <InputField label="Công việc" type="text" value={task} onChange={(val) => handleChange("task", val)} />
         </div>
+        <div className="flex flex-col gap-1">
+          <label className="text-sm font-medium">Loại bệnh</label>
+          <input type="text" value={diseaseType} disabled className="w-full p-2 border border-[#D4D4D4] rounded-[6px]" />
+        </div>
+        <div className="flex flex-col gap-1">
+          <InputField label="Thuốc sử dụng" type="text" value={medicine} onChange={(val) => handleChange("medicine", val)} />
+        </div>
+        <div className="flex flex-col gap-1">
+          <label className="text-sm font-medium">Người phụ trách</label>
+          <input type="text" value="Chuyên gia A" disabled className="w-full p-2 border border-[#D4D4D4] rounded-[6px]" />
+        </div>
+        <div className="md:col-span-2 flex flex-col gap-1">
+          <label className="text-sm font-medium">Ghi chú</label>
+          <textarea value={note} onChange={(e) => setNote(e.target.value)} className="w-full border border-[#D4D4D4] rounded-[6px] p-2 text-[#242731] resize-none focus:outline-none focus:border-[#F8C32C] h-[110px]"/>
+        </div>
+      </div>
 
         <div className="flex justify-end gap-4 my-6">
           <Button label="Thoát" outlined onClick={onClose} rounded />

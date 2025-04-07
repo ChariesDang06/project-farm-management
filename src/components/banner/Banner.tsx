@@ -23,7 +23,7 @@ const Banner = () => {
   };
   return (
     <div
-      className="relative w-full h-[120vh] bg-cover bg-center rounded-[4%] transition-all duration-500"
+      className="relative w-full min-h-[80vh] lg:min-h-[100vh] xl:h-[120vh] bg-cover bg-center rounded-[4%] transition-all duration-500"
       style={{
         backgroundImage: `linear-gradient(to top right, rgba(171, 179, 137, 0.67), rgba(18, 37, 20, 0.73)), url(${banners[currentIndex]})`,
         backgroundSize: "cover",
@@ -33,22 +33,21 @@ const Banner = () => {
     >
       <Navbar />
       <div className="flex items-center text-left h-full pl-[6%] absolute top-1/2 transform -translate-y-1/2 mt-[2%]">
-        <div className="w-[66%] flex justify-center flex-col text-left">
-          <button className="w-[16%] h-[3.5%] py-1 px-2 border border-white rounded-full text-white flex items-center justify-center mb-[3%] overflow-hidden ">
-            <p className="text-white text-[1.2vw] whitespace-nowrap max-w-full truncate">DL FARM</p>
+        <div className="w-[66%] flex justify-center flex-col">
+          <button className="w-[16%] min-w-[100px] md:w-[140px] h-auto py-1 px-2 border border-white rounded-full text-white flex items-center justify-center mb-[3%]">
+            <p className="text-white text-sm sm:text-sm md:text-sm lg:text-lg xl:text-lg  whitespace-nowrap">DL FARM</p>
           </button>
-
-          <h1 className="text-[5vw] leading-[120%] text-white">
+          <h1 className="text-3xl lg:text-[4vw] xl:text-[5vw] text-white">
             Tự Nhiên Nuôi Dưỡng Cuộc Sống
           </h1>
-          <hr className="w-full border-t-1 border-white my-[2%]" />
-          <p className="text-[1.5vw] leading-[150%] text-white mb-[3%]">
+          <hr className="w-full border-t border-white my-1" />
+          <p className="text-sm md:text-md lg:text-lg xl:text-xl text-white mb-3">
             Chúng tôi cung cấp vật nuôi khỏe mạnh, rau sạch, an toàn từ nông trại đến bàn ăn.
           </p>
           <Button text="Liên Hệ Ngay" backgroundColor="#FFFFFF" iconType="arrow" />
         </div>
       </div>
-      <div className="absolute top-1/2 right-5 transform -translate-y-1/2 flex flex-col gap-2">
+      <div className="absolute top-1/2 right-5 text-sm lg:text-md transform -translate-y-1/2 flex flex-col gap-2">
         {banners.map((_, index) => (
           <button
             key={index}

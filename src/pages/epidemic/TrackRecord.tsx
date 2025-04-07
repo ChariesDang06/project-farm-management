@@ -293,24 +293,24 @@ export default function TrackRecord() {
             </div>
 
             <Dialog visible={productDialog} style={{ width: '45rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Hồ sơ theo dõi" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
-                <p className="mb-4 text-black">Lịch sử điều trị </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+                <p className="mb-4 text-black">Lịch sử điều trị</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2 sx:grid-cols-1">
                   {/* trai */}
-                  <div className="grid gap-1 ">
+                  <div className="grid gap-1 w-full">
                     <div className="field ">
                         <label htmlFor="_id" className="font-normal">ID</label>
                         <InputText id="_id" value={product._id}  onChange={(e) => onInputChange(e, '_id')}  required  autoFocus className={classNames({ 'p-invalid': submitted && !product._id })}
                         />
                         {submitted && !product._id && <small className="p-error">_id is required.</small>}
                     </div>
-                    <div className="field ">
+                    <div className="field w-full">
                       <label htmlFor="barn" className="font-normal">
                           Khu vực cách ly
                       </label>
                       <InputText id="barn" value={product.barn} onChange={(e) => onInputChange(e, 'barn')}   />
                     </div>
 
-                    <div className="field">
+                    <div className="field w-full">
                         <label htmlFor="detectionDate" className="font-normal">Ngày phát hiện</label>
                         <Calendar 
                             id="detectionDate" 
@@ -321,20 +321,20 @@ export default function TrackRecord() {
                     </div>
                   </div>
                   {/* phải */}
-                  <div className="grid gap-1 ">
+                  <div className="grid gap-1 w-full ">
                     <div className="field ">
                         <label htmlFor="species" className="font-normal">Giống loài</label>
                         <InputText id="species" value={product.species}  onChange={(e) => onInputChange(e, 'species')}  required  autoFocus className={classNames({ 'p-invalid': submitted && !product.species })}
                         />
                         {submitted && !product.species && <small className="p-error">species is required.</small>}
                     </div>
-                    <div className="field ">
+                    <div className="field w-full ">
                       <label htmlFor="diseaseType" className="font-normal">
                         Loại bệnh
                       </label>
                       <InputText id="diseaseType" value={product.diseaseType} onChange={(e) => onInputChange(e, 'diseaseType')}   />
                     </div>
-                    <div className="field">
+                    <div className="field w-full">
                         <label htmlFor="entryDate" className="font-normal">Ngày tái nhập đàn</label>
                         <Calendar 
                             id="entryDate" 

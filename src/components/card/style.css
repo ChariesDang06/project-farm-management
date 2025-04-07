@@ -99,20 +99,20 @@
 
 }
 .curve_oneAgri {
-  height: 3rem;
+  height: 2.4rem;
   width: 3rem;
   background-color: #ffffff;
-  left: 62.6%;
-  bottom: -0.07rem;
+  left: -72.4%;
+  bottom: 0.4rem;
   border-bottom-right-radius: 5.625rem;
   z-index: 2;
 }
 .curve_twoAgri {
-    z-index: 1;
-    width: 3rem;
-    height: 3.1rem; 
-     background-image: url(../../assets//IconHomePage/SectionCNC1.PNG);
-    left: 63%;
-    bottom: -0.5rem;
-    border-bottom-right-radius: 0.625rem;
+  z-index: 1;
+  width: 3rem;
+  height: 3.1rem;
+  background-image: url(/src/assets/IconHomePage/SectionCNC1.PNG);
+  left: -71%;
+  bottom: -0.5rem;
+  border-bottom-right-radius: 0.625rem;
 }

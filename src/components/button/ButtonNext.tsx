@@ -1,5 +1,5 @@
 import { GrNext, GrPrevious } from "react-icons/gr";
-
+import { FaArrowUp } from "react-icons/fa";
 interface ButtonProps {
   text?: string;
   borderColor?: string; 
