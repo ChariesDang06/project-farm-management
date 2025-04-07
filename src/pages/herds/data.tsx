@@ -10,7 +10,7 @@ export const ProductService = {
                   exitDate: '12.06.2022',
                   totalQuantity: 1200120,
                   sickQuantity: 234,
-                  cameraMonitoring: 'Camera'
+                  cameraMonitoring: 'CAM_001'
                 },
                 {
                   id: '2001',
@@ -21,7 +21,7 @@ export const ProductService = {
                   exitDate: '12.06.2023',
                   totalQuantity: 6060606,
                   sickQuantity: 12,
-                  cameraMonitoring: 'Camera'
+                  cameraMonitoring: 'CAM_002'
                 },
                 {
                   id: '2002',
@@ -32,7 +32,7 @@ export const ProductService = {
                   exitDate: '10.05.2023',
                   totalQuantity: 6060606,
                   sickQuantity: 606,
-                  cameraMonitoring: 'Camera'
+                  cameraMonitoring: 'CAM_003'
                 },
                 {
                   id: '2003',
@@ -43,7 +43,7 @@ export const ProductService = {
                   exitDate: '05.07.2022',
                   totalQuantity: 1200120,
                   sickQuantity: 120,
-                  cameraMonitoring: 'Camera'
+                  cameraMonitoring: 'CAM_004'
                 },
                 {
                   id: '2004',
@@ -54,7 +54,7 @@ export const ProductService = {
                   exitDate: '15.08.2023',
                   totalQuantity: 6060606,
                   sickQuantity: 6060606,
-                  cameraMonitoring: 'Camera'
+                  cameraMonitoring: 'CAM_005'
                 },
                 {
                   id: '2005',
@@ -65,7 +65,7 @@ export const ProductService = {
                   exitDate: '10.07.2023',
                   totalQuantity: 500500,
                   sickQuantity: 25,
-                  cameraMonitoring: 'Camera'
+                  cameraMonitoring: 'CAM_006'
                 },
                 {
                   id: '2006',

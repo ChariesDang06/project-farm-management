@@ -8,20 +8,34 @@ interface AbnormalDetectionCardProps {
   link: string;
 }
 
-const AbnormalDetectionCard: React.FC<AbnormalDetectionCardProps> = ({ imageUrl, title, timestamp, description, link }) => {
+const AbnormalDetectionCard: React.FC<AbnormalDetectionCardProps> = ({
+  imageUrl,
+  title,
+  timestamp,
+  description,
+  link,
+}) => {
   return (
-    <div className="flex border-1 border text-[#F44336] rounded-xl p-3 items-center bg-[#FFEBEE] shadow-md w-full">
-      <img src={imageUrl} alt="Alert" className="w-24 h-24 rounded-lg object-cover" />
+    <div className="flex border border-red-300 text-[#F44336] rounded-xl p-3 items-center bg-[#FFEBEE] shadow-md w-full">
+      <img
+        src={imageUrl}
+        alt="Alert"
+        className="w-24 h-24 rounded-lg object-cover"
+      />
       <div className="ml-3 flex flex-col text-left">
-        <h3 className="text-[#F44336] font-bold text-sm">{title}</h3>
-        <p className="text-[#F44336] text-xs">{timestamp}</p>
+        <h3 className="text-[#F44336] font-bold text-sm line-clamp-1">{title}</h3>
+        <p className="text-[#F44336] text-xs italic">{timestamp}</p>
         <p className="text-[#F44336] text-sm line-clamp-2">{description}</p>
-        <a href={link} className="text-[#F44336] text-sm font-medium mt-1 underline">
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#F44336] text-sm font-medium mt-1 underline"
+        >
           Xem thêm
         </a>
       </div>
     </div>
   );
 };
-
-export default AbnormalDetectionCard;
+ export default AbnormalDetectionCard;

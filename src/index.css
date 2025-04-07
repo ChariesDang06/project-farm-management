@@ -198,3 +198,18 @@ img{
     padding: 0.5rem 0.5rem;
   }
 }
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    background: #ffffff;
+    border-color: #76BC6A;
+    color: #76BC6A;
+}
+.p-tabview{
+  width: 100%;
+}
+.p-tabview .p-tabview-panels {
+  background: #f3f7f5;
+  padding: 0 ;
+  border-radius: 0 0 16px 16px ;
+}.p-tabview .p-tabview-nav {border-radius: 16px 16px 0 0; 
+}

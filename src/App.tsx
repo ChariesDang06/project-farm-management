@@ -21,11 +21,13 @@ import Diseases from './pages/prev-pages/diseases/Diseases';
 import Treatments from './pages/prev-pages/treatments/Treatments';
 import { NotificationProvider } from "./contexts/NotificationContext";
 import NotificationContainer from "./components/NotificationContainer";
-import { MdLinkedCamera } from "react-icons/md";
+import { MdLinkedCamera ,MdManageAccounts } from "react-icons/md";
 import IndexHerd from './pages/herds';
 import IndexResources from './pages/resources';
 import IndexEpidemic from './pages/epidemic';
 import ButtonScrollToTop from './components/button/ButtonScrollToTop';
+import CameraPage from './pages/herds/CameraBarn';
+import GlobalDetectionListener from './components/camera-stream/GlobalDetectionListener ';
 const queryClient = new QueryClient();
 const SIDEBAR_ITEMS = [
   { text: "Tổng quan", url: "/dashboard", icon: <HiMiniChartPie /> },
@@ -53,7 +55,7 @@ const SIDEBAR_ITEMS = [
   {
     text: "QL Admin (Prev)",
     url: "/admin",
-    icon: <MdAssignment />,
+    icon: <MdManageAccounts  />,
     subItems: [
       { text: "Nhóm vật nuôi", url: "/admin/categories" },
       { text: "Đàn (pages old)", url: "/admin/old-herds" },
@@ -141,6 +143,10 @@ function App() {
           element: <IndexHerd />,
         },
         {
+          path: "/herds/:_id/:chuongId/:camId",
+          element: <CameraPage />,
+        },
+        {
           path: "/epidemic",
           element: <IndexEpidemic />,
         },
@@ -187,6 +193,7 @@ function App() {
   ]);
   return (
       <NotificationProvider>
+        <GlobalDetectionListener />
         <NotificationContainer />
         <RouterProvider router={router} />
         <ButtonScrollToTop />

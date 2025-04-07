@@ -353,6 +353,8 @@ import { FiEdit, FiTrash2 ,FiChevronDown, FiChevronUp ,FiSearch, FiPlus} from "r
 import { FaExclamationTriangle } from "react-icons/fa";
 import { Calendar } from 'primereact/calendar';
 import { MdCameraOutdoor } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+
 interface Product {
   id: string | null;
   species: string;
@@ -497,13 +499,25 @@ export default function Herds() {
         setProduct(_product);
     };
     const cameraBodyTemplate = (rowData: Product) => {
+        const navigate = useNavigate(); // hook phải gọi trong component
+      
+        const handleClick = () => {
+          if (rowData.id && rowData.cameraMonitoring) {
+            navigate(`/herds/${rowData.id}/${rowData.barn}/${rowData.cameraMonitoring}`);
+          }
+        };
+      
         return (
-            <div className="flex  cursor-pointer gap-1 bg-[#3D6649] text-white px-4 py-2 rounded-full hover:bg-green-600 transition">
-                <MdCameraOutdoor className="text-white" size={18} />
-                <p className="" > {rowData.cameraMonitoring} </p>
+          <div
+            className="flex cursor-pointer gap-1 bg-[#3D6649] text-white px-4 py-2 rounded-full hover:bg-green-600 transition"
+            onClick={handleClick}
+          >
+            <MdCameraOutdoor className="text-white" size={18} />
+            <p>{rowData.cameraMonitoring}</p>
           </div>
-        )
-    };
+        );
+      };
+      
     const actionBodyTemplate = (rowData: Product) => {
         return (
             <React.Fragment>
