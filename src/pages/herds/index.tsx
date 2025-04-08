@@ -6,16 +6,16 @@ import Herds from "./Herds";
 import { MdOutlinePets } from "react-icons/md";
 
 const IndexHerd: React.FC = () => {
-  const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<Herds />);
+  const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<AbnormalDetection />);
 
   const buttons = [
-    { text: "Giám sát", component: <AbnormalDetection /> },
+    { text: "Quản lý", component: <Herds /> },
     { text: "Báo cáo", component: <HerdsReport /> },
   ];
   return (
     <div className="gap-4 w-full space-y-5">
         {/* <ButtonAction  text="Quản lý vật nuôi" onClick={() => setActiveComponent(<Herds />)} bgColor="#000000" textColor="#ffffff" /> */}
-        <ButtonAction icon={<MdOutlinePets className="w-5 h-5" />}  hoverBorderColor="#76bc6a"  borderColor="#000000" text="Quản lý vật nuôi" onClick={() => setActiveComponent(<Herds />)} bgColor="#000000" textColor="#ffffff" truncate={false}/>
+        <ButtonAction icon={<MdOutlinePets className="w-5 h-5" />}  hoverBorderColor="#76bc6a"  borderColor="#000000" text="Giám sát chuồng trại" onClick={() => setActiveComponent(<AbnormalDetection />)} bgColor="#000000" textColor="#ffffff" truncate={false}/>
       <div className="flex gap-2">
         {buttons.map((btn, index) => (
           <ButtonAction key={index} text={btn.text} bgColor="#ffffff" textColor="#76bc6a" borderColor="#76bc6a" onClick={() => setActiveComponent(btn.component)} />
