@@ -2,7 +2,6 @@ import  { useRef, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { FiChevronUp, FiChevronDown } from "react-icons/fi";
-import { RiVideoDownloadLine } from "react-icons/ri";
 
 interface EventType {
     _id: string;
@@ -24,36 +23,7 @@ const LatestEventTable = ({ events }: { events: EventType[] }) => {
       className="w-16 h-16 object-cover rounded"
     />
   );
-  const downloadVideo = async (video_recorded: string) => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/download/${video_recorded}`);
-      if (!response.ok) throw new Error("Video not found");
-  
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${video_recorded}.mp4`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error(err);
-      alert("Tải video thất bại");
-    }
-  };
-  const downloadButtonTemplate = (rowData: EventType) => (
-     <div
-                      className="flex cursor-pointer gap-1 bg-[#3D6649] text-white px-4 py-2 rounded-full hover:bg-green-600 transition"
-                      onClick={() => downloadVideo(rowData._id)}
-                    >
-                      <RiVideoDownloadLine className="text-white" size={18} />
-                      <p>Tải Video</p>
-                    </div>
-     
-  );
-    
+
     const dateBodyTemplate = (rowData: EventType) =>
     new Date(rowData.event_time).toLocaleString();
     const header = (
@@ -100,11 +70,7 @@ const LatestEventTable = ({ events }: { events: EventType[] }) => {
             style={{ minWidth: "8rem" }}
           />
           <Column field="cameraID" header="Camera ID" sortable style={{ minWidth: "6rem" }} />
-          {/* <Column
-          header="Tải Video"
-          body={downloadButtonTemplate}
-          style={{ minWidth: "8rem" }}
-        /> */}
+
 
         </DataTable>
     </div>

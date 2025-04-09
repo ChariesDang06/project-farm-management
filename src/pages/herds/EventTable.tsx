@@ -34,10 +34,10 @@ const EventsTable: React.FC = () => {
 
   const header = <div className="text-xl font-bold">Danh sách sự kiện</div>;
 
-  const imageBodyTemplate = (rowData: Event) => {
-    if (!rowData.image_url) return "Không có ảnh";
-    return <img src={rowData.image_url} alt="event" className="w-20 h-auto rounded" />;
-  };
+  // const imageBodyTemplate = (rowData: Event) => {
+  //   if (!rowData.image_url) return "Không có ảnh";
+  //   return <img src={rowData.image_url} alt="event" className="w-20 h-auto rounded" />;
+  // };
 
   const dateBodyTemplate = (rowData: Event) => {
     return new Date(rowData.event_time).toLocaleString("vi-VN");

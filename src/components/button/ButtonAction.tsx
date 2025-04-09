@@ -9,22 +9,35 @@ type ButtonProps = {
   hoverBorderColor ?: string; 
   onClick?: () => void;
   truncate?: boolean; 
+  disabled?: boolean;
 };
 
-const Button: React.FC<ButtonProps> = ({ icon, text, bgColor = "#76bc6a", textColor = "#ffffff", borderColor,onClick,truncate = true,hoverBorderColor  = "", }) => {
+const Button: React.FC<ButtonProps> = ({ icon, text, bgColor = "#76bc6a", textColor = "#ffffff", borderColor,onClick,truncate = true,hoverBorderColor  = "", disabled = false}) => {
+  const handleClick = () => {
+    if (!disabled && onClick) {
+      onClick();
+    }
+  };
   return (
     <button 
-      className="flex items-center whitespace-nowrap gap-2 sm:px-4 sm:py-2 py-1.5 px-3 rounded-lg font-medium border  cursor-pointer transition-colors duration-300"
-      style={{ backgroundColor: bgColor, color: textColor ,borderColor: borderColor || bgColor, borderWidth: borderColor ? "2px" : "0"}} onClick={onClick}
+      disabled={disabled}
+      className={`flex items-center whitespace-nowrap gap-2 sm:px-4 sm:py-2 py-1.5 px-3 rounded-lg font-medium border  transition-colors duration-300
+      ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`}
+      style={{ backgroundColor: bgColor, color: textColor ,borderColor: borderColor || bgColor, borderWidth: borderColor ? "2px" : "0"}}
+      onClick={handleClick}
       onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = "#76bc6a";
-        e.currentTarget.style.borderColor = hoverBorderColor; 
-        e.currentTarget.style.color = "#ffffff";
+        if (!disabled) {
+          e.currentTarget.style.backgroundColor = "#76bc6a";
+          e.currentTarget.style.borderColor = hoverBorderColor;
+          e.currentTarget.style.color = "#ffffff";
+        }
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundColor = bgColor;
-        e.currentTarget.style.borderColor = borderColor || bgColor;
-        e.currentTarget.style.color = textColor;
+        if (!disabled) {
+          e.currentTarget.style.backgroundColor = bgColor;
+          e.currentTarget.style.borderColor = borderColor || bgColor;
+          e.currentTarget.style.color = textColor;
+        }
       }}
     >
       {icon}

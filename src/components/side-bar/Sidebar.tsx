@@ -215,7 +215,7 @@ useEffect(() => {
           <ul className="px-3">
             {React.Children.map(children, (child) =>
               React.cloneElement(child as React.ReactElement, {
-                onSelect: (path: string) => {
+                onSelect: () => {
                   if (wasExpanded) {
                     setExpanded(false); 
                   }

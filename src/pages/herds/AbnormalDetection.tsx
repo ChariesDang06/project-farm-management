@@ -9,37 +9,34 @@ import QuantitySelector from "../../components/quantity-selector/QuantitySelecto
 import { useEffect, useState } from "react";
 import ButtonAction from "../../components/button/ButtonAction";
 import { Toast } from "primereact/toast";
-
+import { mockData, barns, BarnId, MonthRange, WidgetInfo } from "./data"
 const cameraIds = ["CAM_001"];
 
 function AbnormalDetection() {
   const handleSelectBarn = (id: string) => {
     console.log("Selected Barn ID:", id);
   };
-    const [barns, setBarns] = useState<Barn[]>([]);
+    const [barns1, setBarns1] = useState<Barn[]>([]);
   useEffect(() => {
       const fetchBarns = async () => {
         try {
           const response = await fetch("https://agriculture-traceability.vercel.app/api/v1/rooms");
           const data = await response.json();
-          setBarns(data.rooms);
+          setBarns1(data.rooms);
         } catch (error) {
           console.error("Error fetching:", error);
         }
       };
       fetchBarns();
     }, []);
-  const handleQuantityChange = (animal: string, quantity: number, from: string, to: string) => {
-    console.log("Loại vật nuôi:", animal);
-    console.log("Số lượng:", quantity);
-    console.log("Từ tháng:", from, "đến tháng:", to);
-  };
+ 
   const [abnormalDetections, setAbnormalDetections] = useState<any[]>([]);
 
   const handleAbnormalDetect = (data: any) => {
     console.log("Phát hiện bất thường:", data);
     setAbnormalDetections((prev) => [data, ...prev]);
   };
+
   const toast = useRef<Toast>(null);
   const [showAddCamera, setShowAddCamera] = useState(false);
   const [newCam, setNewCam] = useState({ id: "", name: "", location: "", url: "" });
@@ -90,37 +87,74 @@ function AbnormalDetection() {
   
     fetchCameras();
   }, []);
-  
 
+  
+  const [selectedBarnId, setSelectedBarnId] = useState<BarnId>("barn1");
+  const [from, setFrom] = useState<string>("Tháng 1");
+  const [to, setTo] = useState<string>("Tháng 3");
+  
+  const [widgetData, setWidgetData] = useState<WidgetInfo>(
+    mockData["barn1"]["Tháng 1-Tháng 3"]
+  );
+  useEffect(() => {
+    handleUpdateData(selectedBarnId, from, to);
+  }, [selectedBarnId, from, to]);
+  const handleUpdateData = (barnId: string, fromMonth: string, toMonth: string) => {
+    const key = `${fromMonth}-${toMonth}` as MonthRange;
+  
+    if (barnId in mockData) {
+      const data = mockData[barnId as BarnId]?.[key];
+      if (data) {
+        setWidgetData(data);
+      } else {
+        console.warn("Không có dữ liệu cho khoảng tháng:", key);
+      }
+    } else {
+      console.warn("Không có dữ liệu cho barnId:", barnId);
+    }
+  };
+  
     return (
       <>
       <Toast ref={toast} />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 rounded-[20px] mb-5">
         <div className="bg-[#F3F7F5] rounded-[20px] p-3 sm:p-5 mb-5 lg:col-span-2">
-          <BarnSelector 
-            barns={barns}
-            onSelect={handleSelectBarn}
-            icon={<MdHome className="w-6 h-6"/>}
-            rounded={false}
-            widthFull="w-[240px]"
-            placeholder="Chọn đàn"
-            iconColor="text-white"
-            iconBgColor="bg-yellow-500"
-          />
+        <BarnSelector
+          barns={barns}
+          value={selectedBarnId}
+          onSelect={(id: string) => {
+            setSelectedBarnId(id as BarnId); 
+            handleUpdateData(id, from, to);
+          }}
+          icon={<MdHome className="w-6 h-6" />}
+          rounded={false}
+          widthFull="w-[240px]"
+          placeholder="Chọn đàn"
+          iconColor="text-white"
+          iconBgColor="bg-yellow-500"
+        />
           <div className="my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <WidgetComponent icon={<FaPaw />} title="Tổng số vật nuôi" quantity={80040} description="Số lượng tổng vật nuôi tại chi nhánh" bgColor="#2196F3" />
-              <WidgetComponent icon={<FaCheck />} title="Nhập vào" quantity={80040} description="Tổng số lượng vật nuôi được nhập tại chi nhánh" bgColor="#619959" />
-              <WidgetComponent icon={<FaTag />} title="Bán ra" quantity={80040} description="Tổng số lượng vật nuôi được bán ra tại chi nhánh" bgColor="#FCBD2D" />
+              <WidgetComponent icon={<FaPaw />} title="Tổng số vật nuôi" quantity={widgetData.total}  description="Số lượng tổng vật nuôi tại chi nhánh" bgColor="#2196F3" />
+              <WidgetComponent icon={<FaCheck />} title="Nhập vào" quantity={widgetData.input} description="Tổng số lượng vật nuôi được nhập tại chi nhánh" bgColor="#619959" />
+              <WidgetComponent icon={<FaTag />} title="Bán ra" quantity={widgetData.output} description="Tổng số lượng vật nuôi được bán ra tại chi nhánh" bgColor="#FCBD2D" />
           </div>
         </div>
         <div className="lg:col-span-1 rounded-[20px] p-3 sm:p-5 mb-5 bg-[#F3F7F5]">
-            <QuantitySelector onChange={handleQuantityChange} />
+        <QuantitySelector
+          from={from}
+          to={to}
+          setFrom={setFrom}
+          setTo={setTo}
+          quantity={widgetData.quantity}
+          onDateChange={(from, to) => handleUpdateData(selectedBarnId, from, to)}
+        />
+
         </div>
       </div>
       <div className="bg-[#F3F7F5] rounded-[20px] p-3 sm:p-5">
           <div className="flex flex-wrap items-center gap-4 mb-5">
             <BarnSelector 
-              barns={barns}
+              barns={barns1}
               onSelect={handleSelectBarn}
               icon={<MdHome className="w-6 h-6"/>}
               rounded={false}

@@ -19,7 +19,7 @@ interface CameraStreamProps {
 
 const CameraStream: React.FC<CameraStreamProps> = ({ camId, onAbnormalDetect }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [eventMessage, setEventMessage] = useState("Đang tải...");
+  // const [eventMessage, setEventMessage] = useState("Đang tải...");
   const [personCount, setPersonCount] = useState<number | null>(null);
   const [hasPerson, setHasPerson] = useState<boolean>(false);
   const [isConnected, setIsConnected] = useState(true);
@@ -110,7 +110,7 @@ const CameraStream: React.FC<CameraStreamProps> = ({ camId, onAbnormalDetect }) 
       try {
         const res = await fetch(`http://127.0.0.1:8000/latest_event/${camId}`);
         const data = await res.json();
-        setEventMessage(data.message || "Không có thông tin sự kiện");
+        // setEventMessage(data.message || "Không có thông tin sự kiện");
         setHasPerson(data.currentCount > 0);
 
         if (data.currentCount !== undefined) {
@@ -144,7 +144,8 @@ const CameraStream: React.FC<CameraStreamProps> = ({ camId, onAbnormalDetect }) 
         }
 
       } catch (error) {
-        setEventMessage("Lỗi khi lấy sự kiện");
+        console.log("err",error)
+        // setEventMessage("Lỗi khi lấy sự kiện");
       }
     };
 

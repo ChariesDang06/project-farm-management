@@ -1,6 +1,6 @@
 import './App.css';
-import { useState , useContext} from "react";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { useState , useContext,useEffect} from "react";
+import { createBrowserRouter, RouterProvider, Outlet ,useLocation } from "react-router-dom";
 import { QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
@@ -28,6 +28,7 @@ import IndexEpidemic from './pages/epidemic';
 import ButtonScrollToTop from './components/button/ButtonScrollToTop';
 import CameraPage from './pages/herds/CameraBarn';
 import GlobalDetectionListener from './components/camera-stream/GlobalDetectionListener ';
+import BreadcrumbManager from './components/breadcrumb/BreadcrumbManager';
 const queryClient = new QueryClient();
 const SIDEBAR_ITEMS = [
   { text: "Tổng quan", url: "/dashboard", icon: <HiMiniChartPie /> },
@@ -84,6 +85,11 @@ function App() {
   const Layout = () => {
     const { currentUser } = useContext(AuthContext);
     const [expanded, setExpanded] = useState<boolean>(true);
+    const location = useLocation();
+
+    useEffect(() => {
+    }, [location.pathname]);
+    
     return (
       <>
       {currentUser && (
@@ -114,6 +120,11 @@ function App() {
             `}
           >
             <Header expanded={expanded}/>
+            <BreadcrumbManager
+              setBreadcrumbItems={setBreadcrumbItems}
+              setActiveItem={setActiveItem}
+              SIDEBAR_ITEMS={SIDEBAR_ITEMS}
+            />
             <Breadcrumb_Comp items={breadcrumbItems} onNavigate={(url) => console.log("Navigate to:", url)} />
             <QueryClientProvider client={queryClient}>
               <Outlet />
@@ -203,3 +214,4 @@ function App() {
 }
 
 export default App;
+
