@@ -126,3 +126,73 @@ export const ProductService = {
         return Promise.resolve(this.getProductsData());
     },
 };
+
+
+
+export type MonthRange =
+  | "Tháng 1-Tháng 3"
+  | "Tháng 3-Tháng 5"
+  | "Tháng 5-Tháng 7"
+  | "Tháng 7-Tháng 9"
+  | "Tháng 9-Tháng 11";
+
+export type BarnId = "barn1" | "barn2" | "barn3" | "barn4" | "barn5";
+
+export type WidgetInfo = {
+  total: number;
+  input: number;
+  output: number;
+  quantity: number;
+};
+
+export type MockData = {
+  [key in BarnId]: {
+    [range in MonthRange]: WidgetInfo;
+  };
+};
+
+export const mockData: MockData = {
+  barn1: {
+    "Tháng 1-Tháng 3": { total: 1200, input: 800, output: 400, quantity: 33 },
+    "Tháng 3-Tháng 5": { total: 1600, input: 1100, output: 500, quantity: 55 },
+    "Tháng 5-Tháng 7": { total: 1400, input: 900, output: 500, quantity: 41 },
+    "Tháng 7-Tháng 9": { total: 1800, input: 1300, output: 500, quantity: 62 },
+    "Tháng 9-Tháng 11": { total: 2000, input: 1500, output: 500, quantity: 74 },
+  },
+  barn2: {
+    "Tháng 1-Tháng 3": { total: 2200, input: 1800, output: 400, quantity: 99 },
+    "Tháng 3-Tháng 5": { total: 2600, input: 2100, output: 500, quantity: 112 },
+    "Tháng 5-Tháng 7": { total: 3000, input: 2500, output: 500, quantity: 128 },
+    "Tháng 7-Tháng 9": { total: 3300, input: 2800, output: 500, quantity: 145 },
+    "Tháng 9-Tháng 11": { total: 3600, input: 3100, output: 500, quantity: 161 },
+  },
+  barn3: {
+    "Tháng 1-Tháng 3": { total: 900, input: 600, output: 300, quantity: 25 },
+    "Tháng 3-Tháng 5": { total: 1100, input: 800, output: 300, quantity: 30 },
+    "Tháng 5-Tháng 7": { total: 1300, input: 1000, output: 300, quantity: 35 },
+    "Tháng 7-Tháng 9": { total: 1500, input: 1200, output: 300, quantity: 40 },
+    "Tháng 9-Tháng 11": { total: 1700, input: 1400, output: 300, quantity: 45 },
+  },
+  barn4: {
+    "Tháng 1-Tháng 3": { total: 800, input: 500, output: 300, quantity: 20 },
+    "Tháng 3-Tháng 5": { total: 1000, input: 700, output: 300, quantity: 27 },
+    "Tháng 5-Tháng 7": { total: 1200, input: 900, output: 300, quantity: 33 },
+    "Tháng 7-Tháng 9": { total: 1400, input: 1100, output: 300, quantity: 39 },
+    "Tháng 9-Tháng 11": { total: 1600, input: 1300, output: 300, quantity: 44 },
+  },
+  barn5: {
+    "Tháng 1-Tháng 3": { total: 1000, input: 700, output: 300, quantity: 28 },
+    "Tháng 3-Tháng 5": { total: 1200, input: 900, output: 300, quantity: 34 },
+    "Tháng 5-Tháng 7": { total: 1400, input: 1100, output: 300, quantity: 40 },
+    "Tháng 7-Tháng 9": { total: 1600, input: 1300, output: 300, quantity: 46 },
+    "Tháng 9-Tháng 11": { total: 1800, input: 1500, output: 300, quantity: 52 },
+  },
+};
+
+export const barns = [
+  { _id: "barn1", name: "Đàn số 1" },
+  { _id: "barn2", name: "Đàn số 2" },
+  { _id: "barn3", name: "Đàn số 3" },
+  { _id: "barn4", name: "Đàn số 4" },
+  { _id: "barn5", name: "Đàn số 5" },
+];

@@ -14,7 +14,7 @@ type BarnSelectorProps = {
   iconBgColor?: string; 
   rounded?: boolean;
   widthFull?: string; 
-  placeholder?: string; 
+  placeholder?: string; value?: string;
 };
 
 const BarnSelector: React.FC<BarnSelectorProps> = ({
@@ -25,7 +25,7 @@ const BarnSelector: React.FC<BarnSelectorProps> = ({
   iconBgColor = "bg-yellow-500",
   rounded = false,
   widthFull = "w-full",
-  placeholder = "Chọn chuồng", 
+  placeholder = "Chọn chuồng", value,
 }) => {
   const [selectedBarn, setSelectedBarn] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -35,6 +35,12 @@ const BarnSelector: React.FC<BarnSelectorProps> = ({
     onSelect(id);
     setIsOpen(false);
   };
+  useEffect(() => {
+    if (value !== undefined) {
+      setSelectedBarn(value);
+    }
+  }, [value]);
+  
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {

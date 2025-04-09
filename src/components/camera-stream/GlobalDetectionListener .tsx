@@ -33,7 +33,7 @@ const GlobalDetectionListener = () => {
           const res = await fetch(`http://127.0.0.1:8000/latest_event/${camId}`);
           const data = await res.json();
           console.log(data);
-          const lastEventType = lastEventsRef.current[camId];
+          // const lastEventType = lastEventsRef.current[camId];
 
           // if (data.event_type !== lastEventType) {// sự khác biệt
           if (data.event_type === "Object leaving detected") {

@@ -1,10 +1,8 @@
 import {useContext,useState,useEffect} from "react"
 import AvataAdmin from "../../assets/avataAdmin.png"
-import IconNo from "../../assets/IconNotification.png"
 import { AuthContext } from "../../hooks/user"
 import BarnSelector, { Barn } from "../barn-selector/BarnSelector"
 import { MdHomeWork ,MdNotificationsNone } from "react-icons/md";
-import React from "react";
 
 export default function Header({
   expanded,

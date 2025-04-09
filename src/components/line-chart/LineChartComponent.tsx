@@ -3,7 +3,7 @@ import AlertCard from "../card/AlertCard";
 import { FaRegCheckCircle } from "react-icons/fa";  
 import { MdOutlineLightbulbCircle } from "react-icons/md";
 import { FiAlertCircle } from "react-icons/fi";
-
+import useWindowSize from "./useWindowSize"; 
 type ChartType = "herd" | "consumption" | "disease" | "water" | "food" | "medical";
 type FilterType = "year" | "month" | "week";
 
@@ -98,56 +98,40 @@ const LineChartComponent: React.FC<CombinedChartProps> = ({ title, chartType, fi
   };
 
   const selectedColors = colorGroups[chartType] || {};
-
+  const size = useWindowSize();
   return (
-    <div className="p-4 bg-white rounded-[16px] shadow-md ">
-      {/* <h1 className="text-xl mb-4 text-left font-semibold">{title}</h1>
-      <div className="max-h-120 h-full w-full">
-        <ResponsiveContainer width="100%" aspect={2.5} >
-          <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" tick={{ fill: "#555" }} />
-            <YAxis tick={{ fill: "#555" }} />
-            <Tooltip />
-            {Object.keys(selectedColors).map((key) => (
-              <Line
-                key={key}
-                type="monotone"
-                dataKey={key}
-                stroke={selectedColors[key]}
-                strokeWidth={2}
-                dot={false}
-              />
-            ))}
-          </LineChart>
-        </ResponsiveContainer>
-      </div> */}
+    <div className="p-2 md:p-4 bg-white rounded-[16px] shadow-md ">
       <h1 className="text-md md:text-xl mb-4 text-left font-semibold">{title}</h1>
-      <ResponsiveContainer 
-        width="100%" 
-        aspect={window.innerWidth < 740 ? 1.5 : 2.5} 
-        className="max-h-400 sm:max-h-100" 
-      >
-        <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" className="hidden sm:block" /> 
-          <XAxis dataKey="name" tick={{ fill: "#555", fontSize: window.innerWidth < 640 ? 10 : 14 }} />
-          <YAxis tick={{ fill: "#555", fontSize: window.innerWidth < 640 ? 10 : 14 }} />
-          <Tooltip />
-          {Object.keys(selectedColors).map((key) => (
-            <Line
-              key={key}
-              type="monotone"
-              dataKey={key}
-              stroke={selectedColors[key]}
-              strokeWidth={2}
-              dot={window.innerWidth < 740 ? false : true} 
-            />
-          ))}
-        </LineChart>
-      </ResponsiveContainer>
+      <ResponsiveContainer
+  width="100%"
+  height={size.width < 768 ? 280 : size.width < 1024 ? 350 : 420}
+  className="w-full"
+>
+  <LineChart data={data}>
+    <CartesianGrid strokeDasharray="3 3" className="hidden sm:block" />
+    <XAxis
+      dataKey="name"
+      tick={{ fill: "#555", fontSize: size.width < 640 ? 10 : 14 }}
+    />
+    <YAxis
+      tick={{ fill: "#555", fontSize: size.width < 640 ? 10 : 14 }}
+    />
+    <Tooltip />
+    {Object.keys(selectedColors).map((key) => (
+      <Line
+        key={key}
+        type="monotone"
+        dataKey={key}
+        stroke={selectedColors[key]}
+        strokeWidth={2}
+        dot={size.width < 740 ? false : true}
+      />
+    ))}
+  </LineChart>
+</ResponsiveContainer>
 
 
-      <div className="flex flex-nowrap overflow-x-auto justify-center bg-[#1C1717] text-white rounded-lg p-3 w-fit mx-auto mt-4">
+      <div className="flex flex-nowrap overflow-x-auto justify-center bg-[#1C1717] text-white rounded-lg p-3 w-fit mx-auto md:mt-4">
         {Object.keys(selectedColors).map((key, index, array) => (
           <div key={key} className="flex flex-row items-center">
             <div className="flex flex-col items-center">
@@ -161,7 +145,7 @@ const LineChartComponent: React.FC<CombinedChartProps> = ({ title, chartType, fi
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 mb-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 md:mt-4 mb-1">
       {alert==="water" ? (
         <>
         <AlertCard

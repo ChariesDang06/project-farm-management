@@ -1,4 +1,4 @@
-import {useState,useEffect} from "react"
+import {useState} from "react"
 import Banner from "../../components/banner/Banner";
 import Login from "../login/Login";
 import { RiLeafLine } from "react-icons/ri";
@@ -167,7 +167,7 @@ const HomePage = () => {
     setCurrentPage((prev) => (prev - 1 + totalCardPages) % totalCardPages);
   };
   return (
-    <>
+    <>{currentPage&&""}
       <Banner/>
       <div  id="targetSection"  className="flex w-full my-12">
         <div className="w-full md:w-1/2 flex items-center justify-center px-4">
