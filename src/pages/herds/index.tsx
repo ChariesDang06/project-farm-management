@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ButtonAction from "../../components/button/ButtonAction";
 import AbnormalDetection from "./AbnormalDetection";
 import HerdsReport from "./HerdsReport";
+import Herds from "./Herds";
 import { MdOutlinePets } from "react-icons/md";
 
 const IndexHerd: React.FC = () => {
@@ -10,7 +11,7 @@ const IndexHerd: React.FC = () => {
 
 
   const buttons = [
-    { text: "Giám sát", component: <AbnormalDetection /> },
+    { text: "Quản lý", component: <Herds /> },
     { text: "Báo cáo", component: <HerdsReport /> },
   ];
 
@@ -24,12 +25,17 @@ const IndexHerd: React.FC = () => {
       <ButtonAction
         icon={<MdOutlinePets className="w-5 h-5" />}
         hoverBorderColor="#76bc6a"
-        borderColor="#000000"
         text="Giám sát chuồng trại"
-        bgColor="#000000"
-        textColor="#ffffff"
+        textColor={activeButton === "Giám sát chuồng trại" ? "#ffffff" : "#ffffff"}
+        bgColor={activeButton === "Giám sát chuồng trại" ? "#76bc6a" : "#000000"}
+        borderColor="#76bc6a"
         truncate={false}
+        onClick={() => {
+          setActiveButton("Giám sát chuồng trại");
+          setActiveComponent(<AbnormalDetection />);
+        }}
       />
+
       <div className="flex gap-2">
         {buttons.map((btn, index) => (
           <ButtonAction

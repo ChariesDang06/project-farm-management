@@ -28,7 +28,7 @@ import IndexEpidemic from './pages/epidemic';
 import ButtonScrollToTop from './components/button/ButtonScrollToTop';
 import CameraPage from './pages/herds/CameraBarn';
 import GlobalDetectionListener from './components/camera-stream/GlobalDetectionListener ';
-import BreadcrumbManager from './components/breadcrumb/BreadcrumbManager ';
+import BreadcrumbManager from './components/breadcrumb/BreadcrumbManager';
 const queryClient = new QueryClient();
 const SIDEBAR_ITEMS = [
   { text: "Tổng quan", url: "/dashboard", icon: <HiMiniChartPie /> },
