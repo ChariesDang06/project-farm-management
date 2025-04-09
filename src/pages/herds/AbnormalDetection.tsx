@@ -159,7 +159,7 @@ function AbnormalDetection() {
               icon={<MdHome className="w-6 h-6"/>}
               rounded={false}
               widthFull="w-[240px]"
-              placeholder="Đàn hep HA01"
+              placeholder="Chọn đàn"
               iconColor="text-white"
               iconBgColor="bg-yellow-500"
             />

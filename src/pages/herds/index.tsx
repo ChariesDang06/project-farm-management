@@ -9,7 +9,6 @@ const IndexHerd: React.FC = () => {
   const [activeComponent, setActiveComponent] = useState<React.ReactNode>(<AbnormalDetection />);
   const [activeButton, setActiveButton] = useState<string>("Giám sát chuồng trại");
 
-
   const buttons = [
     { text: "Quản lý", component: <Herds /> },
     { text: "Báo cáo", component: <HerdsReport /> },
@@ -35,7 +34,6 @@ const IndexHerd: React.FC = () => {
           setActiveComponent(<AbnormalDetection />);
         }}
       />
-
       <div className="flex gap-2">
         {buttons.map((btn, index) => (
           <ButtonAction
