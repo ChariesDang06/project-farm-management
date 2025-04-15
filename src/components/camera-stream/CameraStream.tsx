@@ -130,7 +130,7 @@ const CameraStream: React.FC<CameraStreamProps> = ({ camId, onAbnormalDetect }) 
             videoId: data.video_recorded,
             imageUrl,
             title: `Sự kiện: ${data.event_type} từ ${data.cameraID}`,
-            timestamp: new Date().toLocaleString(),
+            timestamp: data.event_time,
             description: `${data.message} (${data.currentCount})`,
             link: `/camera/${data.cameraID}/events/${data._id}`,
           });

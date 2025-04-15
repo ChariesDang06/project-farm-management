@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import ButtonAction from "../../components/button/ButtonAction";
 import { Toast } from "primereact/toast";
 import { mockData, barns, BarnId, MonthRange, WidgetInfo } from "./data"
-const cameraIds = ["CAM_001"];
+const cameraIds = ["CAM_001","CAM_002","CAM_003","CAM_004"];
 
 function AbnormalDetection() {
   const handleSelectBarn = (id: string) => {

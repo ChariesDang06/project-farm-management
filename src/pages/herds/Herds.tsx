@@ -564,12 +564,8 @@ export default function Herds() {
             <Toast ref={toast} />
             <div >
 
-            <DataTable className="p-2 bg-[#F3F7F5] rounded-[20px]" ref={dt} value={products} selection={selectedProducts} 
-                        onSelectionChange={(e) => {
-                            if (Array.isArray(e.value)) {
-                                setSelectedProducts(e.value);
-                            }
-                        }}
+                <DataTable className="p-2 bg-[#F3F7F5] rounded-[20px]" ref={dt} value={products} selection={selectedProducts} 
+                        onSelectionChange={(e) => { if (Array.isArray(e.value)) { setSelectedProducts(e.value); }}}
                         sortIcon={(options) => options.order === 1 ? <FiChevronUp /> : <FiChevronDown />}
                         dataKey="id"  paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                         paginatorTemplate=" PrevPageLink PageLinks NextPageLink  RowsPerPageDropdown"
@@ -582,8 +578,6 @@ export default function Herds() {
                     <Column  field="entryDate" header="Ngày nhập chuồng" sortable ></Column>
                     <Column  field="exitDate" header="Ngày xuất chuồng" sortable style={{ minWidth: '4rem' }}></Column>
                     <Column  field="totalQuantity" header="Tổng số lượng" sortable style={{ minWidth: '4rem' }}></Column>
-                    {/* <Column   field="sickQuantity" header="Số lượng bệnh" headerStyle={{ color: '#F14871' }} */}
-                      {/* bodyStyle={{ color: '#F14871' }}   headerClassName="custom-sort-icon" sortable  style={{ minWidth: '4rem' }} /> */}
                     <Column  field="cameraMonitoring" body={cameraBodyTemplate} header="Camera theo dõi"  style={{ minWidth: '4rem' }}></Column>
                     <Column  header="Thao tác" body={actionBodyTemplate} exportable={false} style={{ minWidth: '5rem' }}></Column>
                 </DataTable>
