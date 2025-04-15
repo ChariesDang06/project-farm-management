@@ -155,7 +155,7 @@ function AbnormalDetection() {
     fetchAllEvents();
     const interval = setInterval(() => {
       fetchAllEvents(); 
-    }, 5000);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
   
