@@ -10,12 +10,10 @@ import { useEffect, useState } from "react";
 import ButtonAction from "../../components/button/ButtonAction";
 import { Toast } from "primereact/toast";
 import { mockData, barns, BarnId, MonthRange, WidgetInfo } from "./data"
-const cameraIds = ["CAM_001"];
+import EventsTable from "./EventTable";
 
 function AbnormalDetection() {
-  const handleSelectBarn = (id: string) => {
-    console.log("Selected Barn ID:", id);
-  };
+
     const [barns1, setBarns1] = useState<Barn[]>([]);
   useEffect(() => {
       const fetchBarns = async () => {
@@ -31,15 +29,12 @@ function AbnormalDetection() {
     }, []);
   const [abnormalDetections, setAbnormalDetections] = useState<any[]>([]);
  
-  const handleAbnormalDetect = (data: any) => {
-    console.log("Phát hiện bất thường:", data);
-    setAbnormalDetections((prev) => [data, ...prev]);
-  };
+
 
   interface Camera {
     _id: string;
     location?: string;
-    url?: string;
+    rtsp_url?: string;
   }
   interface EventData {
     event_type: string;
@@ -51,10 +46,10 @@ function AbnormalDetection() {
 
   const toast = useRef<Toast>(null);
   const [showAddCamera, setShowAddCamera] = useState(false);
-  const [newCam, setNewCam] = useState({ id: "",  location: "", url: "" });
+  const [newCam, setNewCam] = useState({ id: "",  location: "", rtsp_url: "" });
   const [cameraList, setCameraList] = useState<Camera[]>([]);
   const handleAddCamera = async () => {
-    if (!newCam.id || !newCam.url) {
+    if (!newCam.id || !newCam.rtsp_url) {
       return alert("Vui lòng nhập đầy đủ thông tin!");
     }
   
@@ -62,7 +57,7 @@ function AbnormalDetection() {
       const requestBody: Camera = {
         _id: newCam.id,
         location: newCam.location,
-        url: newCam.url,
+        rtsp_url: newCam.rtsp_url,
       };
 
       const res = await fetch("http://127.0.0.1:8000/add_cameras", {
@@ -79,7 +74,7 @@ function AbnormalDetection() {
         setCameraList((prev) => [...prev, requestBody]);
         console.log("res",res);
         setShowAddCamera(false);
-        setNewCam({ id: "", location: "", url: "" });
+        setNewCam({ id: "", location: "", rtsp_url: "" });
       } else {
         toast.current?.show({  severity: 'error', summary: 'Error',  detail: 'Lỗi thêm camera',  life: 3000  });
         console.error("API error:", data.error);
@@ -219,29 +214,28 @@ function AbnormalDetection() {
           <div className="mt-12">
 
           <div className="flex flex-col lg:flex-row gap-4 items-start">
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
-            {cameraList
-              .filter((cam) => cam.location === selectedBarnId)
-              .map((cam) => (
-                <CameraStream
-                  key={cam._id}
-                  camId={cam._id}
-                  onAbnormalDetect={handleAbnormalDetect}
-                />
-              ))}
-          </div>
-            <div className="w-full lg:w-1/3 bg-white p-4 rounded-xl shadow-md max-h-[80vh] overflow-y-auto">
-              <h2 className="text-lg font-semibold mb-4 text-red-500">🚨 Cảnh báo bất thường</h2>
+            <div className="w-full lg:w-2/3 grid gap-4">
+              <CameraStream />
+            </div>
+            <div className="w-full lg:w-1/3 bg-white p-4 rounded-xl shadow-md max-h-[100vh] overflow-y-auto">
+              <h2 className="text-lg font-semibold mb-4 text-red-500 ">🚨 Cảnh báo bất thường</h2>
               {abnormalDetections.length === 0 ? (
                 <p className="text-gray-500 text-sm">Không có cảnh báo nào.</p>
               ) : (
                 abnormalDetections.map((event, index) => (
+                  <div className="mb-2">
                   <AbnormalDetectionCard key={index} event={event} />
+                  </div>
                 ))
               )}
             </div>
           </div>
+         
         </div>
+        
+      </div>
+      <div className="rounded-md  mt-20">
+          <EventsTable />
       </div>
       {showAddCamera && (
   <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
@@ -257,25 +251,25 @@ function AbnormalDetection() {
           onChange={(e) => setNewCam({ ...newCam, id: e.target.value })}
         />
        <select
-    className="w-full border p-2 rounded"
-    value={newCam.location}
-    onChange={(e) => setNewCam({ ...newCam, location: e.target.value })}
-  >
-    <option value="" disabled>
-      Chọn đàn
-    </option>
-    {barns.map((barn) => (
-      <option key={barn._id} value={barn._id}>
-        {barn.name}
-      </option>
-    ))}
-  </select>
+          className="w-full border p-2 rounded"
+          value={newCam.location}
+          onChange={(e) => setNewCam({ ...newCam, location: e.target.value })}
+        >
+          <option value="" disabled>
+            Chọn đàn
+          </option>
+          {barns.map((barn) => (
+            <option key={barn._id} value={barn._id}>
+              {barn.name}
+            </option>
+          ))}
+        </select>
         <input
           type="text"
           placeholder="RTSP URL"
           className="w-full border p-2 rounded"
-          value={newCam.url}
-          onChange={(e) => setNewCam({ ...newCam, url: e.target.value })}
+          value={newCam.rtsp_url}
+          onChange={(e) => setNewCam({ ...newCam, rtsp_url: e.target.value })}
         />
       </div>
 

@@ -10,7 +10,7 @@ export const ProductService = {
                   exitDate: '12.06.2022',
                   totalQuantity: 1200120,
                   sickQuantity: 234,
-                  cameraMonitoring: 'CAM_001'
+                  cameraMonitoring: 'CAM_008'
                 },
                 {
                   id: '2001',

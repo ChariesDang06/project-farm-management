@@ -158,16 +158,12 @@ const logos = [logo1, logo2, logo3, logo4, logo5, logo6, logo1, logo2, logo3, lo
 // 
 // 
 const HomePage = () => {
-  const [currentPage, setCurrentPage] = useState(0);
-  const totalCardPages = Math.ceil(cardAgricultureCardData.length / 3);
   const nextPage = () => {
-    setCurrentPage((prev) => (prev + 1) % totalCardPages);
   };
   const prevPage = () => {
-    setCurrentPage((prev) => (prev - 1 + totalCardPages) % totalCardPages);
   };
   return (
-    <>{currentPage&&""}
+    <>
       <Banner/>
       <div  id="targetSection"  className="flex w-full my-12">
         <div className="w-full md:w-1/2 flex items-center justify-center px-4">
