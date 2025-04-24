@@ -31,6 +31,7 @@ const EventsTable: React.FC<EventsTableProps> = ({ filterCamId, filterBarnCamera
     axios.get("http://localhost:8000/events")
       .then((res) => {
         setEvents(res.data.events);
+        console.log("event",event);
       })
       .catch((err) => {
         console.error("Lỗi khi lấy sự kiện:", err);

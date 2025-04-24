@@ -150,7 +150,7 @@ function AbnormalDetection() {
     fetchAllEvents();
     const interval = setInterval(() => {
       fetchAllEvents(); 
-    }, 1000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
   
@@ -215,7 +215,17 @@ function AbnormalDetection() {
 
           <div className="flex flex-col lg:flex-row gap-4 items-start">
             <div className="w-full lg:w-2/3 grid gap-4">
-              <CameraStream />
+            <div className="w-full lg:w-2/3 grid gap-4">
+              {(selectedBarnId === "all"
+                ? cameraList
+                : cameraList.filter((cam) => cam.location === selectedBarnId)
+              ).map((cam) => (
+                <CameraStream
+                />
+              ))}
+            </div>
+
+
             </div>
             <div className="w-full lg:w-1/3 bg-white p-4 rounded-xl shadow-md max-h-[100vh] overflow-y-auto">
               <h2 className="text-lg font-semibold mb-4 text-red-500 ">🚨 Cảnh báo bất thường</h2>

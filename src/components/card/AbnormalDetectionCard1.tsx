@@ -31,8 +31,11 @@ const AbnormalDetectionCard1: React.FC<AbnormalDetectionCardProps> = ({ event })
 
   const camDisplay = cameraID || camera_id;
   const timestamp = event_time ? new Date(event_time).toLocaleString() : "Invalid Date";
+  const isHumanDetected =
+  event_type.trim().toLowerCase() === "human detect" ||
+  (event_type.trim().toLowerCase() === "object count changes" && currentCount && currentCount > 0);
 
-  const isHumanDetected = event_type.toLowerCase().includes("human");
+
 
   return (
     <div className="flex border border-red-300 text-[#F44336] rounded-xl p-3 items-start bg-[#FFEBEE] shadow-md w-full">
@@ -51,12 +54,12 @@ const AbnormalDetectionCard1: React.FC<AbnormalDetectionCardProps> = ({ event })
         )}
 
         {message && (
-          <p className="text-[#F44336] text-sm mt-1">📢 {message}</p>
+          <p className="text-[#F44336] text-sm mt-1">{message}</p>
         )}
 
         {isHumanDetected && (
           <p className="text-green-600 text-sm mt-1 font-medium">
-            ✅ Phát hiện người trong khu vực
+            Phát hiện người trong khu vực
           </p>
         )}
 
@@ -67,7 +70,7 @@ const AbnormalDetectionCard1: React.FC<AbnormalDetectionCardProps> = ({ event })
             target="_blank"
             rel="noopener noreferrer"
           >
-            🎥 Xem video đã ghi
+            Xem video đã ghi
           </a>
         )}
       </div>
