@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import AbnormalDetectionCard from "../../components/card/AbnormalDetectionCard";
-import phvt from "../../assets/phvn.png";
-import phbt1 from "../../assets/phbt1.png";
+import MapFarm from "../../assets/MapFarm.jpg";
 import BarnSelector, { Barn } from "../../components/barn-selector/BarnSelector";
 import { FiChevronDown, FiSearch } from "react-icons/fi";
 import { MdOutlinePets } from "react-icons/md";
@@ -19,7 +18,7 @@ interface EventData {
   
 }
 const imageList = [
-  { src: phbt1, caption: "Chuồng Heo01A1" },
+  { src: MapFarm, caption: "" },
 ];
 const DashBoard = () => {
   const handleBarnSelect = (id: string) => {
@@ -93,9 +92,6 @@ const DashBoard = () => {
                 alt={`Image ${index + 1}`}
                 className="w-full h-auto object-cover"
                 />
-                <p className="absolute bottom-2 left-2 bg-gray-400 text-white text-sm px-2 py-1 rounded-md">
-                  {image.caption}
-                </p>
               </div>
             ))}
           </div>
@@ -112,7 +108,7 @@ const DashBoard = () => {
               iconColor="text-white"
               iconBgColor="bg-yellow-500"
             />
-          <span className="text-left text-black">Số lượng: 10010</span>
+          {/* <span className="text-left text-black">Số lượng: 10010</span> */}
           <span className="text-left text-black">Lịch sử hoạt động</span>
            {abnormalDetections.length === 0 ? (
                           <p className="text-gray-500 text-sm">Không có cảnh báo nào.</p>

@@ -138,17 +138,17 @@ function CameraStream() {
   const renderEventContent = (event: EventData | null) => {
     if (!event) return "Không có dữ liệu";
     if (event.event_type === "Object leaving detected") {
-      return "🚶‍♂️ Vật thể rời đi";
+      return "Người/vật rời đi";
     }
     if (event.event_type === "Object count changes") {
-      return `🔢 ${event.previousCount} ➡ ${event.currentCount}`;
+      return `${event.previousCount} ➡ ${event.currentCount}`;
     }
-    return `📌 ${event.event_type}`;
+    return `Không có người`;
   };
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <h1 className="text-xl font-bold mb-4">📷 Camera Monitor</h1>
+      <h1 className="text-xl font-bold mb-4">Camera Monitor</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {cameras.map((cam) => {
@@ -160,19 +160,16 @@ function CameraStream() {
               key={cam._id}
               className="relative rounded-lg overflow-hidden border shadow bg-black"
             >
-              {/* Nút góc trái hiển thị event */}
               <div className="absolute top-2 left-2 bg-white/80 px-2 py-1 rounded text-sm text-black font-medium shadow">
                 {renderEventContent(event)}
               </div>
 
-              {/* Nút toggle */}
-              <button
+              {/* <button
                 onClick={handleToggle}
                 className="absolute top-2 left-24 w-5 h-5 border-2 border-white bg-white rounded-full shadow hover:bg-green-300 transition"
                 title="Hiển thị / Ẩn camera"
-              />
+              /> */}
 
-              {/* Nút Chi tiết */}
               <button
                 onClick={() => navigateToDetails(cam._id)}
                 className="absolute top-2 right-2 px-3 py-1 bg-white text-sm text-black rounded-full shadow hover:bg-gray-200"
