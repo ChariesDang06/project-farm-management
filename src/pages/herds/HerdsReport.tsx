@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import BarChartComponent from "../../components/bar-chart/BarChartComponent";
 import InputField from "../../components/input-field/InputField";
 import TimelineSelector from "../../components/timeline-selector/TimelineSelector";
 import { generateData } from "../../utils/generateData";
+import { AuthContext } from "../../hooks/user";
+import ChatAnalysisPanel from "../../components/pop-up/ChatAnalysisPanel";
+import { FaRegMessage } from "react-icons/fa6";
+import axios from "axios";
 
 const HerdsReport = () => {
   const [filterType, setFilterType] = useState<"year" | "month" | "week">(
@@ -13,10 +17,12 @@ const HerdsReport = () => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
   const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
+  const { token } = useContext(AuthContext);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [chatResponse, setChatResponse] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [herdData, setHerdData] = useState<
-    { cachly?: number; name: string; khoe: number; benh: number }[]
-  >([]);
+  const [herdData, setHerdData] = useState<any[]>([]);
 
   useEffect(() => {
     const genData = generateData(filterType, true);
@@ -48,12 +54,74 @@ const HerdsReport = () => {
   const handleSave = () => {
     console.log("Dữ liệu đã lưu:", data);
   };
+  useEffect(() => {
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isPanelOpen) setIsPanelOpen(false);
+    };
+
+    const updateBodyOverflow = () => {
+      document.body.style.overflow = isPanelOpen ? "hidden" : "auto";
+    };
+
+    window.addEventListener("keydown", handleEscKey);
+    updateBodyOverflow();
+
+    return () => {
+      window.removeEventListener("keydown", handleEscKey);
+      document.body.style.overflow = "auto";
+    };
+  }, [isPanelOpen]);
+
+  const sendDataToAnalys = async () => {
+    setIsLoading(true);
+    setIsPanelOpen(true);
+    setChatResponse("");
+
+    try {
+      const response = await axios.post(
+        "https://agriculture-traceability.vercel.app/api/v1/analysis/herd",
+        [
+          {
+            name: "đàn",
+            time:
+              filterType === "year"
+                ? "năm"
+                : filterType === "month"
+                ? "tháng"
+                : "tuần",
+            history: JSON.stringify(herdData),
+          },
+        ],
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const analysisData = response.data;
+
+      setChatResponse(analysisData.analysis);
+    } catch (error) {
+      setChatResponse("Lỗi: Không thể xử lý yêu cầu, vui lòng thử lại sau.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
       <div className="bg-[#F3F7F5] rounded-[16px] p-3 sm:p-5">
         <div className="flex items-center gap-y-2 flex-wrap justify-between md:mb-8">
-          <h1 className="text-xl sm:text-2xl">Thống kê</h1>
+          <div className="flex w-full justify-between">
+            <h1 className="text-xl sm:text-2xl">Thống kê</h1>
+            <button
+              onClick={sendDataToAnalys}
+              className="mr-4 bg-[#76bc6a] hover:bg-[#3d8b40] flex items-center text-white px-4 py-3 rounded-lg mb-4"
+            >
+              <FaRegMessage className="w-4 h-4 mr-2" />
+              Phân tích dữ liệu
+            </button>
+          </div>
           <TimelineSelector
             filterType={filterType}
             setFilterType={setFilterType}
@@ -71,6 +139,7 @@ const HerdsReport = () => {
         <div className="flex flex-col gap-y-5">
           <BarChartComponent
             title="Số lượng vật nuôi"
+            labels={{ healthy: "Khỏe", sick: "Bệnh" }}
             data={herdData}
             filterType={filterType}
             hasIsolation={false}
@@ -78,6 +147,7 @@ const HerdsReport = () => {
           />
           <BarChartComponent
             title="Trạng thái sức khỏe"
+            labels={{ healthy: "Khỏe", sick: "Bệnh" }}
             data={herdData}
             filterType={filterType}
             hasIsolation={true}
@@ -169,6 +239,14 @@ const HerdsReport = () => {
           </div>
         </div>
       </div>
+      {isPanelOpen && (
+        <ChatAnalysisPanel
+          isOpen={isPanelOpen}
+          isLoading={isLoading}
+          content={chatResponse}
+          onClose={() => setIsPanelOpen(false)}
+        />
+      )}
     </>
   );
 };

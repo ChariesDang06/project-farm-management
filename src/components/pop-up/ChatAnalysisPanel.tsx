@@ -108,7 +108,10 @@ const ChatAnalysisPanel: React.FC<ChatAnalysisPanelProps> = ({
               </span>
             </div>
             <div className="flex space-x-3">
-              <button onClick={onClose} className="border-gray-300">
+              <button
+                onClick={onClose}
+                className="border-gray-300 cursor-pointer"
+              >
                 Đóng
               </button>
             </div>

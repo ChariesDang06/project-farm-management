@@ -1,8 +1,4 @@
-import axios from "axios";
-import { AuthContext } from "../../hooks/user";
 import useWindowSize from "./useWindowSize";
-import ChatAnalysisPanel from "../../components/pop-up/ChatAnalysisPanel";
-import { FaRegMessage } from "react-icons/fa6";
 import {
   BarChart,
   Bar,
@@ -12,12 +8,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { useContext, useEffect, useState } from "react";
-
-const labelMap = {
-  "Số lượng vật nuôi": { healthy: "Khỏe", sick: "Bệnh" },
-  "Tỉ lệ nhập kho": { healthy: "Nhập", sick: "Xuất" },
-} as const;
 
 const BarChartComponent = ({
   title,
@@ -25,92 +15,24 @@ const BarChartComponent = ({
   hasIsolation,
   selectedAnimal,
   filterType,
+  labels,
 }: {
   title: string;
-  data: Array<{ name: string; khoe?: number; benh?: number; cachly?: number }>;
+  data: Array<any>;
   filterType: "year" | "month" | "week";
   hasIsolation: boolean;
   selectedAnimal: string;
+  labels: { healthy: string; sick: string };
 }) => {
-  const { token } = useContext(AuthContext);
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
-  const [chatResponse, setChatResponse] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const labels = labelMap[title as keyof typeof labelMap] || {
-    healthy: "Khỏe",
-    sick: "Bệnh",
-  };
   const { width } = useWindowSize();
-
-  useEffect(() => {
-    const handleEscKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && isPanelOpen) setIsPanelOpen(false);
-    };
-
-    const updateBodyOverflow = () => {
-      document.body.style.overflow = isPanelOpen ? "hidden" : "auto";
-    };
-
-    window.addEventListener("keydown", handleEscKey);
-    updateBodyOverflow();
-
-    return () => {
-      window.removeEventListener("keydown", handleEscKey);
-      document.body.style.overflow = "auto";
-    };
-  }, [isPanelOpen]);
-
-  const sendDataToAnalys = async () => {
-    setIsLoading(true);
-    setIsPanelOpen(true);
-    setChatResponse("");
-
-    try {
-      const response = await axios.post(
-        "https://agriculture-traceability.vercel.app/api/v1/analysis/herd",
-        [
-          {
-            name: "đàn",
-            time:
-              filterType === "year"
-                ? "năm"
-                : filterType === "month"
-                ? "tháng"
-                : "tuần",
-            history: JSON.stringify(data),
-          },
-        ],
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const analysisData = response.data;
-
-      setChatResponse(analysisData.analysis);
-    } catch (error) {
-      setChatResponse("Lỗi: Không thể xử lý yêu cầu, vui lòng thử lại sau.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <>
       <div className="p-2 md:p-4 bg-white rounded-[16px] shadow-md">
-        <div className="flex justify-between flex-wrap">
-          <h1 className="text-md md:text-xl mb-4 text-left font-semibold">
-            {title}
-          </h1>
-          <button
-            onClick={sendDataToAnalys}
-            className="mr-4 bg-[#76bc6a] hover:bg-[#3d8b40] flex items-center text-white px-4 py-3 rounded-lg mb-4"
-          >
-            <FaRegMessage className="w-4 h-4 mr-2" />
-            Phân tích dữ liệu
-          </button>
-        </div>
+        <h1 className="text-md md:text-xl mb-4 text-left font-semibold">
+          {title}
+        </h1>
+
         <ResponsiveContainer
           width="100%"
           aspect={width < 640 ? 1.2 : width < 1280 ? 2 : 2.5}
@@ -137,15 +59,15 @@ const BarChartComponent = ({
             />
             <Tooltip />
             <Bar
-              dataKey="khoe"
+              dataKey={labels.healthy}
               fill="#278D45"
-              name={`${selectedAnimal} khỏe`}
+              name={`${selectedAnimal} ${labels.healthy}`}
               radius={[4, 4, 0, 0]}
             />
             <Bar
-              dataKey="benh"
+              dataKey={labels.sick}
               fill="#FCBD2D"
-              name={`${selectedAnimal} bệnh`}
+              name={`${selectedAnimal} ${labels.sick}`}
               radius={[4, 4, 0, 0]}
             />
             {hasIsolation && (
@@ -168,7 +90,7 @@ const BarChartComponent = ({
             </div>
             <p className="text-[12px] sm:text-lg">
               {data
-                .reduce((acc, cur) => acc + (cur.khoe || 0), 0)
+                .reduce((acc, cur) => acc + (cur[labels.healthy] || 0), 0)
                 .toLocaleString()}
             </p>
           </div>
@@ -182,7 +104,7 @@ const BarChartComponent = ({
             </div>
             <p className="text-[12px] sm:text-lg">
               {data
-                .reduce((acc, cur) => acc + (cur.benh || 0), 0)
+                .reduce((acc, cur) => acc + (cur[labels.sick] || 0), 0)
                 .toLocaleString()}
             </p>
           </div>
@@ -206,14 +128,6 @@ const BarChartComponent = ({
           )}
         </div>
       </div>
-      {isPanelOpen && (
-        <ChatAnalysisPanel
-          isOpen={isPanelOpen}
-          isLoading={isLoading}
-          content={chatResponse}
-          onClose={() => setIsPanelOpen(false)}
-        />
-      )}
     </>
   );
 };
