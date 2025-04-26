@@ -100,7 +100,7 @@ const EpidemicReport = () => {
           title="Biểu đồ số lượng bệnh"
           chartType="disease"
           filterType={filterType}
-          data={cases}
+          data={[]}
         />
       </div>
 

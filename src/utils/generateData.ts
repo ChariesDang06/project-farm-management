@@ -80,14 +80,14 @@ const generateResourceData = (type: "year" | "month" | "week") => {
   };
 
   const baseValues: Record<ResourceType, number> = {
-    food: 500, // kg
+    food: 900, // kg
     water: 1000, // lit
-    electricity: 300, // kWh
-    medicine: 50, // ml
+    electricity: 1200, // kWh
+    medicine: 800, // ml
   };
 
   const getFluctuated = (base: number) => {
-    const delta = base * 0.1;
+    const delta = base * 0.6;
     return Math.floor(Math.random() * (2 * delta + 1)) + (base - delta);
   };
 
@@ -134,7 +134,7 @@ const generateAnimalData = (type: "year" | "month" | "week") => {
   };
 
   const getFluctuated = (base: number) => {
-    const delta = base * 0.1;
+    const delta = base * 0.5;
     return Math.floor(Math.random() * (2 * delta + 1)) + (base - delta);
   };
 

@@ -1,10 +1,11 @@
-
 import { useState } from "react";
 import TimelineSelector from "../../components/timeline-selector/TimelineSelector";
 import LineChartComponent from "../../components/line-chart/LineChartComponent";
 
 const ResourcesReport = () => {
-  const [filterType, setFilterType] = useState<"year" | "month" | "week">("year");
+  const [filterType, setFilterType] = useState<"year" | "month" | "week">(
+    "year"
+  );
   const [selectedAnimal, setSelectedAnimal] = useState("");
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
@@ -27,16 +28,32 @@ const ResourcesReport = () => {
           setSelectedWeek={setSelectedWeek}
         />
       </div>
-      
+
       <div className="flex flex-col gap-y-5">
-        <LineChartComponent title="Lượng nước tiêu thụ" chartType="water" filterType={filterType} alert="water" />
-        <LineChartComponent title="Lượng thức ăn tiêu thụ" chartType="food" filterType={filterType} alert="food"  />
-        <LineChartComponent title="Chi phí y tế" chartType="medical" filterType={filterType}  alert="medical" /> 
+        <LineChartComponent
+          title="Lượng nước tiêu thụ"
+          chartType="water"
+          filterType={filterType}
+          alert="water"
+          data={[]}
+        />
+        <LineChartComponent
+          title="Lượng thức ăn tiêu thụ"
+          chartType="food"
+          filterType={filterType}
+          alert="food"
+          data={[]}
+        />
+        <LineChartComponent
+          title="Chi phí y tế"
+          chartType="medical"
+          filterType={filterType}
+          alert="medical"
+          data={[]}
+        />
       </div>
     </div>
-    
   );
 };
 
-  export default ResourcesReport;
-      
+export default ResourcesReport;
