@@ -503,7 +503,7 @@ export default function Herds() {
       
         const handleClick = () => {
           if (rowData.id && rowData.cameraMonitoring) {
-            navigate(`/herds/${rowData.id}/${rowData.barn}/${rowData.cameraMonitoring}`);
+            navigate(`/herds/${rowData.barn}/${rowData.cameraMonitoring}`);
           }
         };
       

@@ -154,7 +154,7 @@ function App() {
           element: <IndexHerd />,
         },
         {
-          path: "/herds/:_id/:chuongId/:camId",
+          path: "/herds/:chuongId/:camId",
           element: <CameraPage />,
         },
         {

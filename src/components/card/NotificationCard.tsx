@@ -37,7 +37,7 @@ interface NotificationProps {
 
 const NotificationCard: React.FC<NotificationProps> = ({ title, description, date }) => {
   return (
-    <div className="flex max-w-sm p-4 mb-2 border border-red-400  bg-red-100 rounded-lg shadow-md">
+    <div className="flex max-w-sm p-2 md:p-4 mb-2 border border-red-400  bg-red-100 rounded-lg shadow-md">
       <div className="flex items-center justify-center w-6 h-6 bg-[#EB5757] text-white rounded-full text-xl">
         <FaMinus />
       </div>
