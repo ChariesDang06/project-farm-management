@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import MapFarm from "../../assets/MapFarm.jpg";
 import AbnormalDetectionCard from "../../components/card/AbnormalDetectionCard";
-import phvt from "../../assets/phvn.png";
-import phbt1 from "../../assets/phbt1.png";
 import BarnSelector, {
   Barn,
 } from "../../components/barn-selector/BarnSelector";
@@ -12,40 +11,21 @@ import TimelineSelector from "../../components/timeline-selector/TimelineSelecto
 import LineChartComponent from "../../components/line-chart/LineChartComponent";
 import {
   generateAnimalData,
-  generateData,
   generateResourceData,
   generateStorageRateData,
 } from "../../utils/generateData";
 import { FaRegMessage } from "react-icons/fa6";
 import ChatAnalysisPanel from "../../components/pop-up/ChatAnalysisPanel";
-import axios from "axios";
 import { AuthContext } from "../../hooks/user";
+import axios from "axios";
 
-const abnormalDetections = [
-  {
-    imageUrl: phvt,
-    title: "Phát hiện vật nuôi vượt rào",
-    timestamp: "12:30:05 AM - 01/11/2025",
-    description: "Phát hiện vật nuôi vượt mức tại khu vực 123123",
-    link: "/detail-alert/1",
-  },
-  {
-    imageUrl: phvt,
-    title: "Phát hiện vật nuôi ra khỏi khu vực",
-    timestamp: "03:15:20 PM - 02/11/2025",
-    description: "Vật nuôi đã đi ra khỏi khu vực cho phép. Cần kiểm tra ngay.",
-    link: "/detail-alert/2",
-  },
-  {
-    imageUrl: phvt,
-    title: "Cảnh báo hoạt động bất thường",
-    timestamp: "06:45:10 AM - 03/11/2025",
-    description: "Hệ thống phát hiện di chuyển bất thường tại khu vực nuôi A.",
-    link: "/detail-alert/4",
-  },
-];
-
-const imageList = [{ src: phbt1, caption: "Chuồng Heo01A1" }];
+interface EventData {
+  event_type: string;
+  message?: string;
+  camera_id: string;
+  event_time: string;
+}
+const imageList = [{ src: MapFarm, caption: "" }];
 const DashBoard = () => {
   const { token } = useContext(AuthContext);
   const handleBarnSelect = (id: string) => {
@@ -66,6 +46,29 @@ const DashBoard = () => {
     };
     fetchBarns();
   }, []);
+  const [abnormalDetections, setAbnormalDetections] = useState<any[]>([]);
+
+  const fetchAllEvents = async () => {
+    try {
+      const res = await fetch("http://127.0.0.1:8000/events");
+      const data = await res.json();
+
+      // Assuming the returned data shape is { events: [...] }
+      const events: EventData[] = data.events;
+
+      // Optional: Sort by time descending
+      const sortedEvents = events.sort((a, b) => {
+        return (
+          new Date(b.event_time).getTime() - new Date(a.event_time).getTime()
+        );
+      });
+
+      // Update state with all events
+      setAbnormalDetections(sortedEvents);
+    } catch (error) {
+      console.error("Error fetching all events:", error);
+    }
+  };
   const [filterType, setFilterType] = useState<"year" | "month" | "week">(
     "year"
   );
@@ -88,6 +91,14 @@ const DashBoard = () => {
     const storageData = generateStorageRateData(filterType);
     setStorageData(storageData);
   }, [filterType]);
+
+  useEffect(() => {
+    fetchAllEvents();
+    const interval = setInterval(() => {
+      fetchAllEvents();
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const sendDataToAnalys = async () => {
     setIsLoading(true);
@@ -159,15 +170,12 @@ const DashBoard = () => {
                   alt={`Image ${index + 1}`}
                   className="w-full h-auto object-cover"
                 />
-                <p className="absolute bottom-2 left-2 bg-gray-400 text-white text-sm px-2 py-1 rounded-md">
-                  {image.caption}
-                </p>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="inline-flex flex-col gap-2 bg-white p-3 rounded-[8px]">
+        <div className="inline-flex flex-col gap-2 bg-white p-3 rounded-[8px] max-h-[80vh] overflow-y-auto">
           <BarnSelector
             barns={barns}
             onSelect={handleBarnSelect}
@@ -177,11 +185,17 @@ const DashBoard = () => {
             iconColor="text-white"
             iconBgColor="bg-yellow-500"
           />
-          <span className="text-left text-black">Số lượng: 10010</span>
+          {/* <span className="text-left text-black">Số lượng: 10010</span> */}
           <span className="text-left text-black">Lịch sử hoạt động</span>
-          {abnormalDetections.map((alert, index) => (
-            <AbnormalDetectionCard key={index} {...alert} />
-          ))}
+          {abnormalDetections.length === 0 ? (
+            <p className="text-gray-500 text-sm">Không có cảnh báo nào.</p>
+          ) : (
+            abnormalDetections.map((event, index) => (
+              <div className="mb-2 ">
+                <AbnormalDetectionCard key={index} event={event} />
+              </div>
+            ))
+          )}
         </div>
       </div>
 
