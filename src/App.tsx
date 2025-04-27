@@ -157,6 +157,7 @@ function App() {
           path: "/herds/:chuongId/:camId",
           element: <CameraPage />,
         },
+        
         {
           path: "/epidemic",
           element: <IndexEpidemic />,

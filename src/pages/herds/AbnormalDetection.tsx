@@ -12,6 +12,9 @@ import { Toast } from "primereact/toast";
 import { mockData, barns, BarnId, MonthRange, WidgetInfo } from "./data"
 import EventsTable from "./EventTable";
 import CameraCard from "../../components/camera-stream/CameraCard";
+import PigFeed from "../../components/camera-stream/PigFeed";
+import PigCrossLine from "../../components/camera-stream/PigCrossLine";
+import AbnormalDetectionCard1 from "../../components/card/AbnormalDetectionCard1";
 
 function AbnormalDetection() {
 
@@ -133,13 +136,10 @@ function AbnormalDetection() {
   
       // Assuming the returned data shape is { events: [...] }
       const events: EventData[] = data.events;
-  
-      // Optional: Sort by time descending
       const sortedEvents = events.sort((a, b) => {
         return new Date(b.event_time).getTime() - new Date(a.event_time).getTime();
       });
   
-      // Update state with all events
       setAbnormalDetections(sortedEvents);
     } catch (error) {
       console.error("Error fetching all events:", error);
@@ -216,17 +216,18 @@ function AbnormalDetection() {
 
           <div className="flex flex-col lg:flex-row gap-4 items-start">
             <div className="w-full lg:w-2/3 grid gap-4">
-            <div className="">
-            {selectedBarnId === "all" ? (
-          <CameraStream />
-        ) : (
-          cameraList
-            .filter((cam) => cam.location === selectedBarnId)
-            .map((cam) => (
-              <CameraCard key={cam._id} camera={cam._id} />
-            ))
-        )}
-
+              <div className="">
+                {selectedBarnId === "all" ? (
+                  <>
+                    <CameraStream />
+                  </>
+                  ) : (
+                    cameraList
+                      .filter((cam) => cam.location === selectedBarnId)
+                      .map((cam) => (
+                        <CameraCard key={cam._id} camera={cam._id} />
+                      ))
+                )}
               </div>
             </div>
             <div className="w-full lg:w-1/3 bg-white p-4 rounded-xl shadow-md max-h-[100vh] overflow-y-auto">
@@ -240,15 +241,23 @@ function AbnormalDetection() {
                   </div>
                 ))
               )}
+              
             </div>
+
+            
           </div>
-         
+          {selectedBarnId === "all" &&
+                  <>
+                    <PigFeed isOnlyCameraView={false} />
+                    <PigCrossLine isOnlyCameraView={false} />
+                  </>}
         </div>
         
       </div>
       <div className="rounded-md  mt-20">
           <EventsTable />
       </div>
+
       {showAddCamera && (
   <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
     <div className="bg-white p-6 rounded-xl w-[90%] max-w-md shadow-xl relative">

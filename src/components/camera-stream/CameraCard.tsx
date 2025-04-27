@@ -23,7 +23,7 @@ export default function CameraCard({ camera }: Props) {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/latest_event/${camera}`);
+        const res = await fetch(`http://127.0.0.1:8000/latest_human_count/${camera}`);
         if (res.ok) {
           const data: EventData = await res.json();
           setEvent(data);

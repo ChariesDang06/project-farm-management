@@ -28,13 +28,13 @@ export const ProductService = {
                 {
                   id: '2002',
                   species: 'Cừu',
-                  herd: 'Cuu090dan2',
-                  barn: 'Chuong90C12',
+                  herd: 'De068dan12',
+                  barn: 'Chuong12D311',
                   entryDate: '12.12.2022',
                   exitDate: '10.05.2023',
                   totalQuantity: 6060606,
                   sickQuantity: 606,
-                  cameraMonitoring: 'CAM_003'
+                  cameraMonitoring: 'PIG_CROSS_LINE_CAM'
                 },
                 {
                   id: '2003',
@@ -45,7 +45,7 @@ export const ProductService = {
                   exitDate: '05.07.2022',
                   totalQuantity: 1200120,
                   sickQuantity: 120,
-                  cameraMonitoring: 'CAM_004'
+                  cameraMonitoring: 'SIM_CAM'
                 },
                 {
                   id: '2004',
