@@ -11,7 +11,6 @@ type Props = {
 
 export default function CameraFeed({ camId, isOccupied, personCount,latestEvent }: Props) {
   const [isConnected, setIsConnected] = useState(true);
-  const [showFeed, setShowFeed] = useState(true);
 
   useEffect(() => {
     const checkConnection = async () => {
@@ -25,21 +24,14 @@ export default function CameraFeed({ camId, isOccupied, personCount,latestEvent 
     checkConnection();
   }, [camId]);
 
-  const handleToggleFeed = () => {
-    setShowFeed(!showFeed);
-  };
+
 
   return (
     <div className="relative w-full">
       <p className="absolute top-2 left-2 text-white text-sm bg-black/50 px-2 py-1 rounded-md">
         Camera: {camId}
       </p>
-      <button
-        onClick={handleToggleFeed}
-        className="absolute top-2 right-2 px-3 py-1 bg-white text-sm text-black rounded-full shadow hover:bg-gray-200"
-      >
-        {showFeed ? "Tắt" : "Bật"} Feed
-      </button>
+   
 
       {latestEvent && (
         <div className="absolute bottom-2 left-2 bg-black/50 px-3 py-2 rounded-lg text-white text-sm shadow-md">
@@ -59,8 +51,7 @@ export default function CameraFeed({ camId, isOccupied, personCount,latestEvent 
 
       {/* Video feed */}
       <div className="w-full aspect-video bg-black flex items-center justify-center">
-        {showFeed ? (
-          isConnected ? (
+         { isConnected ? (
             <img crossOrigin="anonymous"
               data-camid={camId}
               src={`http://localhost:8000/video_feed/${camId}`}
@@ -69,10 +60,8 @@ export default function CameraFeed({ camId, isOccupied, personCount,latestEvent 
             />
           ) : (
             <p className="text-red-500 font-semibold">🚫 Mất kết nối</p>
-          )
-        ) : (
-          <p className="text-gray-400 italic">📴 Camera đã tắt</p>
-        )}
+          )}
+       
       </div>
     </div>
   );
